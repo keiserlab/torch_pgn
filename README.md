@@ -1,2 +1,2 @@
 # pgn
-Protein Graph Networks
+Proximity Graph Networks

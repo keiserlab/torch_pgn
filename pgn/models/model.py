@@ -1,4 +1,4 @@
-from pgn.models.encoder import PFPEncoder
+from pgn.models.pfp_encoder import PFPEncoder
 from pgn.args import EncoderArgs, FFArgs, AggregatedArgs
 
 import torch

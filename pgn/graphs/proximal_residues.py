@@ -10,6 +10,38 @@ The code in this module is mostly modified versions of the ODDT implementations 
 """
 
 
+def get_interacting_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
+    """
+    Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions
+    to output the interacting residue.
+    NOTE: The exact format needs to be decided on in order to be as general as possible. Will start with just being a
+    helped function and the exact form can be finalized as the MPNN frameworks become more clear.
+    :param ligand: oddt.toolkit.Molecule object
+            Molecules, which are analysed in order to find interactions.
+    :param protein: oddt.toolkit.Molecule object
+            Molecules, which are analysed in order to find interactions.
+    :param distance_cutoff: float (default=4.5)
+            Cutoff distance for close contacts.
+    :param ignore_hoh: bool (default = True) Should the water molecules be ignored. This is based on the name of the
+            residue ('HOH').
+    :return: ???? (Probably start with the interacting residues for testing and then move on for there (Need to figure
+     this out.)
+    """
+    # removing h
+    protein_mask = protein_no_h = (protein.atom_dict['atomicnum'] != 1)
+    if ignore_hoh:
+        # a copy is needed, so not modifing inplace
+        protein_mask = protein_mask & (protein.atom_dict['resname'] != 'HOH')
+    protein_dict = protein.atom_dict[protein_mask]
+    ligand_dict = ligand.atom_dict[ligand.atom_dict['atomicnum'] != 1]
+
+    # atoms in contact
+    protein_atoms, ligand_atoms = close_contacts(
+        protein_dict, ligand_dict, cutoff=distance_cutoff)
+
+    return protein_atoms, ligand_atoms
+
+
 def get_proximal_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
     """
     Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions

@@ -4,6 +4,8 @@ from pgn.graphs.graph_utils import (
     _get_atom_dict, _extract_position
 )
 
+from pgn.graphs.proximal_residues import *
+
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -26,10 +28,10 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
     reduction.
     :return: A networkx graph of featurized nodes and edges representing the interaction of the protein and ligand.
     """
-    protein_atoms, ligand_atoms = ir.get_interacting_atoms(ligand, protein)
-    cross_edges = ir.extract_cross_edges(protein_atoms, ligand_atoms)
-    receptor_nodes, receptor_edges = ir.get_molecule_graph(protein, protein_atoms, depth=2)
-    ligand_nodes, ligand_edges = ir.get_molecule_graph(ligand, ligand_atoms, depth=1)
+    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein)
+    cross_edges = extract_cross_edges(protein_atoms, ligand_atoms)
+    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=2)
+    ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=1)
 
     ligand_dict, protein_dict = _renumber_nodes(ligand_nodes, receptor_nodes)
 

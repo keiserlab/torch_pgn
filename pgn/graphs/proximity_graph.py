@@ -5,6 +5,8 @@ from pgn.graphs.graph_utils import (
 )
 
 from pgn.graphs.proximal_residues import *
+from pgn.featurization.simple_featurization import *
+from pgn.featurization.featurize import get_all_features
 
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -44,7 +46,7 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
     receptor_positions_3d = _extract_position(protein.atom_dict, receptor_nodes, protein_dict, include_z=True)
     pos3d = {**ligand_positions_3d, **receptor_positions_3d}
 
-    atom_features, edges_features = featurize.get_all_features(ligand, protein, ligand_nodes, receptor_nodes,
+    atom_features, edges_features = get_all_features(ligand, protein, ligand_nodes, receptor_nodes,
                                                                ligand_edges, receptor_edges, cross_edges,
                                                                ligand_dict, protein_dict, pos3d)
 
@@ -117,10 +119,10 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
     :param visualize: whether to visualize the final output graph using matplotlib projection into 2d space
     :return: A networkx graph of featurized nodes and edges representing the interaction of the protein and ligand.
     """
-    protein_atoms, ligand_atoms = ir.get_interacting_atoms(ligand, protein)
-    cross_edges = ir.extract_cross_edges(protein_atoms, ligand_atoms)
-    receptor_nodes, receptor_edges = ir.get_molecule_graph(protein, protein_atoms, depth=4)
-    ligand_nodes, ligand_edges = ir.get_molecule_graph(ligand, ligand_atoms, depth=2)
+    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein)
+    cross_edges = extract_cross_edges(protein_atoms, ligand_atoms)
+    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=4)
+    ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=2)
 
     ligand_dict, protein_dict = _renumber_nodes(ligand_nodes, receptor_nodes)
 
@@ -134,7 +136,7 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
     receptor_positions_3d = _extract_position(protein.atom_dict, receptor_nodes, protein_dict, include_z=True)
     pos3d = {**ligand_positions_3d, **receptor_positions_3d}
 
-    atom_features, edges_features = featurize.get_all_features(ligand, protein, ligand_nodes, receptor_nodes,
+    atom_features, edges_features = get_all_features(ligand, protein, ligand_nodes, receptor_nodes,
                                                                ligand_edges, receptor_edges, cross_edges,
                                                                ligand_dict, protein_dict, pos3d)
 

@@ -4,7 +4,7 @@ graph dataset compatible with using the D-MPNN with edge messages.
 """
 import numpy as np
 import torch
-from tqdm import tqdm 
+from tqdm import tqdm
 
 
 class ProxGraph():

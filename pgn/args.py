@@ -43,8 +43,9 @@ class FFArgs(Tap):
 class TrainArgs(Tap):
     """Class used to store the model independent arguments used for training the NNs"""
 
-class AggregatedArgs():
+class AggregatedArgs(Tap):
     """Wrapper class used to store the encoder, ff and train args classes"""
-    def __init__(self, encoder_args: EncoderArgs, ff_args: FFArgs):
-        self.encoder_args = encoder_args
-        self.ff_args = ff_args
+    def configure(self):
+        self.add_subparsers(help='sub-command help')
+        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
+        self.add_subparser('FF_args', FFArgs, help='FF help')

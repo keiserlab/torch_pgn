@@ -16,3 +16,25 @@ class OneHotTransform(object):
         data.x = np.hstack((one_hots, data.x[:, 1:]))
         data.x = torch.from_numpy(data.x).type(torch.FloatTensor).to(device)
         return data
+
+
+def normalize_targets(dataset, mean=None, std=None, yield_stats=False):
+    """
+    Normalizes the training target to have mean 0 and stddev 1
+    :param dataset: dataset to normalize the targets for
+    :param mean: external mean to use for normalization (i.e. test set normalization)
+    :param std: external stddev to use for normalization (i.e. test set normalization)
+    :param yield_stats: toggle to yield [dataset, (mean, std)] if True or just [dataset] if False
+    :return: A dataset with normalized targets
+    """
+    if mean is None:
+        mean = dataset.data.y.mean()
+    if std is None:
+        std = dataset.data.y.std()
+
+    dataset.data.y = (dataset.data.y - mean) / std
+
+    if yield_stats:
+        return [dataset]
+    else:
+        return [dataset, (mean, std)]

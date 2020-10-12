@@ -6,8 +6,16 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
           train_args, epoch_num = 0, logger = None, writer = None):
     """
     Trains the model for an epoch.
-
-    TODO: docstring
+    :param model: A PFPNetwork to be trained
+    :param data_loader: The Dataloader to be used for the epoch of training
+    :param loss_function: The function used to calculate the loss of the model
+    :param optimizer: The optimizer used for training
+    :param scheduler: A learning rate scheduler
+    :param train_args: The arguments used to determine the training method
+    :param epoch_num: The epoch number of training
+    :param logger: A tensorboard logger used to record details of training
+    :param writer: A tensorboard writer used to output recorded training details
+    :return: The average loss of the epoch.
     """
     debug = logger.debug if logger is not None else print
 

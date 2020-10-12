@@ -27,7 +27,7 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
     for batch in tqdm(data_loader):
         batch = batch.to(device)
         optimizer.zero_grad()
-        loss = loss_function(train_args, batch)
+        loss = loss_function(model(_format_batch(train_args, batch)), batch)
         loss.bachward()
         total_loss += loss.item() * batch.num_graphs
         optimizer.step()

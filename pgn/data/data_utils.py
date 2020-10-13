@@ -42,7 +42,7 @@ def normalize_targets(dataset, mean=None, std=None, yield_stats=False):
         return [dataset.data.y, (mean, std)]
 
 
-def normalize_dist(dataset, mean=None, std=None, yield_stats=False):
+def normalize_distance(dataset, mean=None, std=None, yield_stats=False):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for

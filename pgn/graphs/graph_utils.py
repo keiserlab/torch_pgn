@@ -1,3 +1,5 @@
+from pgn.graphs.proximity_graph import (yield_full_interaction_graph, yield_tree_reduction)
+
 from oddt.utils import is_openbabel_molecule
 
 import networkx as nx
@@ -102,3 +104,24 @@ def _extract_position(molecule_dict, atom_list, translate, include_z=False):
             else:
                 position_dict[translate[atom]] = np.array((-1, -1))
     return position_dict
+
+
+def _return_graph(protein, ligand, energy, name, args):
+    """
+    Return the proximity graph resulting from a given receptor molecule pair.
+    :param protein: The receptor structure for given interaction graph TODO: Type...also fix oddt
+    :param ligand: The molecule (as oddt pandas object)
+    :param energy:The ground truth energy of this interaction
+    :param name:The name of this proximity graph
+    :param args: Arguments object used to determine the setting used for graph generation
+    :return: Returns the name, the graph (networkx), and energy of the proximity graph
+    """
+    #TODO: make interaction graph yielding functions compatible with args object
+    mode = args.graph_type
+    if mode == 'full':
+        graph = yield_full_interaction_graph(ligand, protein)
+    elif mode == 'tree':
+        graph = yield_tree_reduction(ligand, protein)
+    else:
+        raise ValueError("Illegal graph_type argument. Please choose from <full, tree>")
+    return name, graph, energy

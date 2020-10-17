@@ -11,6 +11,8 @@ from pgn.featurization.featurize import get_all_features
 import networkx as nx
 import matplotlib.pyplot as plt
 
+#TODO: Add argument object for passing parameters other than ligand and protein
+
 def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, visualize=None, local_connect=True):
     """
     Takes in the receptor and the docked ligand and produces a tree version of this data. Calculated using Kruskal's and

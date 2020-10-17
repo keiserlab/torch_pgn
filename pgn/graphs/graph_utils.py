@@ -106,7 +106,7 @@ def _extract_position(molecule_dict, atom_list, translate, include_z=False):
     return position_dict
 
 
-def _return_graph(protein, ligand, energy, name, args):
+def _return_graph(input_tuple):
     """
     Return the proximity graph resulting from a given receptor molecule pair.
     :param protein: The receptor structure for given interaction graph TODO: Type...also fix oddt
@@ -117,7 +117,8 @@ def _return_graph(protein, ligand, energy, name, args):
     :return: Returns the name, the graph (networkx), and energy of the proximity graph
     """
     #TODO: make interaction graph yielding functions compatible with args object
-    mode = args.graph_type
+    protein, ligand, energy, name = input_tuple
+    mode = 'full'
     if mode == 'full':
         graph = yield_full_interaction_graph(ligand, protein)
     elif mode == 'tree':

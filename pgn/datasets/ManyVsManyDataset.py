@@ -12,10 +12,10 @@ import oddt.pandas as opd
 from pgn.graphs.graph_utils import _return_graph
 from pgn.datasets.PGDataset import PGDataset
 
-class OneVsManyDataset(PGDataset):
+def ManyVsManyDataset(PGDataset):
 
     def __init__(self, args):
-        super(OneVsManyDataset, self).__init__(args)
+        super(ManyVsManyDataset, self).__init__(args)
         self.raw_pdb_path = args.raw_pdb_path
         self.raw_mol_path = args.raw_mol_path
         self.num_workers = args.num_workers
@@ -32,10 +32,3 @@ class OneVsManyDataset(PGDataset):
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
             self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
-
-
-
-
-
-
-

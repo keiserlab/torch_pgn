@@ -25,6 +25,8 @@ class PGDataset(ABC):
 
     def write_graphs(self):
         #TODO: Fix for multiprocessing (move extra stuff to helper function and switch to imap/tqdm
+        if not osp.isdir(self.data_path):
+            os.mkdir(self.data_path)
         for i, entry in tqdm(enumerate(self.graphs)):
             name, graph, energy = entry
             current_dir = osp.join(self.data_path, name)

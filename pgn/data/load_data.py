@@ -16,7 +16,7 @@ def load_proximity_graphs(args):
     seed = args.seed
     # Add function to parse transforms into composed format for application
     transforms = parse_transforms(args.transforms)
-    dataset_type = args.dataset_type
+    split_type = args.split_type
     norm_targets = args.normalize_targets
     include_dist = args.include_dist
     norm_dist = args.normalize_dist
@@ -24,7 +24,7 @@ def load_proximity_graphs(args):
 
     torch.manual_seed(seed)
 
-    if dataset_type == 'combined':
+    if split_type == 'random':
         valid_begin, valid_end = args.validation_splits
         test_begin, test_end = args.test_splits
         train_begin, train_end = args.train_splits
@@ -44,7 +44,8 @@ def load_proximity_graphs(args):
             train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, yield_stats=True)
 
 
-    elif dataset_type == 'split':
+    elif split_type == 'defined':
+        #TODO: Figure out the best way for this to work
         valid_begin, valid_end = args.validation_splits
         train_begin, train_end = args.train_splits
 
@@ -73,7 +74,7 @@ def load_proximity_graphs(args):
                                                         std=dist_stats[1], yield_stats=False)
 
     else:
-        raise ValueError('Invalid dataset type. Please choose from <combined> or <split>')
+        raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
     #TODO: Need to write out splits and the statistics somehow. Probably best to use some sort of logger object??
 

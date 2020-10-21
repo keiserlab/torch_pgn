@@ -12,7 +12,7 @@ import oddt.pandas as opd
 from pgn.graphs.graph_utils import _return_graph
 from pgn.datasets.PGDataset import PGDataset
 
-class DopamineDockingDataset(PGDataset):
+class OneVsManyDataset(PGDataset):
     """
     Container class for the D4 Dopamine Receptor docking dataset.
     """

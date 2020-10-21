@@ -13,7 +13,10 @@ from pgn.graphs.graph_utils import _return_graph
 from pgn.datasets.PGDataset import PGDataset
 
 class OneVsManyDataset(PGDataset):
-
+    """
+    This dataset is used to load data that is one receptor and many ligands. The pdb is loaded and all mol files are
+    loaded then an pg is constructed for each ligand with the receptor.
+    """
     def __init__(self, args):
         super(OneVsManyDataset, self).__init__(args)
         self.raw_pdb_path = args.raw_pdb_path

@@ -13,7 +13,10 @@ from pgn.graphs.graph_utils import _return_graph
 from pgn.datasets.PGDataset import PGDataset
 
 def ManyVsManyDataset(PGDataset):
-
+    """
+    This dataset is for a 1:1 receptor to ligand mapping. The paths (raw_pdb_path and raw_mol_path) are the same and
+    point to a directory containing subdirectories containing each ligand receptor pair.
+    """
     def __init__(self, args):
         super(ManyVsManyDataset, self).__init__(args)
         self.raw_pdb_path = args.raw_pdb_path

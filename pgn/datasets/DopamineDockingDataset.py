@@ -21,7 +21,6 @@ class DopamineDockingDataset(PGDataset):
         self.raw_mol_path = args.raw_mol_path
         self.num_workers = args.num_workers
 
-
     def process_raw_data(self):
         receptor = next(oddt.toolkit.readfile('pdb', self.raw_pdb_path))
         data = opd.read_mol2(self.raw_mol_path)

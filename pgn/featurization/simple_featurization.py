@@ -5,7 +5,7 @@ from oddt.utils import is_openbabel_molecule
 from oddt.interactions import close_contacts
 from oddt.fingerprints import _ECFP_atom_repr
 
-from pgn.graphs.graph_utils import _euclidean_distance
+from pgn.graphs.graph_utils import *
 
 """
 Functions to output basic atom representations.

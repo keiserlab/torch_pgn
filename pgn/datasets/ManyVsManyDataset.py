@@ -6,6 +6,8 @@ from tqdm import tqdm
 
 import numpy as np
 
+import pandas as pd
+
 import oddt
 import oddt.pandas as opd
 
@@ -24,12 +26,19 @@ class ManyVsManyDataset(PGDataset):
         self.raw_mol_path = args.raw_mol_path
         self.num_workers = args.num_workers
         self.label_file = args.label_file
-        self.label_col_name = args.label_col_name
+        self.label_col = args.label_col_name
+        self.process_raw_data()
+        self.write_graphs()
 
     def process_raw_data(self):
         raw_path = self.raw_pdb_path
         directories = os.listdir(self.raw_pdb_path)
-
+        energy = pd.read_csv(self.label_file,
+                             sep='\s+',
+                             usecols=[0, self.label_col],
+                             names=['name',
+                                    'label'],
+                             comment='#')
         inputs = []
 
         for name in tqdm(directories):
@@ -38,7 +47,8 @@ class ManyVsManyDataset(PGDataset):
                 ligand_path = os.path.join(raw_path, name, name + "_ligand.sdf")
                 receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
                 ligand = opd.read_sdf(ligand_path)['mol'][0]
-                inputs.append((receptor, ligand, energy[i], name))
+                #TODO: Fix me
+                inputs.append((receptor, ligand, energy[name]['label'], name))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
             self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

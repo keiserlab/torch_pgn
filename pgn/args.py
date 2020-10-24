@@ -10,22 +10,31 @@ class EncoderArgs(Tap):
 
     nn_conv_in_dim: int = 16
     """In dimension to the NN_conv layer"""
+
     nn_conv_internal_dim: int = 128
     """Dimension of the internal ff_network in the NN_conv layer"""
+
     nn_conv_out_dim: int = 16
     """output dimension of the nn_conv output matrix (nn_conv_out_dim x nn_conv_out_dim)"""
+
     nn_conv_aggr: Literal['add', 'mean', 'max'] = 'mean'
     """type of pool used in the nn_conv layer"""
+
     pool_type: Literal['add', 'mean', 'max'] = 'add'
     """pooling applied as part of readout function"""
+
     sparse_type: Literal['log_softmax', 'softmax', 'none'] = 'log_softmax'
     """sparsification function used before final readout"""
+
     fp_norm: int = True
     """whether or not to apply batch norm to the fp_layer before readout"""
+
     fp_dim: int = 4096
     """The dimension of the output feature vector"""
+
     depth: int = 3
     """The number of message passing steps"""
+
     skip_connections: bool = True
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
         vectors by adding the readout after each message passing step to the final readout vector."""
@@ -34,10 +43,13 @@ class FFArgs(Tap):
     """Class used to store the arguments used for input to the readout network."""
     dropout_prob: float = 0.0
     """probability of dropout applied between hidden layers"""
+
     hidden_dim: int = 400
     """size of the FC layers"""
+
     num_layers: int = 4
     """Number of FC layers"""
+
     num_classes: int = 1
     """Number of classes being predicted by the model"""
 
@@ -50,9 +62,65 @@ class DataArgs(Tap):
     """
     Class used to store the arguments used to construct and format the dataset being used
     """
-    #### Probably will end up going into a shared arguments class, but for now keep as is####
+    #### Probably will end up going into a shared arguments class, but for now keep as is. ####
     seed: int = 0
     """Random seed used for pytorch in order to ensure reproducibility"""
+
+    num_workers: int = 8
+    """Number of processing units to use in data processing and loading."""
+
+    #### Begin data arguments for loading the raw pdb and molecule data and processing them into ProximityGraphs. ####
+    save_graphs: bool = True
+    """Boolean toggle of whether to save the proximity graphs to harddisk. False will keep the entire processing in
+    ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
+    a decent amount of time depending upon the dataset size and complexity of the proximity graph."""
+
+    directed: bool = False
+    """Boolean toggle for whether to make the proximity graph undirected"""
+    #TODO: Figure out how to make certain arguments required conditional upon other requirements.
+
+    raw_data_path: str = None
+    """The path to the raw data for Many vs. Many datasets. See description of formatting requirements in documentation."""
+
+    raw_pdb_path: str = None
+    """Path to the receptor pdb file used to construct all Proximity Graphs in OneVsMany datasets."""
+
+    raw_mol_path: str = None
+    """Path to the mol file used to construct all Proximity Graphs in OneVsMany datasets."""
+
+    dataset_type: Literal['one_v_many', 'many_v_many']
+    """The type of dataset being loaded. The choice are one_v_many, which is when you have many ligands bound to a 
+    single receptor. The other type of supported dataset is for many receptor ligand pairs. See dataset object
+    documentation for further details.
+    """
+
+    #### Begin data arguments for loading proximity graphs into pytorch dataloader####
+    data_path: str
+    """The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset)."""
+
+    transforms: Literal['one_hot', 'molgraph', 'none'] = ['one_hot'] # TODO:Fix me
+    """Transforms to apply to the dataset."""
+
+    split_type: Literal['random', 'defined']
+    """The mode used to split the data into train, validation and test. Random will randomly split the data. Discrete
+    will use a defined split based on the name of each graph."""
+
+    split_location: str = None
+    """If the split type is defined, this is the location of the directory with files train.txt, validation.txt and 
+    test.txt (see documentation for the format of these files)."""
+    norm_targets: bool = True
+    """"Boolean toggle of whether to normalize the targets to have mean of 0 and stddev of 1."""
+
+    include_dist: bool = True
+    """Boolean toggle of whether to include distance information in the bond features of the proximity graphs."""
+
+    norm_dist: bool = True
+    """Boolean toggle of whether to normalize the distance to have mean 0 and stddev of 1."""
+
+    load_test: bool = True
+    """Boolean toggle of whether or not to load the test set for evaluation."""
+
+
 
 
 class AggregatedArgs(Tap):

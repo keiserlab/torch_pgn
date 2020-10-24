@@ -4,7 +4,7 @@ from pgn.featurization.simple_featurization import (
 
 ######################### Function to calculated all of the atom and edge features #####################################
 
-#TODO: make featurization function an arguement to allow for other possible choices (low priority)
+#TODO: make featurization function an argument to allow for other possible choices (low priority)
 
 def get_all_features(ligand, protein, ligand_nodes, protein_nodes, ligand_edges, protein_edges, cross_edges,
                      ligand_translate, protein_translate, positions):

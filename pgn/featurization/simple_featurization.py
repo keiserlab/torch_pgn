@@ -5,7 +5,7 @@ from oddt.utils import is_openbabel_molecule
 from oddt.interactions import close_contacts
 from oddt.fingerprints import _ECFP_atom_repr
 
-from pgn.graphs.graph_utils import *
+import pgn.graphs.graph_utils as gu
 
 """
 Functions to output basic atom representations.
@@ -61,7 +61,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
     if is_openbabel_molecule(molecule):
         for u, v in bond_dict.keys():
             bond = bond_dict[(u, v)]
-            feature = np.array([_euclidean_distance(position_dict, translate[u], translate[v]),
+            feature = np.array([gu._euclidean_distance(position_dict, translate[u], translate[v]),
                                 int(bond.IsSingle()), int(bond.IsDouble()), int(bond.IsTriple()),
                                 int(bond.IsAromatic()), int(molecule is None)])
             feature_dict[(translate[u], translate[v])]= feature
@@ -69,7 +69,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
     elif molecule is not None:
         for u, v in bond_dict.keys():
             bond = bond_dict[(u, v)]
-            feature = np.array([_euclidean_distance(position_dict, translate[u], translate[v]),
+            feature = np.array([gu._euclidean_distance(position_dict, translate[u], translate[v]),
                                 int(bond.getIsSingle()), int(bond.getIsDouble()), int(bond.getIsTriple()),
                                 int(bond.getIsAromatic()), int(molecule is None)])
             feature_dict[(translate[u], translate[v])] = feature
@@ -78,7 +78,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
         ligand_translate, protein_translate = translate
         for u, v in bond_dict.keys():
             feature = np.array(
-                [_euclidean_distance(position_dict, ligand_translate[u], protein_translate[v]),
+                [gu._euclidean_distance(position_dict, ligand_translate[u], protein_translate[v]),
                  0, 0, 0, 0, int(molecule is None)])
             feature_dict[(ligand_translate[u], protein_translate[v])] = feature
             feature_dict[(protein_translate[v], ligand_translate[u])] = feature

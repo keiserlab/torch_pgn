@@ -3,6 +3,8 @@
 from tap import Tap
 from typing_extensions import Literal
 
+import os.path as osp
+
 
 class EncoderArgs(Tap):
     """Class used to store the arguments used for input to the message passing NN encoder."""
@@ -94,6 +96,12 @@ class DataArgs(Tap):
     documentation for further details.
     """
 
+    label_file: str = None
+    """"The path to the file containing the labels."""
+
+    label_col: int = 3
+    """The column number to use to fetch the labels."""
+
     #### Begin data arguments for loading proximity graphs into pytorch dataloader####
     data_path: str
     """The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset)."""
@@ -119,6 +127,13 @@ class DataArgs(Tap):
 
     load_test: bool = True
     """Boolean toggle of whether or not to load the test set for evaluation."""
+
+    def process_args(self):
+        print('here')
+        if self.raw_data_path is not None and self.label_file is None:
+            self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
+
+
 
 
 

@@ -22,33 +22,32 @@ class ManyVsManyDataset(PGDataset):
     """
     def __init__(self, args):
         super(ManyVsManyDataset, self).__init__(args)
-        self.raw_pdb_path = args.raw_pdb_path
-        self.raw_mol_path = args.raw_mol_path
+        self.raw_data_path = args.raw_data_path
         self.num_workers = args.num_workers
         self.label_file = args.label_file
-        self.label_col = args.label_col_name
+        self.label_col = args.label_col
         self.process_raw_data()
         self.write_graphs()
 
     def process_raw_data(self):
-        raw_path = self.raw_pdb_path
-        directories = os.listdir(self.raw_pdb_path)
+        raw_path = self.raw_data_path
+        directories = os.listdir(raw_path)
         energy = pd.read_csv(self.label_file,
                              sep='\s+',
                              usecols=[0, self.label_col],
                              names=['name',
                                     'label'],
                              comment='#')
+        energy = energy.set_index('name')
         inputs = []
-
+        print(energy)
         for name in tqdm(directories):
             if name not in ['index', 'readme', '.DS_Store']:
                 pdb_path = os.path.join(raw_path, name, name + "_protein.pdb")
                 ligand_path = os.path.join(raw_path, name, name + "_ligand.sdf")
                 receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
                 ligand = opd.read_sdf(ligand_path)['mol'][0]
-                #TODO: Fix me
-                inputs.append((receptor, ligand, energy[name]['label'], name))
+                inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
             self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

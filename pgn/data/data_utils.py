@@ -3,6 +3,9 @@ import torch
 import torch_geometric.transforms as T
 from pgn.data.dmpnn_utils import MolGraphTransform
 
+import os
+import os.path as osp
+
 class OneHotTransform(object):
     """
     Transform object for ProximityGraphDataset with atomic number feature. Transforms the int feature into a 1-hot
@@ -67,3 +70,16 @@ def normalize_distance(dataset, mean=None, std=None, yield_stats=False):
 def parse_transforms(transforms):
     valid_transforms = {'one_hot': OneHotTransform(), 'molgraph': MolGraphTransform()}
     return T.Compose([valid_transforms.get(t) for t in transforms if t in valid_transforms.keys()])
+
+
+def format_data_directory(args):
+    data_path = args.data_path
+    os.mkdir(osp.join(data_path, 'raw'))
+    os.mkdir(osp.join(data_path, 'processed'))
+
+    os.mkdir(osp.join(data_path, 'raw', 'train'))
+    os.mkdir(osp.join(data_path, 'processed', 'train'))
+
+    if args.split_type == 'defined':
+        os.mkdir(osp.join(data_path, 'raw', 'test'))
+        os.mkdir(osp.join(data_path, 'processed', 'test'))

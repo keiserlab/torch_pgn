@@ -128,6 +128,9 @@ class DataArgs(Tap):
     load_test: bool = True
     """Boolean toggle of whether or not to load the test set for evaluation."""
 
+    construct_graphs: bool = True
+    """Whether to process raw data or just look in the data_path for formated proximity graphs"""
+
     def process_args(self):
         print('here')
         if self.raw_data_path is not None and self.label_file is None:

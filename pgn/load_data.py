@@ -12,6 +12,7 @@ args.from_dict({'raw_data_path': '/Users/student/git/pgn/toy_data/ManyVsManyToy'
                 'data_path': '/Users/student/git/pgn/toy_out',
                 'dataset_type': 'many_v_many',
                 'split_type': 'random',
+                'construct_graphs': False
                 })
 args.process_args()
 
@@ -25,4 +26,4 @@ if args.construct_graphs:
     else:
         raise ValueError("Please input a valid dataset type.")
 
-dataset = ProximityGraphDataset(args.dataset_type)
+dataset = ProximityGraphDataset(args.data_path)

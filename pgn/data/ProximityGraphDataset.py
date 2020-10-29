@@ -19,11 +19,11 @@ class ProximityGraphDataset(InMemoryDataset):
                  enable_interacting_mask=False, enable_molgraph=False):
         self.mode = mode
         self.include_dist = include_dist
+        self.enable_interacting_mask = enable_interacting_mask
+        self.enable_molgraph = enable_molgraph
         super(ProximityGraphDataset, self).__init__(root, transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
         self.data.to(device)
-        self.enable_interacting_mask = enable_interacting_mask
-        self.enable_molgraph = enable_molgraph
 
 
     @property

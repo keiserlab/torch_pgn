@@ -29,7 +29,7 @@ class PGDataset(ABC):
             os.mkdir(self.data_path)
         for i, entry in tqdm(enumerate(self.graphs)):
             name, graph, energy = entry
-            current_dir = osp.join(self.data_path, name)
+            current_dir = osp.join(self.data_path, 'raw', 'train', name)
             os.mkdir(current_dir)
             if i % 100 == 0:
                 print("Writing " + name)
@@ -53,7 +53,7 @@ class PGDataset(ABC):
         :param prefix: The prefix to add to the default filenames.
         :return: None
         """
-        current_dir = osp.join(self.data_path, prefix)
+        current_dir = osp.join(self.data_path, 'raw', 'train', prefix)
         prefix = prefix + '_'
         nodes = np.array(G.nodes)
         edges = G.edges

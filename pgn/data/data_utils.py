@@ -5,6 +5,7 @@ from pgn.data.dmpnn_utils import MolGraphTransform
 
 import os
 import os.path as osp
+import shutil
 
 class OneHotTransform(object):
     """
@@ -86,3 +87,18 @@ def format_data_directory(args):
     if args.split_type == 'defined':
         os.mkdir(osp.join(data_path, 'raw', 'test'))
         os.mkdir(osp.join(data_path, 'processed', 'test'))
+
+
+def split_test_graphs(graph_path, test_list):
+    """
+    Splits out the core set paths and the train set from the graphs output from generate_all_graphs.
+    :param graph_path: The path where the graph generation placed all graphs
+    :param test_list: The path to the csv containing the graphs
+    :return: None
+    """
+    with open(test_list, 'r') as f:
+        test_ids = set(f.read().lower().split(','))
+    directories = os.listdir(osp.join(graph_path, 'raw', 'train'))
+    for dir in directories:
+        if dir in test_ids:
+            shutil.move(os.path.join(graph_path, 'raw', 'train', dir), os.path.join(graph_path, 'raw', 'test'))

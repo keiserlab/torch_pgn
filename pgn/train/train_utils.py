@@ -1,6 +1,11 @@
 from pgn.data.dmpnn_utils import BatchProxGraph
+from pgn.train.train_utils import _format_batch
+
 import torch
 import torch.nn.functional as F
+
+from tqdm import tqdm
+import numpy as np
 
 import os.path as osp
 import os
@@ -66,3 +71,21 @@ def make_save_directories(save_directory):
     results_dir = osp.join(save_directory, "results")
     os.mkdir(model_dir)
     os.mkdir(results_dir)
+
+
+def predict(model, data_loader, args, progress_bar=True):
+    """
+    Return the result when the specified model is applied to the data in the data_loader
+    :param model: The model being used to predict
+    :param data_loader: The pytorch_geometric dataloader object containing the data to be evaluated.
+    :param args: The TrainArgs object that contains the required accessory arguments
+    :return: The raw output of the model as a numpy array.
+    """
+
+    model.eval()
+    preds = []
+    for data in tqdm(data_loader, disable=not progress_bar, leave=False):
+        data = data.to(args.device)
+        preds.append(model(_format_batch(args, data)).cpu().detach().numpy)
+    preds = np.hstack(preds)
+    return preds

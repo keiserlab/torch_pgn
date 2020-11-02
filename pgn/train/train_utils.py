@@ -52,12 +52,13 @@ def make_save_directories(save_directory):
     """
     if len(os.listdir(save_directory)) != 0:
         raise ValueError(
-            "The save directory is not empty. Please either clean the directory or specify and empty directory."
+            "The save directory (save_dir) is not empty. "
+            "Please either clean the directory or specify and empty directory."
         )
     if not os.path.isdir(save_directory):
         raise ValueError(
-            "The specified save directory does not exist. Please create an empty directory with this path or specify"
-            "a different path."
+            "The specified save directory (save_dir) does not exist. Please create an empty directory with this "
+            "path or specify a different path."
         )
     # Save the pytorch model data and the arguments json to this directory
     model_dir = osp.join(save_directory, "model")

@@ -28,3 +28,14 @@ def mse_loss(predicted, actual, num_graphs):
     :return: The average MSE loss over the given graphs.
     """
     return F.mse_loss(predicted, actual, reduction="mean")
+
+
+def parse_loss(args):
+    """
+    Parses the arg for loss function and returns the appropriate loss function (currently either RMSE or MSE).
+    :param args: An instance of train args
+    :return: The loss function
+    """
+    loss_possibilities = {'rmse': rmse_loss, 'mse': mse_loss}
+    loss_function = args.loss_fucntion
+    return lambda predicted, actual, num_grahps: loss_possibilities[loss_function](predicted, actual, num_grahps)

@@ -81,14 +81,32 @@ def predict(model, data_loader, args, progress_bar=True):
     :param args: The TrainArgs object that contains the required accessory arguments
     :return: The raw output of the model as a numpy array.
     """
-
+    shuffle_cache = data_loader.shuffle
+    data_loader.shuffle = False
     model.eval()
     preds = []
     for data in tqdm(data_loader, disable=not progress_bar, leave=False):
         data = data.to(args.device)
         preds.append(model(_format_batch(args, data)).cpu().detach().numpy)
     preds = np.hstack(preds)
+    data_loader.shuffle = shuffle_cache
     return preds
+
+
+def get_labels(data_loader):
+    """
+    Helper function to get the ground truth values
+    :param data_loader: dataloader to be get the ground truth values from
+    :return: A labels array (np)
+    """
+    shuffle_cache = data_loader.shuffle
+    data_loader.shuffle = False
+    labels = []
+    for data in data_loader:
+        labels.append(data.y.cpu().detach().numpy)
+    labels = np.hstack(labels)
+    data_loader.shuffle = shuffle_cache
+    return labels
 
 
 def get_metric_functions(metrics):

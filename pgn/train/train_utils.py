@@ -89,3 +89,13 @@ def predict(model, data_loader, args, progress_bar=True):
         preds.append(model(_format_batch(args, data)).cpu().detach().numpy)
     preds = np.hstack(preds)
     return preds
+
+
+def get_metric_functions(metrics):
+    """
+    Returns the relevant metric functions given a list of valid metrics
+    :param metrics: A list of valid metrics in {'rmse', 'mse', 'r2', 'pcc', 'aucroc', 'aucprc'}
+    :return: A dictionary that maps metrics to functions.
+    """
+    #TODO: implement this
+    pass

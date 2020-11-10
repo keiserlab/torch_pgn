@@ -37,6 +37,7 @@ def load_proximity_graphs(args):
         test_dataset = train_dataset[test_begin: test_end]
         train_dataset = train_dataset[train_begin:train_end]
 
+        #TODO: Add stats to args
         if norm_targets:
             train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
 

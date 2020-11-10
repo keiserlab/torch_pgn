@@ -1,6 +1,8 @@
 from pgn.data.dmpnn_utils import BatchProxGraph
 from pgn.train.train_utils import _format_batch
 
+from argparse import Namespace
+
 import torch
 import torch.nn.functional as F
 
@@ -45,7 +47,7 @@ def parse_loss(args):
     :return: The loss function
     """
     loss_possibilities = {'rmse': rmse_loss, 'mse': mse_loss}
-    loss_function = args.loss_fucntion
+    loss_function = args.loss_function
     return lambda predicted, actual, num_grahps: loss_possibilities[loss_function](predicted, actual, num_grahps)
 
 
@@ -117,3 +119,22 @@ def get_metric_functions(metrics):
     """
     #TODO: implement this
     pass
+
+
+def save_checkpoint(path, model, args):
+    """
+    Save the current state of training including the model and the arguments used to instantiate the model.
+    :param path: The path to save the state to.
+    :param model: The current model.
+    :param args: The training arguments used to construct/parameterize the model.
+    :return: None
+    """
+    if args is not None:
+        args = Namespace(**args.as_dict())
+
+    state = {
+        'args': args,
+        'state_dict': model.state_dict(),
+    }
+
+    torch.save(state, path)

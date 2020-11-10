@@ -1,5 +1,7 @@
 from pgn.data.dmpnn_utils import BatchProxGraph
 from pgn.train.train_utils import _format_batch
+from pgn.models.model import PFPNetwork
+from pgn.args import TrainArgs
 
 from argparse import Namespace
 
@@ -138,3 +140,25 @@ def save_checkpoint(path, model, args):
     }
 
     torch.save(state, path)
+
+
+def load_checkpoint(path, device):
+    """
+    Loads a checkpoint.
+    :param path: The path which contains the checkpoint file.
+    :param device: The device to loader the model to.
+    :return: The loaded model file.
+    """
+
+    state = torch.load(path, map_location=lambda storage, loc: storage)
+    args = TrainArgs()
+    args.from_dict(vars(state['args']), skip_unsettable=True)
+    model_state_dict = state['state_dict']
+
+    if device is not None:
+        args.device = device
+
+    model = PFPNetwork(args, args.node_dim, args.edge_dim)
+    model.load_state_dict(model_state_dict)
+
+    return model

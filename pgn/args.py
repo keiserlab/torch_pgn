@@ -2,14 +2,13 @@
 
 from tap import Tap
 from typing_extensions import Literal
+from typing import List
 
 import os.path as osp
 
 
 class EncoderArgs(Tap):
     """Class used to store the arguments used for input to the message passing NN encoder."""
-
-
     nn_conv_in_dim: int = 16
     """In dimension to the NN_conv layer"""
 
@@ -41,6 +40,7 @@ class EncoderArgs(Tap):
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
         vectors by adding the readout after each message passing step to the final readout vector."""
 
+
 class FFArgs(Tap):
     """Class used to store the arguments used for input to the readout network."""
     dropout_prob: float = 0.0
@@ -55,10 +55,42 @@ class FFArgs(Tap):
     num_classes: int = 1
     """Number of classes being predicted by the model"""
 
+
 class TrainArgs(Tap):
     """Class used to store the model independent arguments used for training the NNs"""
-    pass
+    ############ Required arguments ###################################################################################
 
+    save_dir: str
+    """The directory to save the checkpoint files and model outputs."""
+
+    ############ Optional arguments ###################################################################################
+    device: str = 'cpu'
+    """The device to train then model on/location of data and pytorch model. e.g. 'cpu' or 'cuda'"""
+    node_dim: int = None
+    """The node feature size. Set during dataloading procedure."""
+    edge_dim: int = None
+    """The edge feature size. Set during dataloading procedure."""
+    loss_function: str = 'mse'
+    """The function used to evaluate the model. The default is mse. Valid options are: mse, rmse"""
+    encoder_type: str = 'pfp'
+    """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
+    torch_seed: int = 42
+    """Pytorch seed."""
+    num_workers: int = 8
+    """The number of works used in dataloading and batch generation."""
+    batch_size: int = 256
+    """The batch size used in training."""
+    load_test: bool = False
+    """Boolean toggle that indicates whether the test set should be loaded and evaluated."""
+    lr: float = 3e-4
+    """The initial learning rate used to train the model."""
+    weight_decay: bool = False
+    """Boolean toggle to indicate whether weight decay should be used during training"""
+    epochs: int = 50
+    """The number of training epochs to run."""
+    metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']
+    """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
+    include: rmse, mse, pcc, r2."""
 
 class DataArgs(Tap):
     """

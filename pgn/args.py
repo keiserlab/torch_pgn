@@ -75,6 +75,8 @@ class TrainArgs(Tap):
     encoder_type: str = 'pfp'
     """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
     torch_seed: int = 42
+    """Pytorch dataloader seed."""
+    seed: int = 0
     """Pytorch seed."""
     num_workers: int = 8
     """The number of works used in dataloading and batch generation."""

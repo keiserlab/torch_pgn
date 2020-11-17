@@ -1,6 +1,9 @@
 """Class allowing for better multiple training runs."""
 
+
 from pgn.train.train_model import train_model
+from pgn.load_data import process_raw
+from pgn.data.load_data import load_proximity_graphs
 
 class Trainer():
     """Class that loaders and holds the arguments and data objects. Allows for easy evaluation and retraining when the
@@ -8,3 +11,24 @@ class Trainer():
     def __init__(self, args):
         #Need to see if this is going to work with subparsers
         self.args = args
+        self.load_data()
+
+    def load_data(self):
+        if self.args.construct_graphs:
+            process_raw(self.args)
+        if self.args.load_test:
+            self.train_data, self.valid_data, self.test_data = load_proximity_graphs(self.args)
+        else:
+            self.train_data, self.valid_data = load_proximity_graphs(self.args)
+
+    def set_hyperopt_args(self, hyperopt_args, reload_data=False):
+        """
+        Changes the arguments used for training. The data arguments must be the same as initialization args unless
+        load_data is set to true
+        :param hyperopt_args: The new argument object.
+        :param reload_data: Bool toggle to determine whether the data will be reloaded.
+        :return: None
+        """
+        self.args = hyperopt_args
+        if reload_data:
+            self.load_data()

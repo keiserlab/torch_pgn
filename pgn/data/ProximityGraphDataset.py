@@ -13,14 +13,15 @@ Code to load in the processed InteractionGraphs to pytorch geometric.
 """
 
 class ProximityGraphDataset(InMemoryDataset):
-    def __init__(self, args, transform=None, pre_transform=None, mode='train'):
+    def __init__(self, root, transform=None, pre_transform=None, device='cpu', mode='train', include_dist=False,
+                 enable_interacting_mask=False, enable_molgraph=False):
         self.mode = mode
-        self.include_dist = args.include_dist
-        self.enable_interacting_mask = args.enable_interacting_mask
-        self.enable_molgraph = args.enable_molgraph
-        super(ProximityGraphDataset, self).__init__(args.root, transform, pre_transform)
+        self.include_dist = include_dist
+        self.enable_interacting_mask = enable_interacting_mask
+        self.enable_molgraph = enable_molgraph
+        super(ProximityGraphDataset, self).__init__(root, transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
-        self.data.to(args.device)
+        self.data.to(device)
 
 
     @property

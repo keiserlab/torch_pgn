@@ -94,6 +94,12 @@ class TrainArgs(Tap):
     """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
     include: rmse, mse, pcc, r2."""
 
+    def configure(self):
+        self.add_subparsers(help='sub-command help')
+        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
+        self.add_subparser('FF_args', FFArgs, help='FF help')
+        self.add_subparser('data_args', DataArgs, help='Data help')
+
 
 class HyperoptArgs(TrainArgs):
     num_iters: int = 10
@@ -180,12 +186,3 @@ class DataArgs(Tap):
 
 
 
-
-
-
-class AggregatedArgs(Tap):
-    """Wrapper class used to store the encoder, ff and train args classes"""
-    def configure(self):
-        self.add_subparsers(help='sub-command help')
-        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
-        self.add_subparser('FF_args', FFArgs, help='FF help')

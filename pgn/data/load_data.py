@@ -25,12 +25,15 @@ def load_proximity_graphs(args):
     torch.manual_seed(seed)
 
     if split_type == 'random':
-        valid_begin, valid_end = args.validation_splits
-        test_begin, test_end = args.test_splits
-        train_begin, train_end = args.train_splits
 
         train_dataset = ProximityGraphDataset(data_path, include_dist=include_dist)
         train_dataset.data = transforms(train_dataset.data)
+
+        num_examples = len(train_dataset.data.name)
+
+        valid_begin, valid_end = 0, int(args.validation_percent * num_examples)
+        test_begin, test_end = valid_end, int(args.test_percent * num_examples) + valid_end
+        train_begin, train_end = test_end, num_examples
 
         #TODO: Fix edgecase the remove last example if last index is end of dataset
         validation_dataset = train_dataset[valid_begin:valid_end]

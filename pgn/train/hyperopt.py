@@ -7,6 +7,9 @@ import numpy as np
 
 from copy import deepcopy
 import os.path as osp
+import json
+
+from pgn.train.Trainer import Trainer
 
 SPACE = {
     'ffn_hidden_size': hp.quniform('ffn_hidden_size', low=200, high=2400, q=100),
@@ -26,6 +29,7 @@ def hyperopt(args):
     :return: None
     """
     results = []
+    trainer = Trainer(args)
 
     def objective(hyperparams):
 
@@ -40,8 +44,12 @@ def hyperopt(args):
         for key, value in hyperparams.items():
             setattr(hyper_args, key, value)
 
-        #TODO: Run training
-        score = float('inf')
+        # Set hyperparameter optimization args without reloading data
+        trainer.set_hyperopt_args(hyper_args)
+        # Run training using hyper_args
+        trainer.run_training()
+        # Retrieve the validation score from this round of training
+        score = trainer.get_score()
 
         results.append({
             'score': score,
@@ -51,4 +59,14 @@ def hyperopt(args):
         return (1 if hyper_args.minimize_score else -1) * score
 
     fmin(objective, SPACE, algo=tpe.suggest, max_evals=args.num_iters, rstate=np.random.RandomState(args.seed))
+
+    results = [result for result in results if not np.isnan(result['mean_score'])]
+    best_result = min(results, key=lambda result: (1 if args.minimize_score else -1) * result['score'])
+
+    result_path = osp.join(args.save_path, 'hyperopt_result.json')
+
+    with open(result_path, 'w') as f:
+        json.dump(best_result['hyperparams'], f, indent=4, sort_keys=True)
+
+
 

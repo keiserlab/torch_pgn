@@ -94,6 +94,14 @@ class TrainArgs(Tap):
     """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
     include: rmse, mse, pcc, r2."""
 
+
+class HyperoptArgs(TrainArgs):
+    num_iters: int = 10
+    """The number of iterations of model optimization to be run"""
+    minimize_score: bool = True
+    """Whether the score is minimized or maximized during hyperparameter optimization."""
+
+
 class DataArgs(Tap):
     """
     Class used to store the arguments used to construct and format the dataset being used
@@ -136,7 +144,7 @@ class DataArgs(Tap):
     label_col: int = 3
     """The column number to use to fetch the labels."""
 
-    #### Begin data arguments for loading proximity graphs into pytorch dataloader####
+    #### Begin data arguments for loading proximity graphs into pytorch dataloader ####
     data_path: str
     """The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset)."""
 

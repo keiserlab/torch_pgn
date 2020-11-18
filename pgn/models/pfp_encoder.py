@@ -4,13 +4,13 @@ from torch.nn import ReLU, Sequential, Linear, BatchNorm1d
 
 from torch_geometric.nn import NNConv
 
-from pgn.args import EncoderArgs
+from pgn.args import TrainArgs
 from pgn.models.nn_utils import get_sparse_fnctn, get_pool_function
 
 class PFPEncoder(torch.nn.Module):
     """Message passing network used to encode interaction graphs for use in either regression or classification
     tasks."""
-    def __init__(self, args: EncoderArgs, node_dim: int, bond_dim: int):
+    def __init__(self, args: TrainArgs, node_dim: int, bond_dim: int):
         super(PFPEncoder, self).__init__()
         self.node_dim = node_dim
         self.bond_dim = bond_dim

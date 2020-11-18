@@ -1,5 +1,5 @@
 from pgn.models.pfp_encoder import PFPEncoder
-from pgn.args import EncoderArgs, FFArgs, AggregatedArgs
+from pgn.args import TrainArgs
 
 import torch
 import torch.nn as nn
@@ -8,7 +8,7 @@ from torch.nn import ReLU, Sequential, Linear, Dropout
 
 class PFPNetwork(nn.Module):
     """A netork that includes the message passing PFPEncoder and a feed-forward network for learning tasks."""
-    def __init__(self, args: AggregatedArgs, node_dim: int, bond_dim: int):
+    def __init__(self, args: TrainArgs, node_dim: int, bond_dim: int):
         """
         Initialization of the PFPNetwork model
         :param args: Combined arguments for the encoder and feed-forward network
@@ -17,29 +17,28 @@ class PFPNetwork(nn.Module):
         """
         super(PFPNetwork, self).__init__()
 
-        self.encoder_args = AggregatedArgs.encoder_args
-        self.ff_args = AggregatedArgs.ff_args
+        self.args = args
         self.node_dim = node_dim
         self.bond_dim = bond_dim
 
-        self.construct_encoder(self.encoder_args)
+        self.construct_encoder()
 
     def construct_encoder(self):
         """
         Constructs the message passing network for encoding proximity graphs.
         """
-        self.encoder = PFPEncoder(self.encoder_args, self.node_dim, self.bond_dim)
+        self.encoder = PFPEncoder(self.args, self.node_dim, self.bond_dim)
 
 
     def construct_feed_forward(self):
         """
         Constructs the feed-forward network used for regression tasks
         """
-        dropout_prob = self.ff_args.dropout_prob
-        first_hidden_dim = self.encoder_args.fp_dim
-        hidden_dim = self.ff_args.hidden_dim
-        num_layers = self.ff_args.num_layers
-        num_classes = self.ff_args.num_classes
+        dropout_prob = self.args.dropout_prob
+        first_hidden_dim = self.args.fp_dim
+        hidden_dim = self.args.hidden_dim
+        num_layers = self.args.num_layers
+        num_classes = self.args.num_classes
 
         dropout = Dropout(dropout_prob)
         activation_fn = ReLU()

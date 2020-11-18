@@ -55,59 +55,6 @@ class FFArgs(Tap):
     num_classes: int = 1
     """Number of classes being predicted by the model"""
 
-
-class TrainArgs(Tap):
-    """Class used to store the model independent arguments used for training the NNs"""
-    ############ Required arguments ###################################################################################
-
-    save_dir: str
-    """The directory to save the checkpoint files and model outputs."""
-
-    ############ Optional arguments ###################################################################################
-    device: str = 'cpu'
-    """The device to train then model on/location of data and pytorch model. e.g. 'cpu' or 'cuda'"""
-    node_dim: int = None
-    """The node feature size. Set during dataloading procedure."""
-    edge_dim: int = None
-    """The edge feature size. Set during dataloading procedure."""
-    loss_function: str = 'mse'
-    """The function used to evaluate the model. The default is mse. Valid options are: mse, rmse"""
-    encoder_type: str = 'pfp'
-    """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
-    torch_seed: int = 42
-    """Pytorch dataloader seed."""
-    seed: int = 0
-    """Pytorch seed."""
-    num_workers: int = 8
-    """The number of works used in dataloading and batch generation."""
-    batch_size: int = 256
-    """The batch size used in training."""
-    load_test: bool = False
-    """Boolean toggle that indicates whether the test set should be loaded and evaluated."""
-    lr: float = 3e-4
-    """The initial learning rate used to train the model."""
-    weight_decay: bool = False
-    """Boolean toggle to indicate whether weight decay should be used during training"""
-    epochs: int = 50
-    """The number of training epochs to run."""
-    metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']
-    """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
-    include: rmse, mse, pcc, r2."""
-
-    def configure(self):
-        self.add_subparsers(help='sub-command help')
-        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
-        self.add_subparser('FF_args', FFArgs, help='FF help')
-        self.add_subparser('data_args', DataArgs, help='Data help')
-
-
-class HyperoptArgs(TrainArgs):
-    num_iters: int = 10
-    """The number of iterations of model optimization to be run"""
-    minimize_score: bool = True
-    """Whether the score is minimized or maximized during hyperparameter optimization."""
-
-
 class DataArgs(Tap):
     """
     Class used to store the arguments used to construct and format the dataset being used
@@ -164,13 +111,13 @@ class DataArgs(Tap):
     split_location: str = None
     """If the split type is defined, this is the location of the directory with files train.txt, validation.txt and 
     test.txt (see documentation for the format of these files)."""
-    norm_targets: bool = True
+    normalize_targets: bool = True
     """"Boolean toggle of whether to normalize the targets to have mean of 0 and stddev of 1."""
 
     include_dist: bool = True
     """Boolean toggle of whether to include distance information in the bond features of the proximity graphs."""
 
-    norm_dist: bool = True
+    normalize_dist: bool = True
     """Boolean toggle of whether to normalize the distance to have mean 0 and stddev of 1."""
 
     load_test: bool = True
@@ -179,10 +126,70 @@ class DataArgs(Tap):
     construct_graphs: bool = True
     """Whether to process raw data or just look in the data_path for formated proximity graphs"""
 
+    validation_percent: int = 0.05
+    """The percentage of the training data to put into the validation set in the case of a random split."""
+
+    test_percent: int = 0.05
+    """The percentage of the training data to hold out into the test set in the case of a random split."""
+
     def process_args(self):
         print('here')
         if self.raw_data_path is not None and self.label_file is None:
             self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
+
+
+class TrainArgs(DataArgs, FFArgs, EncoderArgs):
+    """Class used to store the model independent arguments used for training the NNs"""
+    ############ Required arguments ###################################################################################
+
+    save_dir: str
+    """The directory to save the checkpoint files and model outputs."""
+
+    ############ Optional arguments ###################################################################################
+    device: str = 'cpu'
+    """The device to train then model on/location of data and pytorch model. e.g. 'cpu' or 'cuda'"""
+    node_dim: int = None
+    """The node feature size. Set during dataloading procedure."""
+    edge_dim: int = None
+    """The edge feature size. Set during dataloading procedure."""
+    loss_function: str = 'mse'
+    """The function used to evaluate the model. The default is mse. Valid options are: mse, rmse"""
+    encoder_type: str = 'pfp'
+    """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
+    torch_seed: int = 42
+    """Pytorch dataloader seed."""
+    seed: int = 0
+    """Pytorch seed."""
+    num_workers: int = 8
+    """The number of works used in dataloading and batch generation."""
+    batch_size: int = 256
+    """The batch size used in training."""
+    load_test: bool = False
+    """Boolean toggle that indicates whether the test set should be loaded and evaluated."""
+    lr: float = 3e-4
+    """The initial learning rate used to train the model."""
+    weight_decay: bool = False
+    """Boolean toggle to indicate whether weight decay should be used during training"""
+    epochs: int = 50
+    """The number of training epochs to run."""
+    metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']
+    """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
+    include: rmse, mse, pcc, r2."""
+
+    def configure(self):
+        self.add_subparsers(help='sub-command help')
+        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
+        self.add_subparser('FF_args', FFArgs, help='FF help')
+        self.add_subparser('data_args', DataArgs, help='Data help')
+
+
+class HyperoptArgs(TrainArgs):
+    num_iters: int = 10
+    """The number of iterations of model optimization to be run"""
+    minimize_score: bool = True
+    """Whether the score is minimized or maximized during hyperparameter optimization."""
+
+
 
 
 

@@ -1,5 +1,4 @@
 from pgn.train.train import train
-from pgn.train.Trainer import Trainer
 from pgn.train.evaluate_model import evaluate
 from pgn.train.train_utils import parse_loss, make_save_directories, save_checkpoint, load_checkpoint
 from pgn.models.model import PFPNetwork
@@ -96,15 +95,4 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     return model, validation_eval
 
-
-def run_training(args):
-    """
-    Wrapper for running training given TrainArgs
-    :param args: TrainArgs object with parameters to be used in training
-    :return: pgn.train.Trainer.Trainer object
-    """
-    trainer = Trainer(args)
-    trainer.load_data()
-    trainer.run_training()
-    return trainer
 

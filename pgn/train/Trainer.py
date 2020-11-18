@@ -1,7 +1,4 @@
 """Class allowing for better multiple training runs."""
-
-
-from pgn.train.train_model import train_model
 from pgn.load_data import process_raw
 from pgn.data.load_data import load_proximity_graphs
 from pgn.train.train_model import train_model

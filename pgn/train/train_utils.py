@@ -1,5 +1,4 @@
 from pgn.data.dmpnn_utils import BatchProxGraph
-from pgn.train.train_utils import _format_batch
 from pgn.models.model import PFPNetwork
 from pgn.args import TrainArgs
 
@@ -14,7 +13,7 @@ import numpy as np
 import os.path as osp
 import os
 
-def _format_batch(train_args, data):
+def format_batch(train_args, data):
     if train_args.encoder_type == 'd-mpnn':
         return BatchProxGraph(data)
     else:
@@ -91,7 +90,7 @@ def predict(model, data_loader, args, progress_bar=True):
     preds = []
     for data in tqdm(data_loader, disable=not progress_bar, leave=False):
         data = data.to(args.device)
-        preds.append(model(_format_batch(args, data)).cpu().detach().numpy)
+        preds.append(model(format_batch(args, data)).cpu().detach().numpy)
     preds = np.hstack(preds)
     data_loader.shuffle = shuffle_cache
     return preds

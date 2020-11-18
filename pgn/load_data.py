@@ -31,11 +31,11 @@ if __name__ == "__main__":
     args = DataArgs()
     # For parsing from terminal
     # args.parse_args()
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/toy_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/test/data/toy_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/test/data/',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
-                    'construct_graphs': False
+                    'construct_graphs': True
                     })
     args.process_args()
 

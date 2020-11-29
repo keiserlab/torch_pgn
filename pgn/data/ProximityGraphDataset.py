@@ -60,6 +60,7 @@ class ProximityGraphDataset(InMemoryDataset):
                     edge_attr = np.load(edge_attr_path)[:, 1:]
                 else:
                     edge_attr = np.load(edge_attr_path)
+                print(edge_attr)
                 edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
                 pos = torch.from_numpy(np.load(pos_path)).type(torch.FloatTensor)
                 y = torch.from_numpy(np.load(label_path).astype(np.float)).type(torch.FloatTensor)

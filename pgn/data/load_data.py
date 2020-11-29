@@ -80,6 +80,11 @@ def load_proximity_graphs(args):
     else:
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
+    args.node_dim = train_dataset.data.x.numpy().shape[1]
+    #TODO: Something seems to be wrong with the edge_attr
+    args.edge_dim = train_dataset.data.edge_attr.numpy().shape[0]
+
+
     #TODO: Need to write out splits and the statistics somehow. Probably best to use some sort of logger object??
 
     if load_test:

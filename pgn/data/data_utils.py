@@ -24,7 +24,7 @@ class OneHotTransform(object):
         return data
 
 
-def normalize_targets(dataset, mean=None, std=None, yield_stats=False):
+def normalize_targets(dataset, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for
@@ -40,13 +40,13 @@ def normalize_targets(dataset, mean=None, std=None, yield_stats=False):
 
     dataset.data.y = (dataset.data.y - mean) / std
 
-    if yield_stats:
+    if not yield_stats:
         return [dataset.data.y]
     else:
         return [dataset.data.y, (mean, std)]
 
 
-def normalize_distance(dataset, mean=None, std=None, yield_stats=False):
+def normalize_distance(dataset, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for
@@ -62,10 +62,10 @@ def normalize_distance(dataset, mean=None, std=None, yield_stats=False):
 
     dataset.data.edge_attr[:, 0] = (dataset.data.edge_attr[:, 0] - mean) / std
 
-    if yield_stats:
-        return [dataset.data.edge_attr[:, 0]]
+    if not yield_stats:
+        return [dataset.data.edge_attr]
     else:
-        return [dataset.data.edge_attr[:, 0], (mean, std)]
+        return [dataset.data.edge_attr, (mean, std)]
 
 
 def parse_transforms(transforms):

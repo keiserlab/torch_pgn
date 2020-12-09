@@ -7,6 +7,9 @@ from argparse import Namespace
 import torch
 import torch.nn.functional as F
 
+from scipy.stats import pearsonr
+from sklearn.metrics import r2_score
+
 from tqdm import tqdm
 import numpy as np
 
@@ -89,7 +92,7 @@ def predict(model, data_loader, args, progress_bar=True):
     for data in data_loader:
         print(data)
         data = data.to(args.device)
-        preds.append(model(format_batch(args, data)).cpu().detach().numpy)
+        preds.append(model(format_batch(args, data)).cpu().detach().numpy())
     print(preds)
     preds = np.hstack(preds)
     return preds
@@ -101,13 +104,10 @@ def get_labels(data_loader):
     :param data_loader: dataloader to be get the ground truth values from
     :return: A labels array (np)
     """
-    shuffle_cache = data_loader.shuffle
-    data_loader.shuffle = False
     labels = []
     for data in data_loader:
-        labels.append(data.y.cpu().detach().numpy)
+        labels.append(data.y.cpu().detach().numpy())
     labels = np.hstack(labels)
-    data_loader.shuffle = shuffle_cache
     return labels
 
 
@@ -117,8 +117,17 @@ def get_metric_functions(metrics):
     :param metrics: A list of valid metrics in {'rmse', 'mse', 'r2', 'pcc', 'aucroc', 'aucprc'}
     :return: A dictionary that maps metrics to functions.
     """
-    #TODO: implement this
-    pass
+    metric_map = {}
+    for metric in metrics:
+        if metric == 'rmse':
+            metric_map['rmse'] = lambda truth, predicted: np.sqrt(np.sum((predicted - truth) ** 2) / truth.shape[0])
+        elif metric == 'mse':
+            metric_map['mse'] = lambda truth, predicted: np.sum((predicted - truth) ** 2) / truth.shape[0]
+        elif metric == 'r2':
+            metric_map['r2'] = lambda truth, predicted: r2_score(truth, predicted)
+        elif metric == 'pcc':
+            metric_map['pcc'] = lambda truth, predicted: pearsonr(truth, predicted)[0]
+    return metric_map
 
 
 def save_checkpoint(path, model, args):
@@ -131,12 +140,10 @@ def save_checkpoint(path, model, args):
     """
     if args is not None:
         args = Namespace(**args.as_dict())
-
     state = {
         'args': args,
         'state_dict': model.state_dict(),
     }
-
     torch.save(state, path)
 
 

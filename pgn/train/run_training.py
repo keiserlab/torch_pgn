@@ -9,4 +9,5 @@ def run_training(args):
     trainer = Trainer(args)
     trainer.load_data()
     trainer.run_training()
+    print(trainer.eval)
     return trainer

@@ -206,7 +206,6 @@ def prox2graph(mols) -> BatchProxGraph:
 class MolGraphTransform(object):
     def __call__(self, data, encoder=None):
         molgraphs = []
-        print(len(data.molgraph))
         for molgraph in tqdm(data.molgraph):
             molgraphs.append(ProxGraph(molgraph))
         data.molgraph = molgraphs

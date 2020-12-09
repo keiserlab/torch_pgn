@@ -43,9 +43,11 @@ def load_proximity_graphs(args):
         #TODO: Add stats to args
         if norm_targets:
             train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
+            args.label_mean, args.label_std = target_stats
 
         if norm_dist:
             train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, yield_stats=True)
+            args.distance_mean, args.distance_std = dist_stats
 
 
     elif split_type == 'defined':
@@ -81,7 +83,6 @@ def load_proximity_graphs(args):
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
     args.node_dim = train_dataset.data.x.numpy().shape[1]
-    #TODO: Something seems to be wrong with the edge_attr
     args.edge_dim = train_dataset.data.edge_attr.numpy().shape[0]
 
 

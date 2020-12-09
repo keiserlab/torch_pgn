@@ -22,6 +22,7 @@ class PFPNetwork(nn.Module):
         self.bond_dim = bond_dim
 
         self.construct_encoder()
+        self.construct_feed_forward()
 
     def construct_encoder(self):
         """
@@ -58,6 +59,6 @@ class PFPNetwork(nn.Module):
         :param input: batch of Proximity Graphs
         :return: Output of the PFPNetwork
         """
-        out = self.feed_forward(self.encoder(data.x))
+        out = self.feed_forward(self.encoder(data))
 
         return out.view(-1)

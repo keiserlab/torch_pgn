@@ -163,5 +163,6 @@ def load_checkpoint(path, device):
 
     model = PFPNetwork(args, args.node_dim, args.edge_dim)
     model.load_state_dict(model_state_dict)
+    model.to(device)
 
     return model

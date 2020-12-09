@@ -7,6 +7,7 @@ import numpy as np
 
 from copy import deepcopy
 import os.path as osp
+import os
 import json
 
 from pgn.train.Trainer import Trainer
@@ -38,8 +39,9 @@ def hyperopt(args):
 
         hyper_args = deepcopy(args)
 
-        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items())
+        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items()).replace('.', 'p')
         hyper_args.save_dir = osp.join(hyper_args.save_dir, folder_name)
+        os.mkdir(hyper_args.save_dir)
 
         for key, value in hyperparams.items():
             setattr(hyper_args, key, value)
@@ -50,6 +52,7 @@ def hyperopt(args):
         trainer.run_training()
         # Retrieve the validation score from this round of training
         score = trainer.get_score()
+        print(trainer.eval)
 
         results.append({
             'score': score,

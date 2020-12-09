@@ -90,10 +90,8 @@ def predict(model, data_loader, args, progress_bar=True):
     model.eval()
     preds = []
     for data in data_loader:
-        print(data)
         data = data.to(args.device)
         preds.append(model(format_batch(args, data)).cpu().detach().numpy())
-    print(preds)
     preds = np.hstack(preds)
     return preds
 

@@ -3,7 +3,7 @@ from pgn.train.train_utils import format_batch
 
 
 def train(model, data_loader, loss_function, optimizer, scheduler,
-          train_args, epoch_num = 0, logger = None, writer = None):
+          train_args, epoch_num = 0, logger = None, writer = None, device='cpu'):
     """
     Trains the model for an epoch.
     :param model: A PFPNetwork to be trained
@@ -21,8 +21,6 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
 
     model.train()
     total_loss = 0
-
-    device = model.device
 
     for batch in tqdm(data_loader):
         batch = batch.to(device)

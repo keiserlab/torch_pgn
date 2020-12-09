@@ -13,6 +13,7 @@ class Trainer():
         self.model = None
 
     def load_data(self):
+        #TODO: Fix weird issue that tries to remake folders
         if self.args.construct_graphs:
             process_raw(self.args)
         if self.args.load_test:

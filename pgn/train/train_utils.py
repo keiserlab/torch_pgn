@@ -84,15 +84,14 @@ def predict(model, data_loader, args, progress_bar=True):
     :param args: The TrainArgs object that contains the required accessory arguments
     :return: The raw output of the model as a numpy array.
     """
-    shuffle_cache = data_loader.shuffle
-    data_loader.shuffle = False
     model.eval()
     preds = []
-    for data in tqdm(data_loader, disable=not progress_bar, leave=False):
+    for data in data_loader:
+        print(data)
         data = data.to(args.device)
         preds.append(model(format_batch(args, data)).cpu().detach().numpy)
+    print(preds)
     preds = np.hstack(preds)
-    data_loader.shuffle = shuffle_cache
     return preds
 
 

@@ -15,7 +15,7 @@ class EncoderArgs(Tap):
     nn_conv_internal_dim: int = 128
     """Dimension of the internal ff_network in the NN_conv layer"""
 
-    nn_conv_out_dim: int = 16
+    nn_conv_out_dim: int = 16*16
     """output dimension of the nn_conv output matrix (nn_conv_out_dim x nn_conv_out_dim)"""
 
     nn_conv_aggr: Literal['add', 'mean', 'max'] = 'mean'

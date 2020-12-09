@@ -132,6 +132,18 @@ class DataArgs(Tap):
     test_percent: int = 0.05
     """The percentage of the training data to hold out into the test set in the case of a random split."""
 
+    label_mean: float = 0.
+    """Mean correction used for target normalization."""
+
+    label_std: float = 1.
+    """Std deviation correction used for target normalization."""
+
+    distance_mean: float = 0.
+    """Mean correction used for distance normalization."""
+
+    distance_std: float = 1.
+    """Std deviation correction used for distance normalization."""
+
     def process_args(self):
         print('here')
         if self.raw_data_path is not None and self.label_file is None:

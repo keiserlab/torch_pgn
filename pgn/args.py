@@ -126,10 +126,10 @@ class DataArgs(Tap):
     construct_graphs: bool = True
     """Whether to process raw data or just look in the data_path for formated proximity graphs"""
 
-    validation_percent: int = 0.05
+    validation_percent: int = 0.20
     """The percentage of the training data to put into the validation set in the case of a random split."""
 
-    test_percent: int = 0.05
+    test_percent: int = 0.20
     """The percentage of the training data to hold out into the test set in the case of a random split."""
 
     label_mean: float = 0.
@@ -188,11 +188,6 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
     include: rmse, mse, pcc, r2."""
 
-    def configure(self):
-        self.add_subparsers(help='sub-command help')
-        self.add_subparser('encoder_args', EncoderArgs, help='encoder help')
-        self.add_subparser('FF_args', FFArgs, help='FF help')
-        self.add_subparser('data_args', DataArgs, help='Data help')
 
 
 class HyperoptArgs(TrainArgs):

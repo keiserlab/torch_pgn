@@ -40,8 +40,6 @@ class PFPEncoder(torch.nn.Module):
 
     def construct_nn_conv(self):
         #Construct the NN Conv network
-        print(self.bond_dim, self.nn_conv_internal_dim, self.nn_conv_out_dim)
-
         feed_forward = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                                   ReLU(),
                                   Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))

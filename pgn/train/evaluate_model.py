@@ -13,11 +13,9 @@ def evaluate(model, data_loader, args, metrics, mean=0, std=1):
     """
     metric_function_map = get_metric_functions(metrics)
 
-    predictions = predict(model=model,
+    predictions, labels = predict(model=model,
                           data_loader=data_loader,
-                          args=args)
-
-    labels = get_labels(data_loader=data_loader)
+                          args=args, return_labels=True)
 
     results = {}
 

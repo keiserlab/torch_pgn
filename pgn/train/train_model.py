@@ -92,6 +92,13 @@ def train_model(args, train_data, validation_data, test_data=None):
     model = load_checkpoint(osp.join(save_dir, 'best_checkpoint.pt'),
                             device=args.device)
 
+    train_eval = evaluate(model=model,
+                          data_loader=valid_dataloader,
+                          args=args,
+                          metrics=args.metrics,
+                          mean=args.label_mean,
+                          std=args.label_std)
+
     validation_eval = evaluate(model=model,
                                data_loader=valid_dataloader,
                                args=args,
@@ -99,25 +106,37 @@ def train_model(args, train_data, validation_data, test_data=None):
                                mean=args.label_mean,
                                std=args.label_std)
 
+    if args.load_test:
+        test_eval = evaluate(model=model,
+                               data_loader=test_dataloader,
+                               args=args,
+                               metrics=args.metrics,
+                               mean=args.label_mean,
+                               std=args.label_std)
+
+
 
     if args.plot_correlations:
         plot_correlation(model=model,
                          args=args,
                          data_loader=train_dataloader,
-                         filename='train_correlation'
+                         filename='train_correlation',
+                         metrics=train_eval
                          )
 
         plot_correlation(model=model,
                          args=args,
                          data_loader=valid_dataloader,
-                         filename='valid_correlation'
+                         filename='valid_correlation',
+                         metrics=validation_eval
                          )
 
         if args.load_test:
             plot_correlation(model=model,
                              args=args,
                              data_loader=test_dataloader,
-                             filename='valid_correlation'
+                             filename='valid_correlation',
+                             metrics=test_eval
                              )
 
         return model, validation_eval

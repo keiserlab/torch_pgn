@@ -100,7 +100,7 @@ def train_model(args, train_data, validation_data, test_data=None):
                                std=args.label_std)
 
 
-    if args.plot_correlation:
+    if args.plot_correlations:
         plot_correlation(model=model,
                          args=args,
                          data_loader=train_dataloader,
@@ -119,8 +119,6 @@ def train_model(args, train_data, validation_data, test_data=None):
                              data_loader=test_dataloader,
                              filename='valid_correlation'
                              )
-
-
 
         return model, validation_eval
 

@@ -47,6 +47,6 @@ class Trainer():
         """
         if self.model is None:
             raise RuntimeError("Score attempted to be retrieved before model trained.")
-        return self.eval[self.args.loss_function]
+        return self.valid_eval[self.args.loss_function]
 
 

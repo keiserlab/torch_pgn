@@ -15,7 +15,7 @@ def plot_correlation(model, args, data_loader, filename='train_correlation', fit
     """
     predictions, labels = predict(model, data_loader, args, return_labels=True)
     save_file = osp.join(args.save_dir, 'results', filename)
-    fig, ax = plt.subplot(1,1)
+    fig, ax = plt.subplots(1, 1)
     ax.scatter(labels, predictions, alpha=0.2)
     if fit:
         z = np.polyfit(labels, predictions, 1)

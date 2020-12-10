@@ -79,21 +79,29 @@ def make_save_directories(save_directory):
     os.mkdir(results_dir)
 
 
-def predict(model, data_loader, args, progress_bar=True):
+def predict(model, data_loader, args, progress_bar=True, return_labels=False):
     """
     Return the result when the specified model is applied to the data in the data_loader
     :param model: The model being used to predict
     :param data_loader: The pytorch_geometric dataloader object containing the data to be evaluated.
     :param args: The TrainArgs object that contains the required accessory arguments
+    :param return_labels: Boolean toggle of whether to collect and return the labels at the same time as generating
+    the predictions. This is useful when the dataset being analyzed in shuffled
     :return: The raw output of the model as a numpy array.
     """
     model.eval()
     preds = []
+    labels = []
     for data in data_loader:
         data = data.to(args.device)
         preds.append(model(format_batch(args, data)).cpu().detach().numpy())
+        labels.append(data.y.cpu().detach().numpy())
     preds = np.hstack(preds)
-    return preds
+    labels = np.hstack(labels)
+    if return_labels:
+        return preds, labels
+    else:
+        return preds
 
 
 def get_labels(data_loader):

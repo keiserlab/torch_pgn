@@ -3,7 +3,8 @@ import os.path as osp
 import numpy as np
 from pgn.train.train_utils import predict
 
-def plot_correlation(model, args, data_loader, filename='train_correlation', fit=True):
+
+def plot_correlation(model, args, data_loader, metrics=None, filename='train_correlation', fit=True):
     """
     Simple method to plot correlations for a model.
     :param model: The model to be evaluated
@@ -22,5 +23,8 @@ def plot_correlation(model, args, data_loader, filename='train_correlation', fit
         p = np.poly1d(z)
         ax.set_title(filename)
         ax.plot(predictions, p(predictions), 'r--')
+    if metrics is not None and metrics.get('r2') is not None and metrics.get('pcc') is not None:
+        text = f"$R^2 = {metrics.get('r2'):0.3f}$\n$PCC = {metrics.get('pcc'):0.3f}$"
+        plt.gca().text(0.05, 0.95, text, transform=plt.gca().transAxes, fontsize=10, verticalalignment='top')
     ax.set(xlabel='Ground Truth', ylabel='Model Prediction')
     plt.savefig(save_file)

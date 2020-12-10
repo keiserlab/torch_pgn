@@ -187,6 +187,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']
     """The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
     include: rmse, mse, pcc, r2."""
+    plot_correlations: bool = True
+    """Boolean toggle of whether to plot the correlations for train, validation and test (if loaded)."""
 
 
 

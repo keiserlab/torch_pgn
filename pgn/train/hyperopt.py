@@ -63,7 +63,7 @@ def hyperopt(args):
 
     fmin(objective, SPACE, algo=tpe.suggest, max_evals=args.num_iters, rstate=np.random.RandomState(args.seed))
 
-    results = [result for result in results if not np.isnan(result['mean_score'])]
+    results = [result for result in results if not np.isnan(result['score'])]
     best_result = min(results, key=lambda result: (1 if args.minimize_score else -1) * result['score'])
 
     result_path = osp.join(args.save_path, 'hyperopt_result.json')

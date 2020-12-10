@@ -35,10 +35,10 @@ class Trainer():
 
     def run_training(self):
         """
-        Runs
+        Runs training.
         :return:
         """
-        self.model, self.eval = train_model(self.args, self.train_data, self.valid_data)
+        self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
 
     def get_score(self):
         """
@@ -48,3 +48,5 @@ class Trainer():
         if self.model is None:
             raise RuntimeError("Score attempted to be retrieved before model trained.")
         return self.eval[self.args.loss_function]
+
+

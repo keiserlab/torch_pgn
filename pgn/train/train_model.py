@@ -2,6 +2,8 @@ from pgn.train.train import train
 from pgn.train.evaluate_model import evaluate
 from pgn.train.train_utils import parse_loss, make_save_directories, save_checkpoint, load_checkpoint
 from pgn.models.model import PFPNetwork
+from pgn.evaluate.plot_utils import plot_correlation
+
 
 import os.path as osp
 
@@ -97,6 +99,29 @@ def train_model(args, train_data, validation_data, test_data=None):
                                mean=args.label_mean,
                                std=args.label_std)
 
-    return model, validation_eval
+
+    if args.plot_correlation:
+        plot_correlation(model=model,
+                         args=args,
+                         data_loader=train_dataloader,
+                         filename='train_correlation'
+                         )
+
+        plot_correlation(model=model,
+                         args=args,
+                         data_loader=valid_dataloader,
+                         filename='valid_correlation'
+                         )
+
+        if args.load_test:
+            plot_correlation(model=model,
+                             args=args,
+                             data_loader=test_dataloader,
+                             filename='valid_correlation'
+                             )
+
+
+
+        return model, validation_eval
 
 

@@ -84,6 +84,9 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    mean=args.label_mean,
                                    std=args.label_std)
 
+        print(f'Train loss_{loss_fucntion} = {train_loss:.4e}')
+        print("Validation evaluation: ", validation_eval)
+
         writer.add_scalar(f'train loss_{args.loss_function}', train_loss, epoch+1)
         for metric, value in validation_eval.items():
             writer.add_scalar(f'validation_{metric}', value, epoch+1)

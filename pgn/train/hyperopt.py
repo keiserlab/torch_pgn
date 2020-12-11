@@ -52,7 +52,7 @@ def hyperopt(args):
         trainer.run_training()
         # Retrieve the validation score from this round of training
         score = trainer.get_score()
-        print(trainer.eval)
+        print(trainer.valid_eval)
 
         results.append({
             'score': score,

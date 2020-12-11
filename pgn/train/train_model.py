@@ -4,6 +4,8 @@ from pgn.train.train_utils import parse_loss, make_save_directories, save_checkp
 from pgn.models.model import PFPNetwork
 from pgn.evaluate.plot_utils import plot_correlation
 
+from torch.utils.tensorboard import SummaryWriter
+
 
 import os.path as osp
 
@@ -61,6 +63,8 @@ def train_model(args, train_data, validation_data, test_data=None):
     else:
         scheduler = None
 
+    writer = SummaryWriter(log_dir=save_dir)
+
     best_score = float('inf')
     best_epoch = 0
     for epoch in trange(args.epochs):
@@ -79,6 +83,10 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    metrics=args.metrics,
                                    mean=args.label_mean,
                                    std=args.label_std)
+
+        writer.add_scalar(f'train loss_{args.loss_function}', train_loss, epoch+1)
+        for metric, value in validation_eval.items():
+            writer.add_scalar(f'validation_{metric}', value, epoch+1)
 
 
         validation_loss = validation_eval[args.loss_function]

@@ -104,7 +104,7 @@ def train_model(args, train_data, validation_data, test_data=None):
                             device=args.device)
 
     train_eval = evaluate(model=model,
-                          data_loader=valid_dataloader,
+                          data_loader=train_dataloader,
                           args=args,
                           metrics=args.metrics,
                           mean=args.label_mean,

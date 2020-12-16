@@ -69,7 +69,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     best_score = float('inf')
     best_epoch = 0
     for epoch in trange(args.epochs):
-        if args.weight_decay:
+        if args.weight_decay and epoch > args.decay_delay:
             lr = scheduler.optimizer.param_groups[0]['lr']
 
         train_loss = train(model=model,
@@ -92,7 +92,6 @@ def train_model(args, train_data, validation_data, test_data=None):
         print("Validation evaluation: ", validation_eval)
 
         if args.weight_decay:
-            scheduler.step(validation_eval[args.loss_function])
             writer.add_scalar(f'learning_rate', lr, epoch + 1)
 
         writer.add_scalar(f'train loss_{args.loss_function}', train_loss, epoch+1)
@@ -101,6 +100,10 @@ def train_model(args, train_data, validation_data, test_data=None):
 
 
         validation_loss = validation_eval[args.loss_function]
+
+        if args.weight_decay and epoch > args.decay_delay:
+            scheduler.step(validation_eval[args.loss_function])
+
         if validation_loss < best_score:
             best_score = validation_loss
             best_epoch = epoch

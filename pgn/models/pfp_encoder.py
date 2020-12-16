@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from torch.nn import ReLU, Sequential, Linear, BatchNorm1d
+from torch.nn import ReLU, Sequential, Linear, BatchNorm1d, Dropout
 
 from torch_geometric.nn import NNConv
 
@@ -18,6 +18,7 @@ class PFPEncoder(torch.nn.Module):
         self.nn_conv_in_dim = args.nn_conv_in_dim
         self.nn_conv_internal_dim = args.nn_conv_internal_dim
         self.nn_conv_out_dim = args.nn_conv_out_dim
+        self.nn_conv_dropout_prob = args.nn_conv_dropout_prob
         self.nn_conv_aggr = args.nn_conv_aggr
         self.pool_type = args.pool_type
         self.sparse_type = args.sparse_type
@@ -42,6 +43,7 @@ class PFPEncoder(torch.nn.Module):
         #Construct the NN Conv network
         feed_forward = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                                   ReLU(),
+                                  Dropout(p=self.nn_conv_dropout_prob),
                                   Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
         self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward, aggr=self.nn_conv_aggr)
 

@@ -18,6 +18,9 @@ class EncoderArgs(Tap):
     nn_conv_out_dim: int = 16*16
     """output dimension of the nn_conv output matrix (nn_conv_out_dim x nn_conv_out_dim)"""
 
+    nn_conv_dropout: float = 0.5
+    """dropout probability used in the nn_conv ff_network"""
+
     nn_conv_aggr: Literal['add', 'mean', 'max'] = 'mean'
     """type of pool used in the nn_conv layer"""
 
@@ -27,7 +30,7 @@ class EncoderArgs(Tap):
     sparse_type: Literal['log_softmax', 'softmax', 'none'] = 'log_softmax'
     """sparsification function used before final readout"""
 
-    fp_norm: int = True
+    fp_norm: bool = True
     """whether or not to apply batch norm to the fp_layer before readout"""
 
     fp_dim: int = 4096

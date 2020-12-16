@@ -18,7 +18,7 @@ class EncoderArgs(Tap):
     nn_conv_out_dim: int = 16*16
     """output dimension of the nn_conv output matrix (nn_conv_out_dim x nn_conv_out_dim)"""
 
-    nn_conv_dropout: float = 0.5
+    nn_conv_dropout_prob: float = 0.5
     """dropout probability used in the nn_conv ff_network"""
 
     nn_conv_aggr: Literal['add', 'mean', 'max'] = 'mean'
@@ -52,7 +52,7 @@ class FFArgs(Tap):
     hidden_dim: int = 400
     """size of the FC layers"""
 
-    num_layers: int = 4
+    num_layers: int = 3
     """Number of FC layers"""
 
     num_classes: int = 1
@@ -185,6 +185,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """The initial learning rate used to train the model."""
     weight_decay: bool = False
     """Boolean toggle to indicate whether weight decay should be used during training"""
+    decay_delay: int = 20
+    """Number of epoch to delay before starting weight decay."""
     epochs: int = 50
     """The number of training epochs to run."""
     metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']

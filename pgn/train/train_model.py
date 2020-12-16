@@ -53,9 +53,10 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     model = model.to(args.device)
 
+    lr = args.lr
     #TODO: Add options to allow for optimizer choice
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=0)
-    #TODO: Allow for more sophisticated schedular choices
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0)
+    #TODO: Allow for more sophisticated scheduler choices
     if args.weight_decay:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
                                                                factor=0.7, patience=10,
@@ -68,6 +69,9 @@ def train_model(args, train_data, validation_data, test_data=None):
     best_score = float('inf')
     best_epoch = 0
     for epoch in trange(args.epochs):
+        if args.weight_decay:
+            lr = scheduler.optimizer.param_groups[0]['lr']
+
         train_loss = train(model=model,
                            data_loader=train_dataloader,
                            loss_function=loss_fucntion,
@@ -86,6 +90,10 @@ def train_model(args, train_data, validation_data, test_data=None):
 
         print(f'Train loss_{loss_fucntion} = {train_loss:.4e}')
         print("Validation evaluation: ", validation_eval)
+
+        if args.weight_decay:
+            scheduler.step(validation_eval[args.loss_function])
+            writer.add_scalar(f'learning_rate', lr, epoch + 1)
 
         writer.add_scalar(f'train loss_{args.loss_function}', train_loss, epoch+1)
         for metric, value in validation_eval.items():

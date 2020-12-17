@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from pgn.train.train_utils import format_batch
-import torch.functional as F
+import torch.nn.functional as F
 
 
 def train(model, data_loader, loss_function, optimizer, scheduler,

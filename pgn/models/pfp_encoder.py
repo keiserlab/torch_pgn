@@ -63,7 +63,7 @@ class PFPEncoder(torch.nn.Module):
             message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
             # print("yay! Message size: ", message.size())
             # expand message for incorporation into final feature vector
-            expanded_message = self.expand_to_fp_nn(message.unsqueeze(0))
+            expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
             # print("Expand message: ", expanded_message.size())
             # readout for depth i
             intermediate = self.pool(expanded_message, data.batch)

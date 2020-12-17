@@ -36,10 +36,11 @@ class PFPNetwork(nn.Module):
         Constructs the feed-forward network used for regression tasks
         """
         dropout_prob = self.args.dropout_prob
-        first_hidden_dim = self.args.fp_dim
+        input_dim = self.args.fp_dim
         hidden_dim = self.args.hidden_dim
         num_layers = self.args.num_layers
         num_classes = self.args.num_classes
+        first_hidden_dim = self.args.ff_dim_1
 
         dropout = Dropout(dropout_prob)
         activation_fn = ReLU()
@@ -47,9 +48,9 @@ class PFPNetwork(nn.Module):
         if num_layers == 1:
             network = [dropout, Linear(first_hidden_dim, num_classes)]
         else:
-            network = [dropout, Linear(first_hidden_dim, hidden_dim)]
+            network = [dropout, Linear(input_dim, first_hidden_dim)]
             for i in range(num_layers - 2):
-                network.extend([activation_fn, dropout, Linear(hidden_dim, hidden_dim)])
+                network.extend([activation_fn, dropout, Linear(first_hidden_dim, hidden_dim)])
             network.extend([activation_fn, dropout, Linear(hidden_dim, num_classes)])
         self.feed_forward = Sequential(*network)
 

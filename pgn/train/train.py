@@ -1,5 +1,6 @@
 from tqdm import tqdm
 from pgn.train.train_utils import format_batch
+import torch.functional as F
 
 
 def train(model, data_loader, loss_function, optimizer, scheduler,
@@ -25,7 +26,8 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
     for batch in tqdm(data_loader):
         batch = batch.to(device)
         optimizer.zero_grad()
-        loss = loss_function(model(format_batch(train_args, batch)), batch.y, batch.num_graphs)
+        #loss = loss_function(model(format_batch(train_args, batch)), batch.y, batch.num_graphs)
+        loss = F.mse_loss(model(batch), batch.y)
         loss.backward()
         total_loss += loss.item() * batch.num_graphs
         optimizer.step()

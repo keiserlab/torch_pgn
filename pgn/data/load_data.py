@@ -35,7 +35,6 @@ def load_proximity_graphs(args):
         test_begin, test_end = valid_end, int(args.test_percent * num_examples) + valid_end
         train_begin, train_end = test_end, num_examples
 
-        #TODO: Fix edgecase the remove last example if last index is end of dataset
         validation_dataset = train_dataset[valid_begin:valid_end]
         test_dataset = train_dataset[test_begin: test_end]
         train_dataset = train_dataset[train_begin:train_end]

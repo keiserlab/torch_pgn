@@ -32,6 +32,9 @@ def train_model(args, train_data, validation_data, test_data=None):
     loss_fucntion = parse_loss(args)
     num_workers = args.num_workers
 
+    args.edge_dim = 6
+    model = PFPNetwork(args, args.node_dim, args.edge_dim)
+
     torch.manual_seed(args.seed)
 
     train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
@@ -48,8 +51,6 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     #TODO: Add function for loading from a prexisting checkpoint
     #TODO: Fix dimension argument (either remove or calculate from the data above).
-    args.edge_dim = 6
-    model = PFPNetwork(args, args.node_dim, args.edge_dim)
 
     model = model.to(args.device)
 

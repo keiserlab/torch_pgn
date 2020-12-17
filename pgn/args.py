@@ -52,11 +52,18 @@ class FFArgs(Tap):
     hidden_dim: int = 400
     """size of the FC layers"""
 
+    ff_dim_1: int = None
+    """dimension of the first ff layer after the fingerprint. If not manually set this will be set to hidden dimension."""
+
     num_layers: int = 3
     """Number of FC layers"""
 
     num_classes: int = 1
     """Number of classes being predicted by the model"""
+
+    def process_args(self) -> None:
+        if self.ff_dim_1 is None:
+            self.ff_dim_1 = self.hidden_dim
 
 class DataArgs(Tap):
     """
@@ -148,7 +155,6 @@ class DataArgs(Tap):
     """Std deviation correction used for distance normalization."""
 
     def process_args(self):
-        print('here')
         if self.raw_data_path is not None and self.label_file is None:
             self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
 

@@ -30,8 +30,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     torch_seed = args.torch_seed
     loss_fucntion = parse_loss(args)
     num_workers = args.num_workers
-    #TODO: Fix this in args!
-    args.edge_dim = 6
+
     model = PFPNetwork(args, args.node_dim, args.edge_dim)
 
     torch.manual_seed(args.seed)

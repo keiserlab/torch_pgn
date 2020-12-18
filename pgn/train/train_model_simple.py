@@ -28,7 +28,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     :return: The best best model from training as determined by validation score and a dictionary of the metrics to
     evaluate validation performance.
     """
-    model = PFPNetwork(args, args.num_node_feature, args.num_edge_features)
+    model = PFPNetwork(args, 107, 6)
 
     torch.manual_seed(0)
 

@@ -84,9 +84,6 @@ def load_proximity_graphs(args):
     args.node_dim = train_dataset.data.x.numpy().shape[1]
     args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
 
-
-    #TODO: Need to write out splits and the statistics somehow. Probably best to use some sort of logger object??
-
     if load_test:
         return train_dataset, validation_dataset, test_dataset
 

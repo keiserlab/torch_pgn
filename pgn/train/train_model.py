@@ -49,9 +49,6 @@ def train_model(args, train_data, validation_data, test_data=None):
     # Format the save_dir for the output of training data
     make_save_directories(save_dir)
 
-    #TODO: Add function for loading from a prexisting checkpoint
-    #TODO: Fix dimension argument (either remove or calculate from the data above).
-
     model = model.to(args.device)
 
     lr = args.lr

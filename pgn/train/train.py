@@ -19,7 +19,6 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
     :return: The average loss of the epoch.
     """
     debug = logger.debug if logger is not None else print
-
     model.train()
     total_loss = 0
 

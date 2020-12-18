@@ -28,22 +28,15 @@ def train_model(args, train_data, validation_data, test_data=None):
     :return: The best best model from training as determined by validation score and a dictionary of the metrics to
     evaluate validation performance.
     """
-    torch_seed = args.torch_seed
-    loss_fucntion = parse_loss(args)
-    num_workers = args.num_workers
+    model = PFPNetwork(args, args.num_node_feature, args.num_edge_features)
 
-    args.edge_dim = 6
-    model = PFPNetwork(args, args.node_dim, args.edge_dim)
+    torch.manual_seed(0)
 
-    torch.manual_seed(args.seed)
+    train_loader = DataLoader(train_data, batch_size=args.batch_size, shuffle=True)
+    val_loader = DataLoader(validation_data, batch_size=args.batch_size, shuffle=False)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=False)
 
-    train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
-                                  num_workers=num_workers, shuffle=True)
-    valid_dataloader = DataLoader(validation_data, batch_size=args.batch_size,
-                                  num_workers=num_workers, shuffle=False)
-    if args.load_test is True:
-        test_dataloader = DataLoader(test_data, batch_size=args.batch_size,
-                                  num_workers=num_workers, shuffle=False)
+    device = args.device
 
     save_dir = args.save_dir
     # Format the save_dir for the output of training data
@@ -69,9 +62,9 @@ def train_model(args, train_data, validation_data, test_data=None):
         if args.weight_decay and epoch > 20:
             lr = scheduler.optimizer.param_groups[0]['lr']
 
-        loss = train(model, train_dataloader, F.mse_loss, optimizer, scheduler, args, device=args.device)
+        loss = train(model, train_loader, F.mse_loss, optimizer, scheduler, args, device=args.device)
 
-        metrics = evaluate(model, valid_dataloader, args, args.metrics)
+        metrics = evaluate(model, val_loader, args, args.metrics)
         val_error = metrics['mse']
         if val_error < best_val_error:
             best_val_error = val_error

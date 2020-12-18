@@ -4,9 +4,9 @@ from torch.nn import LogSoftmax, Softmax
 
 def get_sparse_fnctn(sparse_type: str):
     if sparse_type == 'log_softmax':
-        return LogSoftmax()
+        return LogSoftmax(dim=-1)
     elif sparse_type == 'softmax':
-        return Softmax()
+        return Softmax(dim=-1)
     elif sparse_type == 'none':
         return lambda x: x
     else:

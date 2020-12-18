@@ -1,4 +1,8 @@
-from pgn.train.train_utils import predict, get_metric_functions, get_labels
+from pgn.train.train_utils import predict
+
+from scipy.stats import pearsonr
+from sklearn.metrics import r2_score
+import numpy as np
 
 def evaluate(model, data_loader, args, metrics, mean=0, std=1):
     """
@@ -11,15 +15,18 @@ def evaluate(model, data_loader, args, metrics, mean=0, std=1):
     :param std: The stddev. of the non-normalized data.
     :return: The value of the metrics.
     """
-    metric_function_map = get_metric_functions(metrics)
-
     predictions, labels = predict(model=model,
                           data_loader=data_loader,
                           args=args, return_labels=True)
 
     results = {}
-
-    for metric in metric_function_map.keys():
-        results[metric] = metric_function_map[metric](predictions, labels)
+    if 'rmse' in metrics:
+        results['rmse'] = np.sqrt(np.sum((predictions - labels) ** 2) / labels.shape[0])
+    if 'mse' in metrics:
+        results['mse'] = np.sum((predictions - labels) ** 2) / labels.shape[0]
+    if 'r2' in metrics:
+        results['r2'] = r2_score(labels, predictions)
+    if 'pcc' in metrics:
+        results['pcc'] = pearsonr(predictions, labels)[0]
 
     return results

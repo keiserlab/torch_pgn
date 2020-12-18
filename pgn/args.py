@@ -201,6 +201,12 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     plot_correlations: bool = True
     """Boolean toggle of whether to plot the correlations for train, validation and test (if loaded)."""
 
+    def process_args(self):
+        if self.ff_dim_1 is None:
+            self.ff_dim_1 = self.hidden_dim
+        if self.raw_data_path is not None and self.label_file is None:
+            self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
+
 
 
 class HyperoptArgs(TrainArgs):

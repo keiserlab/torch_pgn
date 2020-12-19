@@ -201,10 +201,10 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     plot_correlations: bool = True
     """Boolean toggle of whether to plot the correlations for train, validation and test (if loaded)."""
     cross_validate: bool = False
-    """Boolean toggle of whether to run cross validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
+    """Boolean toggle of whether to run cross-validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
     will be set to True."""
     cv_folds: int = None
-    """Number of folds to use in cross validation. If this is set cross-validations will be automatically used."""
+    """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
 
     def process_args(self):
         if self.ff_dim_1 is None:

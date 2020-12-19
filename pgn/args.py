@@ -200,12 +200,20 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     include: rmse, mse, pcc, r2."""
     plot_correlations: bool = True
     """Boolean toggle of whether to plot the correlations for train, validation and test (if loaded)."""
+    cross_validate: bool = False
+    """Boolean toggle of whether to run cross validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
+    will be set to True."""
+    cv_folds: int = None
+    """Number of folds to use in cross validation. If this is set cross-validations will be automatically used."""
 
     def process_args(self):
         if self.ff_dim_1 is None:
             self.ff_dim_1 = self.hidden_dim
         if self.raw_data_path is not None and self.label_file is None:
             self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
+        if self.cv_folds is not None:
+            self.cross_validate = True
+
 
 
 

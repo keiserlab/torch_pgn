@@ -108,7 +108,7 @@ def train_model(args, train_data, validation_data, test_data=None):
                             args=args)
 
     model = load_checkpoint(osp.join(save_dir, 'best_checkpoint.pt'),
-                            device=args.device)
+                            device=args.device, return_args=False)
 
     train_eval = evaluate(model=model,
                           data_loader=train_dataloader,

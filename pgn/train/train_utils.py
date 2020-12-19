@@ -173,4 +173,7 @@ def load_checkpoint(path, device, return_args=False):
     model.load_state_dict(model_state_dict)
     model.to(device)
 
-    return model, args if return_args else model
+    if return_args:
+        return model, args
+    else:
+        return model

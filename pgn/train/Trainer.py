@@ -2,6 +2,7 @@
 from pgn.load_data import process_raw
 from pgn.data.load_data import load_proximity_graphs
 from pgn.train.train_model import train_model
+from pgn.train.train_utils import load_checkpoint
 
 class Trainer():
     """Class that loaders and holds the arguments and data objects. Allows for easy evaluation and retraining when the
@@ -48,5 +49,15 @@ class Trainer():
         if self.model is None:
             raise RuntimeError("Score attempted to be retrieved before model trained.")
         return self.valid_eval[self.args.loss_function]
+
+    def load_checkpoint(self, path):
+        """
+        Loads a checkpoint file and sets it to the model to be used in training.
+        :param path: The path of the checkpoint file to be loaded.
+        """
+        self.model, self.args = load_checkpoint(path,
+                                      device=self.args.device,
+                                      return_args=True
+                                      )
 
 

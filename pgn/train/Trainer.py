@@ -57,7 +57,4 @@ class Trainer():
         """
         self.model, self.args = load_checkpoint(path,
                                       device=self.args.device,
-                                      return_args=True
-                                      )
-
-
+                                      return_args=True)

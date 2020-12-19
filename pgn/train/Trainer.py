@@ -19,14 +19,12 @@ class Trainer():
         if self.args.construct_graphs:
             process_raw(self.args)
         if self.args.cross_validate:
-            if self.args.load_test:
-                self.train_data, self.test_data = load_proximity_graphs(self.args)
-            else:
-                self.train_data = load_proximity_graphs(self.args)
-        if self.args.load_test:
-            self.train_data, self.valid_data, self.test_data = load_proximity_graphs(self.args)
+            self.train_data = load_proximity_graphs(self.args)
         else:
-            self.train_data, self.valid_data = load_proximity_graphs(self.args)
+            if self.args.load_test:
+                self.train_data, self.valid_data, self.test_data = load_proximity_graphs(self.args)
+            else:
+                self.train_data, self.valid_data = load_proximity_graphs(self.args)
 
     def set_hyperopt_args(self, hyperopt_args, reload_data=False):
         """

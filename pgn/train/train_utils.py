@@ -153,7 +153,7 @@ def save_checkpoint(path, model, args):
     torch.save(state, path)
 
 
-def load_checkpoint(path, device):
+def load_checkpoint(path, device, return_args=False):
     """
     Loads a checkpoint.
     :param path: The path which contains the checkpoint file.
@@ -173,4 +173,4 @@ def load_checkpoint(path, device):
     model.load_state_dict(model_state_dict)
     model.to(device)
 
-    return model
+    return model, args if return_args else model

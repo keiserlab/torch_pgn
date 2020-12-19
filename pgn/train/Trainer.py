@@ -17,6 +17,11 @@ class Trainer():
         #TODO: Fix weird issue that tries to remake folders
         if self.args.construct_graphs:
             process_raw(self.args)
+        if self.args.cross_validate:
+            if self.args.load_test:
+                self.train_data, self.test_data = load_proximity_graphs(self.args)
+            else:
+                self.train_data = load_proximity_graphs(self.args)
         if self.args.load_test:
             self.train_data, self.valid_data, self.test_data = load_proximity_graphs(self.args)
         else:

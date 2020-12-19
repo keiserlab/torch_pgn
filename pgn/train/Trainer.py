@@ -3,6 +3,7 @@ from pgn.load_data import process_raw
 from pgn.data.load_data import load_proximity_graphs
 from pgn.train.train_model import train_model
 from pgn.train.train_utils import load_checkpoint
+from pgn.train.cross_validate_model import cross_validation
 
 class Trainer():
     """Class that loaders and holds the arguments and data objects. Allows for easy evaluation and retraining when the
@@ -44,7 +45,10 @@ class Trainer():
         Runs training.
         :return:
         """
-        self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
+        if self.args.cross_validate:
+            self.model, self.valid_eval = cross_validation(self.args, self.train_data)
+        else:
+            self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
 
     def get_score(self):
         """

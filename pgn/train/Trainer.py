@@ -54,7 +54,10 @@ class Trainer():
         """
         if self.model is None:
             raise RuntimeError("Score attempted to be retrieved before model trained.")
-        return self.valid_eval[self.args.loss_function]
+        if self.args.cross_validate:
+            return sum([fold_eval[self.args.loss_function] for fold_eval in self.valid_eval]) / self.args.cv_folds
+        else:
+            return self.valid_eval[self.args.loss_function]
 
     def load_checkpoint(self, path):
         """

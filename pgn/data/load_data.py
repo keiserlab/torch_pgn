@@ -70,6 +70,22 @@ def load_proximity_graphs(args):
             args.distance_mean, args.distance_std = dist_stats
 
 
+    elif split_type == 'defined_test':
+        # TODO: make sure error handling of no split dir happens somewhere
+        split_dir = args.split_dir
+        train_names, valid_names, test_names = _load_splits(split_dir)
+        train_names = np.hstack((train_names, valid_names))
+
+        print(train_names)
+        train_dataset = ProximityGraphDataset(data_path,
+                                              include_dist=include_dist)
+
+        test_dataset = _split_data(train_dataset, test_names)
+        train_dataset = _split_data(train_dataset, train_names)
+
+        print(test_dataset, train_dataset)
+
+
     elif split_type == 'defined':
         #TODO: Figure out the best way for this to work
         valid_begin, valid_end = args.validation_splits
@@ -172,14 +188,13 @@ def _load_data_cross_validation(args):
         return train_dataset
 
 
-def _save_splits(base_dir, train, validation=None, test=None):
+def _save_splits(base_dir, train, validation, test):
     """
     Helper function to save the data splits.
     :param base_dir: The base_directory to write the splits directory containing the saved splits
     :param train: Tuple(train_dataset, train_index)
-    :param validation: Tuple(validation_dataset, validation_index) default is None meaning no validation splits will be
-    saved.
-    :param test: Tuple(test_dataset, test_index) default is None meaning no test splits will be saved.
+    :param validation: Tuple(validation_dataset, validation_index) .
+    :param test: Tuple(test_dataset, test_index).
     """
     split_dir = osp.join(base_dir, 'splits')
     os.mkdir(split_dir)
@@ -191,3 +206,25 @@ def _save_splits(base_dir, train, validation=None, test=None):
     if test is not None:
         test_data, test_index = test
         np.save(osp.join(split_dir, 'test.npy'), np.array(test_data.data.name)[test_index])
+
+
+def _load_splits(split_dir):
+    """
+    Loads the splits from split_dir
+    :param split_dir: Directory containing train.npy, validation.npy and test.npy
+    :return: the name lists for each of the defined splits (train, valid, test).
+    """
+    train_path = osp.join(split_dir, 'train.npy')
+    valid_path = osp.join(split_dir, 'validation.npy')
+    test_path = osp.join(split_dir, 'test.npy')
+
+    train_name = np.load(train_path)
+    valid_name = np.load(valid_path)
+    test_name = np.load(test_path)
+
+    return train_name, valid_name, test_name
+
+
+def _split_data(dataset, names):
+    mask = np.vectorize(lambda value: value in names)(np.array(dataset.data.name))
+    return dataset[list(np.arange(mask.shape[0])[mask])]

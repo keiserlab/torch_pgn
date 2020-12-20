@@ -28,3 +28,4 @@ def plot_correlation(model, args, data_loader, metrics=None, filename='train_cor
         plt.gca().text(0.05, 0.95, text, transform=plt.gca().transAxes, fontsize=10, verticalalignment='top')
     ax.set(xlabel='Ground Truth', ylabel='Model Prediction')
     plt.savefig(save_file)
+    plt.close(fig)

@@ -114,11 +114,12 @@ class DataArgs(Tap):
     transforms: Literal['one_hot', 'molgraph', 'none'] = ['one_hot'] # TODO:Fix me
     """Transforms to apply to the dataset."""
 
-    split_type: Literal['random', 'defined']
-    """The mode used to split the data into train, validation and test. Random will randomly split the data. Discrete
-    will use a defined split based on the name of each graph."""
+    split_type: Literal['random', 'defined', 'defined_test']
+    """The mode used to split the data into train, validation and test. Random will randomly split the data. Defined
+    will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading
+    defined train and test splits (validation will be randomly picked from train)."""
 
-    split_location: str = None
+    split_dir: str = None
     """If the split type is defined, this is the location of the directory with files train.txt, validation.txt and 
     test.txt (see documentation for the format of these files)."""
     normalize_targets: bool = True

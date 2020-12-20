@@ -4,6 +4,9 @@ from pgn.data.data_utils import (parse_transforms,
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 
 import torch
+import numpy as np
+import os.path as osp
+import os
 
 # TODO: Add a little bit more though into how we want to do defined splits. Probably have an option for only having
 #  a defined test set i.e. defined_test option in split type
@@ -47,6 +50,9 @@ def load_proximity_graphs(args):
         test_dataset = train_dataset[test_begin: test_end]
         train_dataset = train_dataset[train_begin:train_end]
 
+        if args.save_splits:
+
+
         if norm_targets:
             train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
             args.label_mean, args.label_std = target_stats
@@ -67,6 +73,7 @@ def load_proximity_graphs(args):
         validation_dataset = train_dataset[valid_begin:valid_end]
         train_dataset = train_dataset[train_begin:train_end]
 
+        # TODO: Fix norms
         if norm_targets:
             train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
 
@@ -155,3 +162,24 @@ def _load_data_cross_validation(args):
 
     else:
         return train_dataset
+
+
+def _save_splits(base_dir, train, validation=None, test=None):
+    """
+    Helper function to save the data splits.
+    :param base_dir: The base_directory to write the splits directory containing the saved splits
+    :param train: Tuple(train_dataset, train_index)
+    :param validation: Tuple(validation_dataset, validation_index) default is None meaning no validation splits will be
+    saved.
+    :param test: Tuple(test_dataset, test_index) default is None meaning no test splits will be saved.
+    """
+    split_dir = osp.join(base_dir, 'splits')
+    os.mkdir(split_dir)
+    train_data, train_index = train
+    np.save(osp.join(split_dir, 'train.npy'), np.array(train_data.data.name)[train_index])
+    if validation is not None:
+        val_data, val_index = validation
+        np.save(osp.join(split_dir, 'validation.npy'), np.array(val_data.data.name)[val_index])
+    if test is not None:
+        test_data, test_index = test
+        np.save(osp.join(split_dir, 'test.npy'), np.array(test_data.data.name)[test_index])

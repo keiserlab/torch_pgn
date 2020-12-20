@@ -4,7 +4,6 @@ import numpy as np
 import torch
 from torch_geometric.data import InMemoryDataset
 from torch_geometric.data import Data
-from torch_geometric.data import DataLoader
 
 from tqdm import tqdm
 
@@ -14,7 +13,7 @@ Code to load in the processed InteractionGraphs to pytorch geometric.
 
 class ProximityGraphDataset(InMemoryDataset):
     def __init__(self, root, transform=None, pre_transform=None, device='cpu', mode='train', include_dist=False,
-                 enable_interacting_mask=False, enable_molgraph=False, load_index=None):
+                 enable_interacting_mask=False, enable_molgraph=False):
         # TODO: Add docstring
         self.mode = mode
         self.include_dist = include_dist
@@ -23,7 +22,6 @@ class ProximityGraphDataset(InMemoryDataset):
         super(ProximityGraphDataset, self).__init__(root, transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
         self.data.to(device)
-        self.load_index = load_index
 
 
     @property
@@ -41,11 +39,7 @@ class ProximityGraphDataset(InMemoryDataset):
         data_list = []
         base_dir = os.path.join(self.raw_dir, self.raw_paths[0])
         # TODO: enable multiprocessing support
-        if self.load_index is None:
-            subdir_list = os.listdir(base_dir)
-        else:
-            subdir_list = self.load_index
-        for subdir in tqdm(subdir_list):
+        for subdir in tqdm(os.listdir(base_dir)):
             if subdir[0] != '.':
                 print(subdir)
                 x_path = os.path.join(base_dir, subdir, subdir + "_node_features.npy")

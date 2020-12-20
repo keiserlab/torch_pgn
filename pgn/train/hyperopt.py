@@ -66,7 +66,7 @@ def hyperopt(args):
     results = [result for result in results if not np.isnan(result['score'])]
     best_result = min(results, key=lambda result: (1 if args.minimize_score else -1) * result['score'])
 
-    result_path = osp.join(args.save_path, 'hyperopt_result.json')
+    result_path = osp.join(args.save_dir, 'hyperopt_result.json')
 
     with open(result_path, 'w') as f:
         json.dump(best_result['hyperparams'], f, indent=4, sort_keys=True)

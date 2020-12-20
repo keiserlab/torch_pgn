@@ -136,10 +136,10 @@ class DataArgs(Tap):
     construct_graphs: bool = True
     """Whether to process raw data or just look in the data_path for formated proximity graphs"""
 
-    validation_percent: int = 0.20
+    validation_percent: int = 0.10
     """The percentage of the training data to put into the validation set in the case of a random split."""
 
-    test_percent: int = 0.20
+    test_percent: int = 0.10
     """The percentage of the training data to hold out into the test set in the case of a random split."""
 
     label_mean: float = 0.
@@ -153,6 +153,9 @@ class DataArgs(Tap):
 
     distance_std: float = 1.
     """Std deviation correction used for distance normalization."""
+
+    save_splits: bool = False
+    """Write the training/validation/test splits to the """
 
     def process_args(self):
         if self.raw_data_path is not None and self.label_file is None:

@@ -40,18 +40,26 @@ def load_proximity_graphs(args):
         train_dataset.data = transforms(train_dataset.data)
 
         num_examples = len(train_dataset.data.name)
-        #TODO: make this truly random by using shuffled indexing
+
+        rand = np.random.RandomState(args.seed)
+        permutations = rand.choice(num_examples, num_examples)
 
         valid_begin, valid_end = 0, int(args.validation_percent * num_examples)
         test_begin, test_end = valid_end, int(args.test_percent * num_examples) + valid_end
         train_begin, train_end = test_end, num_examples
 
-        validation_dataset = train_dataset[valid_begin:valid_end]
-        test_dataset = train_dataset[test_begin: test_end]
-        train_dataset = train_dataset[train_begin:train_end]
+        train_index = permutations[train_begin:train_end]
+        valid_index = permutations[valid_begin:valid_end]
+        test_index = permutations[test_begin:test_end]
+
+        validation_dataset = train_dataset[list(valid_index)]
+        test_dataset = train_dataset[list(test_index)]
+        train_dataset = train_dataset[list(train_index)]
 
         if args.save_splits:
-
+            _save_splits(args.save_dir, (train_dataset, train_index),
+                         validation=(validation_dataset, valid_index),
+                         test=(test_dataset, test_index))
 
         if norm_targets:
             train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)

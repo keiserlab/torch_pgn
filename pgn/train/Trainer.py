@@ -11,7 +11,6 @@ class Trainer():
     def __init__(self, args):
         #Need to see if this is going to work with subparsers
         self.args = args
-        self.load_data()
         self.model = None
 
     def load_data(self):

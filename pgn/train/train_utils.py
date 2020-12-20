@@ -61,11 +61,6 @@ def make_save_directories(save_directory):
     :param save_directory: An empty directory where the output of training will be saved.
     :return: None
     """
-    if len([directory for directory in os.listdir(save_directory) if not directory.startswith('.')]) != 0:
-        raise ValueError(
-            "The save directory (save_dir) is not empty. "
-            "Please either clean the directory or specify and empty directory."
-        )
     if not os.path.isdir(save_directory):
         raise ValueError(
             "The specified save directory (save_dir) does not exist. Please create an empty directory with this "

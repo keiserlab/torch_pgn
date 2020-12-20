@@ -30,6 +30,7 @@ def hyperopt(args):
     """
     results = []
     trainer = Trainer(args)
+    trainer.load_data()
 
     def objective(hyperparams):
 

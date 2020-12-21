@@ -24,19 +24,22 @@ class OneHotTransform(object):
         return data
 
 
-def normalize_targets(dataset, mean=None, std=None, yield_stats=True):
+def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for
+    :param index: Index into dataset for the subset of dataset to calculate statistics on for normalization
     :param mean: external mean to use for normalization (i.e. test set normalization)
     :param std: external stddev to use for normalization (i.e. test set normalization)
     :param yield_stats: toggle to yield [dataset, (mean, std)] if True or just [dataset] if False
     :return: A dataset with normalized targets
     """
+    if index is None:
+        index = np.arange(len(dataset.data.name))
     if mean is None:
-        mean = dataset.data.y.mean()
+        mean = dataset.data.y[list(index)].mean()
     if std is None:
-        std = dataset.data.y.std()
+        std = std = dataset.data.y[list(index)].std()
 
     dataset.data.y = (dataset.data.y - mean) / std
 
@@ -46,19 +49,23 @@ def normalize_targets(dataset, mean=None, std=None, yield_stats=True):
         return [dataset.data.y, (mean, std)]
 
 
-def normalize_distance(dataset, mean=None, std=None, yield_stats=True):
+def normalize_distance(dataset, index=None, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for
+    :param index: Index into dataset for the subset of dataset to calculate statistics on for normalization
     :param mean: external mean to use for normalization (i.e. test set normalization)
     :param std: external stddev to use for normalization (i.e. test set normalization)
     :param yield_stats: toggle to yield [dataset, (mean, std)] if True or just [dataset] if False
     :return: A dataset with normalized targets
     """
+    if index is None:
+        index = np.arange(len(dataset.data.name))
     if mean is None:
-        mean = dataset.data.edge_attr[:, 0].mean()
+        mean = dataset.data.edge_attr[list(index), 0].mean()
+
     if std is None:
-        std = dataset.data.edge_attr[:, 0].std()
+        std = dataset.data.edge_attr[list(index), 0].std()
 
     dataset.data.edge_attr[:, 0] = (dataset.data.edge_attr[:, 0] - mean) / std
 

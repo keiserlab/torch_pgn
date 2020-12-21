@@ -106,16 +106,13 @@ def load_proximity_graphs(args):
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
     if norm_targets:
-        label_mean = train_dataset.data.y[list(train_index)].mean()
-        label_std = train_dataset.data.y[list(train_index)].std()
-        args.label_mean, args.label_std = label_mean, label_std
-        train_dataset.data.y = (train_dataset.data.y - label_mean) / label_std
+        train_dataset.data.y, label_stats = normalize_targets(train_dataset, index=train_index)
+        args.label_mean, args.label_std = label_stats
+
 
     if norm_dist:
-        dist_mean = train_dataset.data.edge_attr[list(train_index), 0].mean()
-        dist_std = train_dataset.data.edge_attr[list(train_index), 0].std()
-        args.distance_mean, args.distance_std = dist_mean, dist_std
-        train_dataset.data.edge_attr[:, 0] = (train_dataset.data.edge_attr[:, 0] - dist_mean) / dist_std
+        train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, index=train_index)
+        args.distance_mean, args.distance_std = dist_stats
 
     args.node_dim = train_dataset.data.x.numpy().shape[1]
     args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]

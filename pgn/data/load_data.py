@@ -61,63 +61,61 @@ def load_proximity_graphs(args):
                          validation=(validation_dataset, valid_index),
                          test=(test_dataset, test_index))
 
-        if norm_targets:
-            train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
-            args.label_mean, args.label_std = target_stats
-
-        if norm_dist:
-            train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, yield_stats=True)
-            args.distance_mean, args.distance_std = dist_stats
-
-
     elif split_type == 'defined_test':
         # TODO: make sure error handling of no split dir happens somewhere
         split_dir = args.split_dir
         train_names, valid_names, test_names = _load_splits(split_dir)
         train_names = np.hstack((train_names, valid_names))
 
-        print(train_names)
+        num_examples = train_names.shape[0] + valid_names.shape[0] + test_names.shape[0]
+
         train_dataset = ProximityGraphDataset(data_path,
                                               include_dist=include_dist)
 
-        test_dataset = _split_data(train_dataset, test_names)
-        train_dataset = _split_data(train_dataset, train_names)
+        test_index = _split_data(train_dataset, test_names)
+        train_index = _split_data(train_dataset, train_names)
 
-        print(test_dataset, train_dataset)
+        valid_end = int(args.validation_percent * num_examples)
+        train_begin = valid_end
 
+        valid_index = train_index[:valid_end]
+        train_index = train_index[train_begin:]
+
+        validation_dataset = train_dataset[valid_index]
+        test_dataset = train_dataset[test_index]
+        train_dataset = train_dataset[train_index]
 
     elif split_type == 'defined':
-        #TODO: Figure out the best way for this to work
-        valid_begin, valid_end = args.validation_splits
-        train_begin, train_end = args.train_splits
 
-        train_dataset = ProximityGraphDataset(data_path, include_dist=include_dist)
-        train_dataset.data = transforms(train_dataset.data)
+        split_dir = args.split_dir
+        train_names, valid_names, test_names = _load_splits(split_dir)
+        train_dataset = ProximityGraphDataset(data_path,
+                                              include_dist=include_dist)
 
-        validation_dataset = train_dataset[valid_begin:valid_end]
-        train_dataset = train_dataset[train_begin:train_end]
+        test_index = _split_data(train_dataset, test_names)
+        train_index = _split_data(train_dataset, train_names)
+        valid_index = _split_data(train_dataset, valid_names)
 
-        # TODO: Fix norms
-        if norm_targets:
-            train_dataset.data.y, target_stats = normalize_targets(train_dataset, yield_stats=True)
+        validation_dataset = train_dataset[valid_index]
+        test_dataset = train_dataset[test_index]
+        train_dataset = train_dataset[train_index]
 
-        if norm_dist:
-            train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, yield_stats=True)
 
-        if load_test:
-            test_dataset = ProximityGraphDataset(data_path, include_dist=include_dist, mode='test')
-            test_dataset.data = transforms(test_dataset.data)
-
-            if norm_targets:
-                test_dataset.data.y = normalize_targets(test_dataset, mean=target_stats[0],
-                                                        std=target_stats[1], yield_stats=False)
-
-            if norm_dist:
-                test_dataset.data.edge_attr = normalize_distance(test_dataset, mean=dist_stats[0],
-                                                        std=dist_stats[1], yield_stats=False)
 
     else:
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
+
+    if norm_targets:
+        label_mean = train_dataset.data.y[list(train_index)].mean()
+        label_std = train_dataset.data.y[list(train_index)].std()
+        args.label_mean, args.label_std = label_mean, label_std
+        train_dataset.data.y = (train_dataset.data.y - label_mean) / label_std
+
+    if norm_dist:
+        dist_mean = train_dataset.data.edge_attr[list(train_index), 0].mean()
+        dist_std = train_dataset.data.edge_attr[list(train_index), 0].std()
+        args.distance_mean, args.distance_std = dist_mean, dist_std
+        train_dataset.data.edge_attr[:, 0] = (train_dataset.data.edge_attr[:, 0] - dist_mean) / dist_std
 
     args.node_dim = train_dataset.data.x.numpy().shape[1]
     args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
@@ -227,4 +225,5 @@ def _load_splits(split_dir):
 
 def _split_data(dataset, names):
     mask = np.vectorize(lambda value: value in names)(np.array(dataset.data.name))
-    return dataset[list(np.arange(mask.shape[0])[mask])]
+    index = list(np.arange(mask.shape[0])[mask])
+    return index

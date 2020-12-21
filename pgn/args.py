@@ -209,6 +209,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     will be set to True."""
     cv_folds: int = None
     """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
+    memory_stats: bool = False
+    """Whether to right the memory stat of a run to model results directory."""
 
     def process_args(self):
         if self.ff_dim_1 is None:

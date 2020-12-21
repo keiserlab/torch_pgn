@@ -132,7 +132,12 @@ def train_model(args, train_data, validation_data, test_data=None):
                                mean=args.label_mean,
                                std=args.label_std)
 
-
+    if args.memory_stats and torch.cuda.is_available():
+        try:
+            memory_stats = torch.cuda.memory_stats()
+            print(memory_stats)
+        except:
+            pass
 
     if args.plot_correlations:
         plot_correlation(model=model,

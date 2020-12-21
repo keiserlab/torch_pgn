@@ -63,5 +63,8 @@ def cross_validation(args, train_data):
             train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] * dist_std) + dist_mean
 
         fold += 1
+        model = model.to('cpu')
+        del model
+        torch.cuda.empty_cache()
 
-    return model, evals
+    return None, evals

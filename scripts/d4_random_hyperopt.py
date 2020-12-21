@@ -1,7 +1,5 @@
 import sys
 import os
-
-import openbabel
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 from pgn.train.run_training import run_training
 from pgn.train.hyperopt import hyperopt
@@ -16,11 +14,12 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 'split_type': 'random',
                 'construct_graphs': False,
                 'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/d4_pgn_rand_hyper',
-                'device': 'cuda:0',
+                'device': 'cuda:1',
                 'epochs': 50,
                 'cv_folds': 5,
                 'save_splits': True,
-                'num_iters': 20
+                'num_iters': 20,
+		'batch_size': 128
                 })
 args.process_args()
 

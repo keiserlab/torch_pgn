@@ -209,6 +209,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     will be set to True."""
     cv_folds: int = None
     """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
+    tensorboard_logging: bool = True
+    """Whether or not to track model training with tensorboard."""
 
     def process_args(self):
         if self.ff_dim_1 is None:

@@ -30,22 +30,23 @@ def cross_validation(args, train_data):
     evals = []
     for train_index, valid_index in kfold.split(train_data):
 
+        with torch.no_grad():
         # Normalize targets and dist
-        if norm_targets:
-            label_mean = train_data.data.y[list(train_index)].mean()
-            label_std = train_data.data.y[list(train_index)].std()
-            args.label_mean, args.label_std = label_mean, label_std
-            train_data.data.y = (train_data.data.y - label_mean) / label_std
+            if norm_targets:
+                label_mean = train_data.data.y[list(train_index)].mean()
+                label_std = train_data.data.y[list(train_index)].std()
+                args.label_mean, args.label_std = label_mean, label_std
+                train_data.data.y = (train_data.data.y - label_mean) / label_std
 
-        if norm_dist:
-            dist_mean = train_data.data.edge_attr[list(train_index), 0].mean()
-            dist_std = train_data.data.edge_attr[list(train_index), 0].std()
-            args.distance_mean, args.distance_std = dist_mean, dist_std
-            train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] - dist_mean) / dist_std
+            if norm_dist:
+                dist_mean = train_data.data.edge_attr[list(train_index), 0].mean()
+                dist_std = train_data.data.edge_attr[list(train_index), 0].std()
+                args.distance_mean, args.distance_std = dist_mean, dist_std
+                train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] - dist_mean) / dist_std
 
-        # Split datasets
-        fold_train = train_data[list(train_index)]
-        fold_valid = train_data[list(valid_index)]
+            # Split datasets
+            fold_train = train_data[list(train_index)]
+            fold_valid = train_data[list(valid_index)]
 
         fold_dir = osp.join(base_dir, 'cv_fold_{0}'.format(fold))
         args.save_dir = fold_dir

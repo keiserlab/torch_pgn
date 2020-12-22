@@ -84,19 +84,25 @@ def predict(model, data_loader, args, progress_bar=True, return_labels=False):
     the predictions. This is useful when the dataset being analyzed in shuffled
     :return: The raw output of the model as a numpy array.
     """
-    model.eval()
-    preds = []
-    labels = []
-    for data in data_loader:
-        data = data.to(args.device)
-        preds.append(model(format_batch(args, data)).cpu().detach().numpy())
-        labels.append(data.y.cpu().detach().numpy())
-    preds = np.hstack(preds)
-    labels = np.hstack(labels)
-    if return_labels:
-        return preds, labels
-    else:
-        return preds
+    with torch.no_grad():
+        model.eval()
+        preds = []
+        labels = []
+        try:
+            for data in data_loader:
+                data = data.to(args.device)
+                preds.append(model(format_batch(args, data)).detach().cpu().numpy())
+                labels.append(data.y.detach().cpu().numpy())
+            preds = np.hstack(preds)
+            labels = np.hstack(labels)
+            if return_labels:
+                return preds, labels
+            else:
+                return preds
+        except:
+            print('Exception caught, timeout averted?!')
+            predict(model, data_loader, args, progress_bar=progress_bar, return_labels=return_labels)
+
 
 
 def get_labels(data_loader):
@@ -107,7 +113,7 @@ def get_labels(data_loader):
     """
     labels = []
     for data in data_loader:
-        labels.append(data.y.cpu().detach().numpy())
+        labels.append(data.y.detach().cpu().numpy())
     labels = np.hstack(labels)
     return labels
 

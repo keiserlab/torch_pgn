@@ -52,8 +52,8 @@ class Trainer():
         Returns the score
         :return:
         """
-        if self.model is None:
-            raise RuntimeError("Score attempted to be retrieved before model trained.")
+        # if self.model is None:
+        #     raise RuntimeError("Score attempted to be retrieved before model trained.")
         if self.args.cross_validate:
             return sum([fold_eval[self.args.loss_function] for fold_eval in self.valid_eval]) / self.args.cv_folds
         else:

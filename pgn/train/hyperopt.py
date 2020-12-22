@@ -16,7 +16,8 @@ SPACE = {
     'ffn_hidden_size': hp.quniform('ffn_hidden_size', low=200, high=2400, q=100),
     'depth': hp.quniform('depth', low=2, high=6, q=1),
     'dropout': hp.quniform('dropout', low=0.0, high=0.4, q=0.05),
-    'ffn_num_layers': hp.quniform('ffn_num_layers', low=1, high=5, q=1)
+    'ffn_num_layers': hp.quniform('ffn_num_layers', low=1, high=5, q=1),
+    'nn_conv_dropout_prob': hp.quniform('dropout', low=0.0, high=0.4, q=0.05)
 }
 
 INT_KEYS = ['ffn_hidden_size', 'depth', 'ffn_num_layers']

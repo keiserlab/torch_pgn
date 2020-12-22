@@ -37,14 +37,14 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
                                   num_workers=num_workers, shuffle=True,
-                                  timeout=10)
+                                  timeout=0)
     valid_dataloader = DataLoader(validation_data, batch_size=args.batch_size,
                                   num_workers=num_workers, shuffle=False,
-                                  timeout=10)
+                                  timeout=0)
     if args.load_test is True:
         test_dataloader = DataLoader(test_data, batch_size=args.batch_size,
                                      num_workers=num_workers, shuffle=False,
-                                     timeout=10)
+                                     timeout=0)
 
     save_dir = args.save_dir
     # Format the save_dir for the output of training data

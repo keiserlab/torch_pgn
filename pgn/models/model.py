@@ -1,9 +1,8 @@
 from pgn.models.pfp_encoder import PFPEncoder
+from pgn.models.dmpnn_encoder import MPNEncoder
 from pgn.args import TrainArgs
 
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.nn import ReLU, Sequential, Linear, Dropout
 
 class PFPNetwork(nn.Module):
@@ -28,7 +27,10 @@ class PFPNetwork(nn.Module):
         """
         Constructs the message passing network for encoding proximity graphs.
         """
-        self.encoder = PFPEncoder(self.args, self.node_dim, self.bond_dim)
+        if self.args.encoder_type == 'pfp':
+            self.encoder = PFPEncoder(self.args, self.node_dim, self.bond_dim)
+        elif self.args.encoder_type == 'dmpnn':
+            self.encoder = MPNEncoder(self.args, self.node_dim, self.bond_dim)
 
 
     def construct_feed_forward(self):

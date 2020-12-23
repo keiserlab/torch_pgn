@@ -158,6 +158,14 @@ class DataArgs(Tap):
     save_splits: bool = False
     """Write the training/validation/test splits to the """
 
+    ###################### Dataloader Args #############################################################################
+    enable_molgraph: bool = True
+    """Include molgraph attribute in dataset to enable use with dmpnn"""
+
+    enable_interacting_mask: bool = True
+    """Include molgraph attribute in dataset to enable use with dmpnn"""
+
+
     def process_args(self):
         if self.raw_data_path is not None and self.label_file is None:
             self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')

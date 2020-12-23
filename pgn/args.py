@@ -82,8 +82,8 @@ class DataArgs(Tap):
     ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
     a decent amount of time depending upon the dataset size and complexity of the proximity graph."""
 
-    directed: bool = False
-    """Boolean toggle for whether to make the proximity graph undirected"""
+    directed: bool = True
+    """Boolean toggle for whether to make the proximity graph undirected. Only valid for use with dmpnn."""
     #TODO: Figure out how to make certain arguments required conditional upon other requirements.
 
     raw_data_path: str = None
@@ -111,7 +111,7 @@ class DataArgs(Tap):
     data_path: str
     """The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset)."""
 
-    transforms: Literal['one_hot', 'molgraph', 'none'] = ['one_hot'] # TODO:Fix me
+    transforms: List[str] = ['one_hot']
     """Transforms to apply to the dataset."""
 
     split_type: Literal['random', 'defined', 'defined_test']
@@ -219,6 +219,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
             self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
         if self.cv_folds is not None:
             self.cross_validate = True
+        if self.encoder_type == 'dmpnn' and 'molgraph' not in self.transforms :
+            self.transforms.append('molgraph')
 
 
 

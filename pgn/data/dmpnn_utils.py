@@ -6,6 +6,8 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
+from torch_geometric.data import DataLoader
+
 
 class ProxGraph():
     """
@@ -83,12 +85,12 @@ class BatchProxGraph():
     * :code:`a2a`: (Optional): A mapping from an atom index to neighboring atom indices.
     """
 
-    def __init__(self, mol_graphs, atom_fdim=8, bond_fdim=5 + 8):
+    def __init__(self, mol_graphs, atom_fdim, bond_fdim):
         r"""
         :param mol_graphs: A list of :class:`MolGraph`\ s from which to construct the :class:`BatchMolGraph`.
         """
         self.atom_fdim = atom_fdim
-        self.bond_fdim = bond_fdim
+        self.bond_fdim = bond_fdim + atom_fdim
 
         # Start n_atoms and n_bonds at 1 b/c zero padding
         self.n_atoms = 1  # number of atoms (start at 1 b/c need index 0 as padding)
@@ -103,6 +105,7 @@ class BatchProxGraph():
         b2a = [0]  # mapping from bond index to the index of the atom the bond is coming from
         b2revb = [0]  # mapping from bond index to the index of the reverse bond
         for mol_graph in mol_graphs:
+            mol_graph = mol_graph[0]
             f_atoms.extend(mol_graph.f_atoms)
             f_bonds.extend(mol_graph.f_bonds)
 
@@ -204,9 +207,16 @@ def prox2graph(mols) -> BatchProxGraph:
 
 
 class MolGraphTransform(object):
-    def __call__(self, data, encoder=None):
+    def __call__(self, data, transforms=None):
         molgraphs = []
+        x_ind, edge_ind = 0, 0
         for molgraph in tqdm(data.molgraph):
-            molgraphs.append(ProxGraph(molgraph))
+            x_size, edge_size, _ = molgraph
+            input_tuple = ((data.x.numpy()[x_ind: x_ind + x_size, :]),
+                           data.edge_attr.numpy()[edge_ind: edge_ind + edge_size, :],
+                           data.edge_index.numpy()[:, edge_ind: edge_ind + edge_size])
+            molgraphs.append(ProxGraph(input_tuple))
+            x_ind += x_size
+            edge_ind += edge_size
         data.molgraph = molgraphs
         return data

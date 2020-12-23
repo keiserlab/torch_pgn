@@ -36,7 +36,7 @@ def load_proximity_graphs(args):
 
     if split_type == 'random':
 
-        train_dataset = ProximityGraphDataset(data_path, include_dist=include_dist)
+        train_dataset = ProximityGraphDataset(args)
         train_dataset.data = transforms(train_dataset.data)
 
         num_examples = len(train_dataset.data.name)

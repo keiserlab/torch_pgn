@@ -10,18 +10,17 @@ from tqdm import tqdm
 """
 Code to load in the processed InteractionGraphs to pytorch geometric.
 """
-
+# TODO: Convert to work with args object
 class ProximityGraphDataset(InMemoryDataset):
-    def __init__(self, root, transform=None, pre_transform=None, device='cpu', mode='train', include_dist=False,
-                 enable_interacting_mask=False, enable_molgraph=False):
+    def __init__(self, args, transform=None, pre_transform=None):
         # TODO: Add docstring
-        self.mode = mode
-        self.include_dist = include_dist
-        self.enable_interacting_mask = enable_interacting_mask
-        self.enable_molgraph = enable_molgraph
-        super(ProximityGraphDataset, self).__init__(root, transform, pre_transform)
+        self.include_dist = args.include_dist
+        self.enable_interacting_mask = args.enable_interacting_mask
+        self.enable_molgraph = args.enable_molgraph
+        self.mode = 'train'
+        super(ProximityGraphDataset, self).__init__(args.data_path, transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
-        self.data.to(device)
+
 
 
     @property
@@ -65,7 +64,7 @@ class ProximityGraphDataset(InMemoryDataset):
                 y = torch.from_numpy(np.load(label_path).astype(np.float)).type(torch.FloatTensor)
                 molgraph = None
                 if self.enable_molgraph:
-                    molgraph = (x.numpy(), edge_attr.numpy(), edge_index.numpy())
+                    molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
                 data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, pos=pos, y=y, name=subdir,
                             mask=interacting_mask, molgraph=molgraph)
                 data_list.append(data)

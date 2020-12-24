@@ -1,5 +1,6 @@
 from pgn.models.pfp_encoder import PFPEncoder
 from pgn.models.dmpnn_encoder import MPNEncoder
+from pgn.models.GGNet import GGNet
 from pgn.args import TrainArgs
 
 import torch.nn as nn
@@ -31,6 +32,8 @@ class PFPNetwork(nn.Module):
             self.encoder = PFPEncoder(self.args, self.node_dim, self.bond_dim)
         elif self.args.encoder_type == 'dmpnn':
             self.encoder = MPNEncoder(self.args, self.node_dim, self.bond_dim)
+        elif self.args.encoder_type == 'ggnet':
+            self.encoder = GGNet(self.args, self.node_dim, self.bond_dim)
 
 
     def construct_feed_forward(self):

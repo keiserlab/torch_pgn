@@ -229,7 +229,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
             self.cross_validate = True
         if self.encoder_type == 'dmpnn' and 'molgraph' not in self.transforms :
             self.transforms.append('molgraph')
-
+        if self.encoder_type == 'ggnet':
+            self.fp_dim = self.nn_conv_in_dim * 2
 
 
 

@@ -7,6 +7,9 @@ import os
 import os.path as osp
 import shutil
 
+# Content: Index in the bond_feature which holds distance information
+DISTANCE_INDEX = 0
+
 class OneHotTransform(object):
     """
     Transform object for ProximityGraphDataset with atomic number feature. Transforms the int feature into a 1-hot
@@ -41,6 +44,7 @@ def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True
     if std is None:
         std = std = dataset.data.y[list(index)].std()
 
+
     dataset.data.y = (dataset.data.y - mean) / std
 
     if not yield_stats:
@@ -49,7 +53,7 @@ def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True
         return [dataset.data.y, (mean, std)]
 
 
-def normalize_distance(dataset, index=None, mean=None, std=None, yield_stats=True):
+def normalize_distance(dataset, args=None, index=None, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1
     :param dataset: dataset to normalize the targets for
@@ -67,12 +71,17 @@ def normalize_distance(dataset, index=None, mean=None, std=None, yield_stats=Tru
     if std is None:
         std = dataset.data.edge_attr[list(index), 0].std()
 
+    if args is not None and args.encoder_type == 'dmpnn':
+        for molgraph in dataset.data.molgraph:
+            molgraph.apply_dist_norm(args.node_dim + DISTANCE_INDEX, float(mean), float(std))
+
     dataset.data.edge_attr[:, 0] = (dataset.data.edge_attr[:, 0] - mean) / std
 
     if not yield_stats:
         return [dataset.data.edge_attr]
     else:
         return [dataset.data.edge_attr, (mean, std)]
+
 
 
 def parse_transforms(transforms):

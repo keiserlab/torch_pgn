@@ -71,6 +71,14 @@ class ProxGraph():
                 self.b2revb.append(b1)
                 self.n_bonds += 2
 
+    def apply_dist_norm(self, dist_column, mean, std):
+        for index in range(len(self.f_bonds)):
+            self.f_bonds[index][dist_column] = (self.f_bonds[index][dist_column] - mean) / std
+
+    def remove_dist_norm(self, dist_column, mean, std):
+        for index in range(len(self.f_bonds)):
+            self.f_bonds[index][dist_column] = (self.f_bonds[index][dist_column] * std) + mean
+
 
 class BatchProxGraph():
     """

@@ -33,16 +33,13 @@ def cross_validation(args, train_data):
         with torch.no_grad():
         # Normalize targets and dist
             if norm_targets:
-                label_mean = train_data.data.y[list(train_index)].mean()
-                label_std = train_data.data.y[list(train_index)].std()
-                args.label_mean, args.label_std = label_mean, label_std
-                train_data.data.y = (train_data.data.y - label_mean) / label_std
+                train_data.data.y, label_stats = normalize_targets(train_data, index=list(train_index))
+                args.label_mean, args.label_std = label_stats
 
             if norm_dist:
-                dist_mean = train_data.data.edge_attr[list(train_index), 0].mean()
-                dist_std = train_data.data.edge_attr[list(train_index), 0].std()
-                args.distance_mean, args.distance_std = dist_mean, dist_std
-                train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] - dist_mean) / dist_std
+                train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
+                                                                              index=list(train_index))
+                args.distance_mean, args.distance_std = dist_stats
 
             # Split datasets
             fold_train = train_data[list(train_index)]
@@ -55,13 +52,6 @@ def cross_validation(args, train_data):
         # Run training
         model, eval = train_model(args, fold_train, fold_valid)
         evals.append(eval)
-
-        # Revert train_dataset std and mean for next CV round
-        if norm_targets:
-            train_data.data.y = (train_data.data.y * label_std) + label_mean
-
-        if norm_dist:
-            train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] * dist_std) + dist_mean
 
         fold += 1
         model = model.to('cpu')

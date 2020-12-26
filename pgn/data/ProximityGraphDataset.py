@@ -40,7 +40,6 @@ class ProximityGraphDataset(InMemoryDataset):
         # TODO: enable multiprocessing support
         for subdir in tqdm(os.listdir(base_dir)):
             if subdir[0] != '.':
-                print(subdir)
                 x_path = os.path.join(base_dir, subdir, subdir + "_node_features.npy")
                 edge_path = os.path.join(base_dir, subdir, subdir + "_edges.npy")
                 label_path = os.path.join(base_dir, subdir, subdir + "_label.npy")

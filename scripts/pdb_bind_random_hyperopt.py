@@ -19,7 +19,8 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 'cv_folds': 5,
                 'save_splits': True,
                 'num_iters': 20,
-		        'batch_size': 128
+		'num_workers': 0,
+		'batch_size': 128
                 })
 args.process_args()
 

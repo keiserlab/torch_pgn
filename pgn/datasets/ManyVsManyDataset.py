@@ -10,6 +10,7 @@ import pandas as pd
 
 import oddt
 import oddt.pandas as opd
+from rdkit import Chem
 
 from pgn.graphs.graph_utils import _return_graph
 from pgn.datasets.PGDataset import PGDataset
@@ -43,11 +44,16 @@ class ManyVsManyDataset(PGDataset):
         print(energy)
         for name in tqdm(directories):
             if name not in ['index', 'readme', '.DS_Store']:
-                pdb_path = os.path.join(raw_path, name, name + "_protein.pdb")
+                pdb_path = os.path.join(raw_path, name, name + "_pocket.pdb")
                 ligand_path = os.path.join(raw_path, name, name + "_ligand.sdf")
-                receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
-                ligand = opd.read_sdf(ligand_path)['mol'][0]
-                inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
+                try:
+                    receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
+                    ligand = opd.read_sdf(ligand_path, skip_bad_mols=True)['mol'][0]
+                    if ligand is not None:
+                        inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
+                except:
+                    continue
+        print(len(inputs))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
             self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

@@ -61,8 +61,9 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
     if is_openbabel_molecule(molecule):
         for u, v in bond_dict.keys():
             bond = bond_dict[(u, v)]
+            order = bond.GetBondOrder()
             feature = np.array([gu._euclidean_distance(position_dict, translate[u], translate[v]),
-                                int(bond.IsSingle()), int(bond.IsDouble()), int(bond.IsTriple()),
+                                int(order == 1), int(order == 2), int(order == 3),
                                 int(bond.IsAromatic()), int(molecule is None)])
             feature_dict[(translate[u], translate[v])]= feature
             feature_dict[(translate[v], translate[u])] = feature

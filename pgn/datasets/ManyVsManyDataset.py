@@ -53,7 +53,7 @@ class ManyVsManyDataset(PGDataset):
                         inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
                 except:
                     continue
-        print(len(inputs))
-
-        with multiprocessing.Pool(processes=self.num_workers) as p:
-            self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
+        
+        self.graphs = [_return_graph(tup) for tup in tqdm(inputs)]    
+        #with multiprocessing.Pool(processes=self.num_workers) as p:
+        #    self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

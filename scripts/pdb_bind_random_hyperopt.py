@@ -8,7 +8,7 @@ from pgn.args import TrainArgs, HyperoptArgs
 args = HyperoptArgs()
 
 args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_with_h.pdb',
-                'raw_mol_path': '/srv/nas/mk2/projects/D4_screen/data/Results/Test_Code/medium_diverse_stratified.mol2',
+                'raw_mol_path': '/srv/nas/mk2/projects/D4_screen/working_data/Results/Test_Code/medium_diverse_stratified.mol2',
                 'data_path': '/srv/home/zgaleday/IG_data/pdbbind_general_pgn/',
                 'dataset_type': 'many_v_many',
                 'split_type': 'random',

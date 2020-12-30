@@ -204,3 +204,5 @@ fabric.properties
 
 # Output files ignored
 **/output
+**/working_data
+

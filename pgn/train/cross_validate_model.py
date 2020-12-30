@@ -16,7 +16,7 @@ def cross_validation(args, train_data):
     Function to run cross validation to train a model.
     :param args: TrainArgs object containing the parameters for the cross-validation run.
     :param train_data: The training to be used in cross-validation
-    :param test_data: The testing data if loaded to be used to evaluate model performance.
+    :param test_data: The testing working_data if loaded to be used to evaluate model performance.
     :return:
     """
     folds = args.cv_folds

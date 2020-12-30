@@ -48,7 +48,7 @@ def hyperopt(args):
         for key, value in hyperparams.items():
             setattr(hyper_args, key, value)
 
-        # Set hyperparameter optimization args without reloading data
+        # Set hyperparameter optimization args without reloading working_data
         trainer.set_hyperopt_args(hyper_args)
         # Run training using hyper_args
         trainer.run_training()

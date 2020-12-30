@@ -29,7 +29,7 @@ class ProximityGraphDataset(InMemoryDataset):
 
     @property
     def processed_file_names(self):
-        return [self.mode + '/data.pt']
+        return [self.mode + '/working_data.pt']
 
     def download(self):
         pass

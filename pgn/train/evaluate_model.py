@@ -8,11 +8,11 @@ def evaluate(model, data_loader, args, metrics, mean=0, std=1):
     """
     Function used to evaluate the model performance on a given dataset.
     :param model: The model to be evaluated.
-    :param data_loader: The dataloader containing the data the model with be evaluated on.
+    :param data_loader: The dataloader containing the working_data the model with be evaluated on.
     :param args: TrainArgs object containing the relevant arguments for evaluation.
-    :param metric: The metrics used to evaluate the model on the given data.
-    :param mean:The mean of the non-normalized data.
-    :param std: The stddev. of the non-normalized data.
+    :param metric: The metrics used to evaluate the model on the given working_data.
+    :param mean:The mean of the non-normalized working_data.
+    :param std: The stddev. of the non-normalized working_data.
     :return: The value of the metrics.
     """
     predictions, labels = predict(model=model,

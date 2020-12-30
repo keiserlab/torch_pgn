@@ -74,9 +74,9 @@ class DataArgs(Tap):
     """Random seed used for pytorch in order to ensure reproducibility"""
 
     num_workers: int = 8
-    """Number of processing units to use in data processing and loading."""
+    """Number of processing units to use in working_data processing and loading."""
 
-    #### Begin data arguments for loading the raw pdb and molecule data and processing them into ProximityGraphs. ####
+    #### Begin working_data arguments for loading the raw pdb and molecule working_data and processing them into ProximityGraphs. ####
     save_graphs: bool = True
     """Boolean toggle of whether to save the proximity graphs to harddisk. False will keep the entire processing in
     ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
@@ -87,7 +87,7 @@ class DataArgs(Tap):
     #TODO: Figure out how to make certain arguments required conditional upon other requirements.
 
     raw_data_path: str = None
-    """The path to the raw data for Many vs. Many datasets. See description of formatting requirements in documentation."""
+    """The path to the raw working_data for Many vs. Many datasets. See description of formatting requirements in documentation."""
 
     raw_pdb_path: str = None
     """Path to the receptor pdb file used to construct all Proximity Graphs in OneVsMany datasets."""
@@ -107,7 +107,7 @@ class DataArgs(Tap):
     label_col: int = 3
     """The column number to use to fetch the labels."""
 
-    #### Begin data arguments for loading proximity graphs into pytorch dataloader ####
+    #### Begin working_data arguments for loading proximity graphs into pytorch dataloader ####
     data_path: str
     """The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset)."""
 
@@ -115,7 +115,7 @@ class DataArgs(Tap):
     """Transforms to apply to the dataset."""
 
     split_type: Literal['random', 'defined', 'defined_test']
-    """The mode used to split the data into train, validation and test. Random will randomly split the data. Defined
+    """The mode used to split the working_data into train, validation and test. Random will randomly split the working_data. Defined
     will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading
     defined train and test splits (validation will be randomly picked from train)."""
 
@@ -135,13 +135,13 @@ class DataArgs(Tap):
     """Boolean toggle of whether or not to load the test set for evaluation."""
 
     construct_graphs: bool = True
-    """Whether to process raw data or just look in the data_path for formated proximity graphs"""
+    """Whether to process raw working_data or just look in the data_path for formated proximity graphs"""
 
     validation_percent: int = 0.10
-    """The percentage of the training data to put into the validation set in the case of a random split."""
+    """The percentage of the training working_data to put into the validation set in the case of a random split."""
 
     test_percent: int = 0.10
-    """The percentage of the training data to hold out into the test set in the case of a random split."""
+    """The percentage of the training working_data to hold out into the test set in the case of a random split."""
 
     label_mean: float = 0.
     """Mean correction used for target normalization."""
@@ -180,7 +180,7 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
 
     ############ Optional arguments ###################################################################################
     device: str = 'cpu'
-    """The device to train then model on/location of data and pytorch model. e.g. 'cpu' or 'cuda'"""
+    """The device to train then model on/location of working_data and pytorch model. e.g. 'cpu' or 'cuda'"""
     node_dim: int = None
     """The node feature size. Set during dataloading procedure."""
     edge_dim: int = None

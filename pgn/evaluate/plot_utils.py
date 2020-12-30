@@ -9,7 +9,7 @@ def plot_correlation(model, args, data_loader, metrics=None, filename='train_cor
     Simple method to plot correlations for a model.
     :param model: The model to be evaluated
     :param args: TrainArgs type object containing the parameters used to train the model
-    :param data_loader: The torch dataloader object containing the data to be plotted.
+    :param data_loader: The torch dataloader object containing the working_data to be plotted.
     :param filename: The name of the plot file.
     :param fit: Boolean toggle for whether to include a trendline on the plot.
     :return: None (saved plot to savedir results file).

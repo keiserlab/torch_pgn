@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, visualize=None, local_connect=True):
     """
-    Takes in the receptor and the docked ligand and produces a tree version of this data. Calculated using Kruskal's and
+    Takes in the receptor and the docked ligand and produces a tree version of this working_data. Calculated using Kruskal's and
     networkx.
     Note: This could likely be done much more efficiently, but not sure if this will be the bottleneck so can refactor
     if required.
@@ -105,7 +105,7 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
 
 def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, visualize=None):
     """
-    Takes in the receptor and the docked ligand and produces a graph data.
+    Takes in the receptor and the docked ligand and produces a graph working_data.
     :param ligand: oddt.toolkit.Molecule object
             Molecules, which are analysed in order to find interactions.
     :param protein: oddt.toolkit.Molecule object

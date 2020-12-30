@@ -14,7 +14,7 @@ from pgn.datasets.PGDataset import PGDataset
 
 class OneVsManyDataset(PGDataset):
     """
-    This dataset is used to load data that is one receptor and many ligands. The pdb is loaded and all mol files are
+    This dataset is used to load working_data that is one receptor and many ligands. The pdb is loaded and all mol files are
     loaded then an pg is constructed for each ligand with the receptor.
     """
     def __init__(self, args):
@@ -32,7 +32,7 @@ class OneVsManyDataset(PGDataset):
         name = data['Name']
         mol = data['mol']
         inputs = []
-        for i, molecule in tqdm(enumerate(name), prefix="Formating raw data for graph creation"):
+        for i, molecule in tqdm(enumerate(name), prefix="Formating raw working_data for graph creation"):
             inputs.append((receptor, mol[i], energy[i], molecule))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:

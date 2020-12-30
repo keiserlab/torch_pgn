@@ -92,7 +92,7 @@ def parse_transforms(transforms):
 def format_data_directory(args):
     data_path = args.data_path
     if len(os.listdir(data_path)) != 0:
-        raise ValueError("--data_path points to a non-empty directory. If the data has already been preprocessed. Please"
+        raise ValueError("--data_path points to a non-empty directory. If the working_data has already been preprocessed. Please"
                          "use the --construct_graphs False argument")
     os.mkdir(osp.join(data_path, 'raw'))
     os.mkdir(osp.join(data_path, 'processed'))

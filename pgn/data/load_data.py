@@ -128,7 +128,7 @@ def load_proximity_graphs(args):
 def _load_data_cross_validation(args):
     """
     Helper function to keep main function from getting to complicated and clutter. Handles the loading and returning
-    or data when cross-validation will be used to train and evaluate/select the model.
+    or working_data when cross-validation will be used to train and evaluate/select the model.
     :param args: The Argument object.
     :return: The datasets specified by args (either train alone if load_test is set to False or both train and test).
     """
@@ -186,7 +186,7 @@ def _load_data_cross_validation(args):
 
 def _save_splits(base_dir, train, validation, test):
     """
-    Helper function to save the data splits.
+    Helper function to save the working_data splits.
     :param base_dir: The base_directory to write the splits directory containing the saved splits
     :param train: Tuple(train_dataset, train_index)
     :param validation: Tuple(validation_dataset, validation_index) .

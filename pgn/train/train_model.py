@@ -20,9 +20,9 @@ def train_model(args, train_data, validation_data, test_data=None):
     Function to run a complete run of training. The function also constructs the model and writes the output of the
     training to the specified model directory (see documentation).
     :param args: The TrainArgs container that contains the training parameters and settings
-    :param train_data: The training data as a ProximityGraphDataset
-    :param validation_data: The validation data as a ProximityGraphDatatset
-    :param test_data: The testing data as a ProximityGraphDataset (defaults to None for training instances where the
+    :param train_data: The training working_data as a ProximityGraphDataset
+    :param validation_data: The validation working_data as a ProximityGraphDatatset
+    :param test_data: The testing working_data as a ProximityGraphDataset (defaults to None for training instances where the
     held out test-set is not used for evaluation)
     :return: The best best model from training as determined by validation score and a dictionary of the metrics to
     evaluate validation performance.
@@ -47,7 +47,7 @@ def train_model(args, train_data, validation_data, test_data=None):
                                      timeout=0)
 
     save_dir = args.save_dir
-    # Format the save_dir for the output of training data
+    # Format the save_dir for the output of training working_data
     make_save_directories(save_dir)
 
     model = model.to(args.device)

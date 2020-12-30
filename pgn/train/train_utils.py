@@ -26,7 +26,7 @@ def format_batch(train_args, data):
 def rmse_loss(predicted, actual, num_graphs):
     """
     Returns the RMSE loss for given predicted and ground_truth values for a given number of graphs (batch size)
-    :param predicted: The output of the model on the given batch of data
+    :param predicted: The output of the model on the given batch of working_data
     :param actual: The ground truth value for the given graphs
     :param num_graphs: The number of graphs being evaluated
     :return: The average RMSE loss over the given graphs.
@@ -36,7 +36,7 @@ def rmse_loss(predicted, actual, num_graphs):
 def mse_loss(predicted, actual, num_graphs):
     """
     Returns the MSE loss for given predicted and ground_truth values for a given number of graphs (batch size)
-    :param predicted: The output of the model on the given batch of data
+    :param predicted: The output of the model on the given batch of working_data
     :param actual: The ground truth value for the given graphs
     :param num_graphs: The number of graphs being evaluated (not used)
     :return: The average MSE loss over the given graphs.
@@ -66,9 +66,9 @@ def make_save_directories(save_directory):
             "The specified save directory (save_dir) does not exist. Please create an empty directory with this "
             "path or specify a different path."
         )
-    # Save the pytorch model data and the arguments json to this directory
+    # Save the pytorch model working_data and the arguments json to this directory
     model_dir = osp.join(save_directory, "model")
-    # The results of the training: i.e. data splits, predicted vs. actual for specified data sets, any plots specified etc.
+    # The results of the training: i.e. working_data splits, predicted vs. actual for specified working_data sets, any plots specified etc.
     results_dir = osp.join(save_directory, "results")
     os.mkdir(model_dir)
     os.mkdir(results_dir)
@@ -76,9 +76,9 @@ def make_save_directories(save_directory):
 
 def predict(model, data_loader, args, progress_bar=True, return_labels=False):
     """
-    Return the result when the specified model is applied to the data in the data_loader
+    Return the result when the specified model is applied to the working_data in the data_loader
     :param model: The model being used to predict
-    :param data_loader: The pytorch_geometric dataloader object containing the data to be evaluated.
+    :param data_loader: The pytorch_geometric dataloader object containing the working_data to be evaluated.
     :param args: The TrainArgs object that contains the required accessory arguments
     :param return_labels: Boolean toggle of whether to collect and return the labels at the same time as generating
     the predictions. This is useful when the dataset being analyzed in shuffled

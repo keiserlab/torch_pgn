@@ -12,7 +12,7 @@ import pickle
 def _renumber_nodes(ligand_nodes, protein_nodes):
     """
     Takes the ligand nodes and protein nodes and renumbers them base zero to comply with the PyTorch convention for
-    input data. The ligand nodes will start at zero and the receptor nodes begin numbering thereafter.
+    input working_data. The ligand nodes will start at zero and the receptor nodes begin numbering thereafter.
     :param ligand_nodes: A set of nodes in the ligand.
     :param protein_nodes: A set of node in the receptor.
     :return: A ligand dictionary and a receptor dictionary that takes in the old number and outputs the safe node numbering.

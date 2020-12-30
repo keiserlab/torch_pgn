@@ -6,8 +6,8 @@ from pgn.train.train_utils import load_checkpoint
 from pgn.train.cross_validate_model import cross_validation
 
 class Trainer():
-    """Class that loaders and holds the arguments and data objects. Allows for easy evaluation and retraining when the
-    same data is going to be used multiple times."""
+    """Class that loaders and holds the arguments and working_data objects. Allows for easy evaluation and retraining when the
+    same working_data is going to be used multiple times."""
     def __init__(self, args):
         #Need to see if this is going to work with subparsers
         self.args = args
@@ -27,10 +27,10 @@ class Trainer():
 
     def set_hyperopt_args(self, hyperopt_args, reload_data=False):
         """
-        Changes the arguments used for training. The data arguments must be the same as initialization args unless
+        Changes the arguments used for training. The working_data arguments must be the same as initialization args unless
         load_data is set to true
         :param hyperopt_args: The new argument object.
-        :param reload_data: Bool toggle to determine whether the data will be reloaded.
+        :param reload_data: Bool toggle to determine whether the working_data will be reloaded.
         :return: None
         """
         self.args = hyperopt_args

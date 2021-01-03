@@ -4,6 +4,8 @@ import torch
 from sklearn.model_selection import KFold
 import numpy as np
 
+from copy import deepcopy
+
 import os.path as osp
 import os
 
@@ -30,22 +32,24 @@ def cross_validation(args, train_data):
     evals = []
     while fold < folds:
 
-        train_index, valid_index = _split_dataset(train_index, fold, folds)
+        fold_train_index, fold_valid_index = _split_dataset(train_index, fold, folds)
+        print(train_index)
+        print(fold_train_index)
 
         with torch.no_grad():
         # Normalize targets and dist
             if norm_targets:
-                train_data.data.y, label_stats = normalize_targets(train_data, index=train_index)
+                train_data.data.y, label_stats = normalize_targets(train_data, index=fold_train_index)
                 args.label_mean, args.label_std = label_stats
 
             if norm_dist:
                 train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
-                                                                              index=train_index)
+                                                                              index=fold_train_index)
                 args.distance_mean, args.distance_std = dist_stats
 
             # Split datasets
-            fold_train = train_data[train_index]
-            fold_valid = train_data[valid_index]
+            fold_train = train_data[fold_train_index]
+            fold_valid = train_data[fold_valid_index]
 
         fold_dir = osp.join(base_dir, 'cv_fold_{0}'.format(fold))
         args.save_dir = fold_dir
@@ -78,6 +82,6 @@ def _split_dataset(index, fold, num_folds):
     print(num_examples, valid_percent, valid_size)
     valid_begin, valid_end = valid_size * fold, valid_size * fold + valid_size
     valid_index = index[valid_begin:valid_end]
-    train_index = index
+    train_index = deepcopy(index)
     del train_index[valid_begin:valid_end]
     return train_index, valid_index

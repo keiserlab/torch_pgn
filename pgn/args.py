@@ -158,6 +158,9 @@ class DataArgs(Tap):
     save_splits: bool = False
     """Write the training/validation/test splits to the """
 
+    train_index: List = None
+    """Stores the index of the training set in order to ensure no dataset contamination."""
+
     ###################### Dataloader Args #############################################################################
     enable_molgraph: bool = True
     """Include molgraph attribute in dataset to enable use with dmpnn"""

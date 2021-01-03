@@ -33,8 +33,6 @@ def cross_validation(args, train_data):
     while fold < folds:
 
         fold_train_index, fold_valid_index = _split_dataset(train_index, fold, folds)
-        print(train_index)
-        print(fold_train_index)
 
         with torch.no_grad():
         # Normalize targets and dist

@@ -160,9 +160,6 @@ def _load_data_cross_validation(args):
         train_index = list(permutations[train_begin:train_end])
         test_index = list(permutations[test_begin:test_end])
 
-        test_dataset = train_dataset[test_index]
-        train_dataset = train_dataset[train_index]
-
 
     elif split_type == 'defined':
 

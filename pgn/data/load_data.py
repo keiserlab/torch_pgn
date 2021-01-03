@@ -157,11 +157,11 @@ def _load_data_cross_validation(args):
         test_begin, test_end = 0, int(args.test_percent * num_examples)
         train_begin, train_end = test_end, num_examples
 
-        train_index = permutations[train_begin:train_end]
-        test_index = permutations[test_begin:test_end]
+        train_index = list(permutations[train_begin:train_end])
+        test_index = list(permutations[test_begin:test_end])
 
-        test_dataset = train_dataset[list(test_index)]
-        train_dataset = train_dataset[list(train_index)]
+        test_dataset = train_dataset[test_index]
+        train_dataset = train_dataset[train_index]
 
 
     elif split_type == 'defined':

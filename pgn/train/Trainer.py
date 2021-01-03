@@ -34,6 +34,7 @@ class Trainer():
         :return: None
         """
         self.args = hyperopt_args
+        self.args.process_args()
         if reload_data:
             self.load_data()
 

@@ -17,7 +17,6 @@ SPACE = {
     #'depth': hp.quniform('depth', low=2, high=6, q=1),
     'dropout': hp.quniform('dropout', low=0.0, high=0.4, q=0.05),
     'ffn_num_layers': hp.quniform('ffn_num_layers', low=1, high=5, q=1),
-    'nn_conv_dropout_prob': hp.quniform('nn_conv_dropout_prob', low=0.0, high=0.4, q=0.05),
     'fp_dim': hp.quniform('fp_dim', low=1024, high=8192, q=1024)
 }
 

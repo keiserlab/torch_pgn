@@ -150,13 +150,19 @@ def _load_data_cross_validation(args):
         train_dataset.data = transforms(train_dataset.data)
 
         num_examples = len(train_dataset.data.name)
-        # TODO: make this truly random by using shuffled indexing
+
+        rand = np.random.RandomState(args.seed)
+        permutations = rand.choice(num_examples, num_examples)
 
         test_begin, test_end = 0, int(args.test_percent * num_examples)
         train_begin, train_end = test_end, num_examples
 
-        test_dataset = train_dataset[test_begin: test_end]
-        train_dataset = train_dataset[train_begin:train_end]
+        train_index = permutations[train_begin:train_end]
+        test_index = permutations[test_begin:test_end]
+
+        test_dataset = train_dataset[list(test_index)]
+        train_dataset = train_dataset[list(train_index)]
+
 
     elif split_type == 'defined':
 
@@ -176,6 +182,8 @@ def _load_data_cross_validation(args):
 
     args.node_dim = train_dataset.data.x.numpy().shape[1]
     args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
+
+    args.train_index = train_index
 
     if load_test:
         return train_dataset, test_dataset

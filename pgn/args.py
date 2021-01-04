@@ -246,6 +246,9 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
             self.fp_dim = self.nn_conv_in_dim * 2
         #Depricate seperate dropout probability for nn_conv and ff
         self.nn_conv_dropout_prob = self.dropout_prob
+        if self.dataset_type == 'fp':
+            self.normalize_dist = False
+            self.encoder_type = 'fp'
 
 
 

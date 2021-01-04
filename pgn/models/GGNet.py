@@ -3,9 +3,8 @@ import torch.nn.functional as F
 from torch.nn import ReLU, Sequential, Linear, BatchNorm1d, Dropout, GRU
 
 from torch_geometric.nn import NNConv, Set2Set
-
 from pgn.args import TrainArgs
-from pgn.models.nn_utils import get_sparse_fnctn, get_pool_function
+
 
 class GGNet(torch.nn.Module):
     """Stock network from QM9 prediction paper gilmer et. al"""

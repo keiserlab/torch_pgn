@@ -34,10 +34,9 @@ class FPDataset():
         self.df = df
 
     def write_fps(self):
-        names = self.df[NAME_COLUMN].values
-        fps = self.df[self.fp_column].values
+        names = np.array(self.df[NAME_COLUMN].values).astype(str)
+        fps = np.vstack(self.df[self.fp_column].values)
         labels = self.df[self.label_col_name].values
-        print(fps)
         base_dir = osp.join(self.data_path, 'raw', 'train')
         np.save(osp.join(base_dir, 'names.npy'), names)
         np.save(osp.join(base_dir, 'labels.npy'), labels)

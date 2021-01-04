@@ -1,13 +1,7 @@
-import sys
-sys.path.append('~/pgn')
-sys.path.append('~/git/pgn/')
-
-import os.path as osp
-
 from pgn.datasets.OneVsManyDataset import OneVsManyDataset
 from pgn.datasets.ManyVsManyDataset import ManyVsManyDataset
-from pgn.data.ProximityGraphDataset import ProximityGraphDataset
-from pgn.data.data_utils import format_data_directory, split_test_graphs
+from pgn.datasets.FPDataset import FPDataset
+from pgn.data.data_utils import format_data_directory
 from pgn.args import DataArgs
 
 
@@ -19,11 +13,10 @@ def process_raw(args: DataArgs):
             ManyVsManyDataset(args)
         elif args.dataset_type == 'one_v_many':
             OneVsManyDataset(args)
+        elif args.dataset_type == 'fp':
+            FPDataset(args)
         else:
             raise ValueError("Please input a valid dataset type.")
-
-    if args.split_type == 'defined':
-        split_test_graphs(args.data_path, args.label_file)
 
 
 if __name__ == "__main__":

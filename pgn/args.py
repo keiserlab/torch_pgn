@@ -95,7 +95,7 @@ class DataArgs(Tap):
     raw_mol_path: str = None
     """Path to the mol file used to construct all Proximity Graphs in OneVsMany datasets."""
 
-    dataset_type: Literal['one_v_many', 'many_v_many']
+    dataset_type: Literal['one_v_many', 'many_v_many', 'fp']
     """The type of dataset being loaded. The choice are one_v_many, which is when you have many ligands bound to a 
     single receptor. The other type of supported dataset is for many receptor ligand pairs. See dataset object
     documentation for further details.
@@ -114,7 +114,7 @@ class DataArgs(Tap):
     transforms: List[str] = ['one_hot']
     """Transforms to apply to the dataset."""
 
-    split_type: Literal['random', 'defined', 'defined_test']
+    split_type: Literal['random', 'defined', 'defined_test'] = 'random'
     """The mode used to split the working_data into train, validation and test. Random will randomly split the working_data. Defined
     will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading
     defined train and test splits (validation will be randomly picked from train)."""
@@ -161,12 +161,22 @@ class DataArgs(Tap):
     train_index: List = None
     """Stores the index of the training set in order to ensure no dataset contamination."""
 
+    fp_format: Literal['sparse', 'dense'] = 'sparse'
+    """The format of the fingerprints in the raw_data directory if the dataset type == fp."""
+
+    fp_column: str = 'fp'
+    """The name of the column that contains the raw_fp data for loading with fp dataset type."""
+
+    fp_dim: int = 4096
+    """The dimension of the output feature vector from the encoder for either pfp or fp dataset types."""
+
     ###################### Dataloader Args #############################################################################
     enable_molgraph: bool = True
     """Include molgraph attribute in dataset to enable use with dmpnn"""
 
     enable_interacting_mask: bool = True
     """Include molgraph attribute in dataset to enable use with dmpnn"""
+
 
 
     def process_args(self):

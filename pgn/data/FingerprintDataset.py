@@ -36,7 +36,7 @@ class FingerprintDataset(InMemoryDataset):
         names = np.load(osp.join(base_dir, 'names.npy'))
         labels = np.load(osp.join(base_dir, 'labels.npy'))
         fps = np.load(osp.join(base_dir, 'fps.npy'))
-        for idx in range(len(names)):
+        for idx in tqdm(range(len(names))):
             fp = torch.from_numpy(fps[idx, :]).type(torch.FloatTensor)
             y = torch.from_numpy(np.array([labels[idx]])).type(torch.FloatTensor)
             name = names[idx]

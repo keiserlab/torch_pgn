@@ -2,6 +2,7 @@ from pgn.data.data_utils import (parse_transforms,
                                  normalize_targets, normalize_distance
                                  )
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
+from pgn.data.FingerprintDataset import FingerprintDataset
 
 import torch
 import numpy as np
@@ -11,7 +12,7 @@ import os
 # TODO: Add a little bit more though into how we want to do defined splits. Probably have an option for only having
 #  a defined test set i.e. defined_test option in split type
 
-
+# TODO: Change name to reflect loading FPs
 def load_proximity_graphs(args):
     """
     #TODO
@@ -28,6 +29,7 @@ def load_proximity_graphs(args):
     norm_dist = args.normalize_dist
     load_test = args.load_test
     cross_validate = args.cross_validate
+    dataset_type = args.dataset_type
 
     if cross_validate:
         return _load_data_cross_validation(args)
@@ -35,9 +37,11 @@ def load_proximity_graphs(args):
     torch.manual_seed(seed)
 
     if split_type == 'random':
-
-        train_dataset = ProximityGraphDataset(args)
-        train_dataset.data = transforms(train_dataset.data)
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
 
         num_examples = len(train_dataset.data.name)
 
@@ -69,8 +73,11 @@ def load_proximity_graphs(args):
 
         num_examples = train_names.shape[0] + valid_names.shape[0] + test_names.shape[0]
 
-        train_dataset = ProximityGraphDataset(data_path,
-                                              include_dist=include_dist)
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
 
         test_index = _split_data(train_dataset, test_names)
         train_index = _split_data(train_dataset, train_names)
@@ -89,8 +96,12 @@ def load_proximity_graphs(args):
 
         split_dir = args.split_dir
         train_names, valid_names, test_names = _load_splits(split_dir)
-        train_dataset = ProximityGraphDataset(data_path,
-                                              include_dist=include_dist)
+
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
 
         test_index = _split_data(train_dataset, test_names)
         train_index = _split_data(train_dataset, train_names)
@@ -105,8 +116,9 @@ def load_proximity_graphs(args):
     else:
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
-    args.node_dim = train_dataset.data.x.numpy().shape[1]
-    args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
+    if dataset_type != 'fp':
+        args.node_dim = train_dataset.data.x.numpy().shape[1]
+        args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
 
     if norm_targets:
         train_dataset.data.y, label_stats = normalize_targets(train_dataset, index=train_index)
@@ -141,13 +153,17 @@ def _load_data_cross_validation(args):
     include_dist = args.include_dist
     norm_dist = args.normalize_dist
     load_test = args.load_test
+    dataset_type = args.dataset_type
 
     torch.manual_seed(seed)
 
     if split_type == 'random':
 
-        train_dataset = ProximityGraphDataset(args)
-        train_dataset.data = transforms(train_dataset.data)
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
 
         num_examples = len(train_dataset.data.name)
 
@@ -165,8 +181,11 @@ def _load_data_cross_validation(args):
 
         train_begin, train_end = args.train_splits
 
-        train_dataset = ProximityGraphDataset(data_path, include_dist=include_dist)
-        train_dataset.data = transforms(train_dataset.data)
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
 
         train_dataset = train_dataset[train_begin:train_end]
 
@@ -177,8 +196,9 @@ def _load_data_cross_validation(args):
     else:
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
-    args.node_dim = train_dataset.data.x.numpy().shape[1]
-    args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
+    if dataset_type != 'fp':
+        args.node_dim = train_dataset.data.x.numpy().shape[1]
+        args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
 
     args.train_index = train_index
 

@@ -41,7 +41,8 @@ def hyperopt(args):
     def objective(hyperparams):
 
         for key in INT_KEYS:
-            hyperparams[key] = int(hyperparams[key])
+            if key in hyperparams:
+                hyperparams[key] = int(hyperparams[key])
 
         hyper_args = deepcopy(args)
 

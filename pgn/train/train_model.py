@@ -154,11 +154,16 @@ def train_model(args, train_data, validation_data, test_data=None):
         if args.load_test:
             plot_correlation(model=model,
                              args=args,
+                             mean=args.label_mean,
+                             std=args.label_std,
                              data_loader=test_dataloader,
-                             filename='valid_correlation',
+                             filename='test_correlation',
                              metrics=test_eval
                              )
 
-        return model, validation_eval
+        if args.load_test:
+            return model, validation_eval, test_eval
+        else:
+            return model, validation_eval
 
 

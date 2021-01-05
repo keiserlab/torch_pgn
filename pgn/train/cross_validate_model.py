@@ -27,6 +27,8 @@ def cross_validation(args, train_data):
     norm_targets = args.normalize_targets
     norm_dist = args.normalize_dist
     train_index = args.train_index
+    # Ensure the test set is not loaded.
+    args.load_test = False
 
     fold = 0
     evals = []

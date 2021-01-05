@@ -9,7 +9,7 @@ args = HyperoptArgs()
 
 args.from_dict({'raw_data_path': '/srv/home/zgaleday/IG_data/pdbbind_general_16384/formatted_plec.csv',
                 'data_path': '/srv/home/zgaleday/IG_data/pgn_pdbbind_general_plec_16384/',
-                'search_keys': ['fp_dim', 'ffn_num_layers', 'dropout'],
+                'search_keys': ['ffn_hidden_size', 'ffn_num_layers', 'dropout'],
                 'dataset_type': 'fp',
                 'encoder_type': 'fp',
                 'split_type': 'random',

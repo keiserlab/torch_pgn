@@ -4,7 +4,7 @@ import numpy as np
 from pgn.train.train_utils import predict
 
 
-def plot_correlation(model, args, data_loader, metrics=None, filename='train_correlation', fit=True):
+def plot_correlation(model, args, data_loader, mean=0, std=1, metrics=None, filename='train_correlation', fit=True):
     """
     Simple method to plot correlations for a model.
     :param model: The model to be evaluated
@@ -15,6 +15,8 @@ def plot_correlation(model, args, data_loader, metrics=None, filename='train_cor
     :return: None (saved plot to savedir results file).
     """
     predictions, labels = predict(model, data_loader, args, return_labels=True)
+    predictions = (predictions * std) + mean
+    labels = (labels * std) + mean
     save_file = osp.join(args.save_dir, 'results', filename)
     fig, ax = plt.subplots(1, 1)
     ax.scatter(labels, predictions, alpha=0.2)

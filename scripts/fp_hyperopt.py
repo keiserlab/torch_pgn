@@ -12,6 +12,7 @@ args.from_dict({'raw_data_path': '/srv/home/zgaleday/IG_data/pdbbind_general_163
                 'search_keys': ['ffn_hidden_size', 'ffn_num_layers', 'dropout'],
                 'dataset_type': 'fp',
                 'encoder_type': 'fp',
+                'fp_dim': 1024*16,
                 'split_type': 'random',
                 'construct_graphs': False,
                 'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/pdbbind_general_rand_fp_hyper',

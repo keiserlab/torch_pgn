@@ -257,6 +257,7 @@ class HyperoptArgs(TrainArgs):
     """The number of iterations of model optimization to be run"""
     minimize_score: bool = True
     """Whether the score is minimized or maximized during hyperparameter optimization."""
+    search_keys: List = ['fp_dim', 'ffn_num_layers', 'dropout', 'ffn_hidden_size']
 
 
 

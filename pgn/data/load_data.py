@@ -91,8 +91,8 @@ def load_proximity_graphs(args):
         rand = np.random.RandomState(args.seed)
         permutations = rand.choice(len(train_index), len(train_index))
 
-        valid_index = np.array(train_index)[list(permutations[:valid_end])]
-        train_index = np.array(train_index)[list(permutations[train_begin:])]
+        valid_index = list(np.array(train_index)[list(permutations[:valid_end])])
+        train_index = list(np.array(train_index)[list(permutations[train_begin:])])
 
         validation_dataset = train_dataset[valid_index]
         test_dataset = train_dataset[test_index]

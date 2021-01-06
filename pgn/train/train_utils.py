@@ -74,7 +74,7 @@ def make_save_directories(save_directory):
     os.mkdir(results_dir)
 
 
-def predict(model, data_loader, args, progress_bar=True, return_labels=False):
+def predict(model, data_loader, args, progress_bar=True, return_labels=False, remove_norm=False):
     """
     Return the result when the specified model is applied to the working_data in the data_loader
     :param model: The model being used to predict
@@ -93,6 +93,9 @@ def predict(model, data_loader, args, progress_bar=True, return_labels=False):
         labels.append(data.y.detach().cpu().numpy())
     preds = np.hstack(preds)
     labels = np.hstack(labels)
+    if remove_norm:
+        preds = preds * float(args.label_std) + float(args.label_mean)
+        labels = labels * float(args.label_std) + float(args.label_mean)
     if return_labels:
         return preds, labels
     else:

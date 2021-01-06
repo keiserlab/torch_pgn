@@ -26,19 +26,23 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     args.split_type = 'defined_test'
     args.split_dir = split_path
     args.load_test = True
+    args.num_workers = 0
+    args.epochs = epochs
+    args.cross_validate = False
+    args.validation_percent = 0.1
     base_dir = final_path
     for iter in range(repeats):
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
         os.mkdir(save_dir)
         args.save_dir = save_dir
         args.seed = np.random.randint(0, 1e4)
-        args.epochs = epochs
-        args.cross_validate = False
-        args.validation_percent = 0.1
         trainer = run_training(args)
         val_evals.append(trainer.valid_eval)
         test_evals.append(trainer.test_eval)
         label_stats.append((float(args.label_mean), float(args.label_std)))
+        # Cleanup
+        trainer = None
+        del trainer
     df = _format_evals(val_evals, test_evals, label_stats)
     df.to_csv(osp.join(base_dir, 'eval_stats.csv'))
 

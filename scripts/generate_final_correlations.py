@@ -65,4 +65,10 @@ def _format_evals(val_evals, test_evals, label_stats):
             evals['test_' + key].append(test_evals[idx][key])
     return pd.DataFrame(evals)
 
-
+if __name__ == '__main__':
+    checkpoint_path = sys.argv[1]
+    final_path = sys.argv[2]
+    split_path = sys.argv[3]
+    device = sys.argv[4]
+    epochs = int(sys.argv[5])
+    generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs)

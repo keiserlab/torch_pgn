@@ -22,7 +22,7 @@ for i in range(len(checkpoint_dirs)):
     final_dir = final_dirs[i]
     checkpoint_path = osp.join(base_dir, model_dir, check_dir, 'best_checkpoint.pt')
     split_path = osp.join(base_dir, model_dir, 'splits')
-    final_path = osp.join(base_dir, model_dir, 'repeats', final_dir)
+    final_path = osp.join(base_dir, 'repeats', final_dir)
     device = 'cuda:3'
     try:
         generate_final_correlations(checkpoint_path, final_path, split_path, device)

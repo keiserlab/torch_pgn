@@ -14,9 +14,7 @@ def plot_correlation(model, args, data_loader, mean=0, std=1, metrics=None, file
     :param fit: Boolean toggle for whether to include a trendline on the plot.
     :return: None (saved plot to savedir results file).
     """
-    predictions, labels = predict(model, data_loader, args, return_labels=True)
-    predictions = (predictions * float(std)) + float(mean)
-    labels = (labels * float(std)) + float(mean)
+    predictions, labels = predict(model, data_loader, args, return_labels=True, remove_norm=True)
     save_file = osp.join(args.save_dir, 'results', filename)
     fig, ax = plt.subplots(1, 1)
     ax.scatter(labels, predictions, alpha=0.2)

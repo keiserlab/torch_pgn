@@ -64,6 +64,11 @@ def cross_validation(args, train_data):
         del model
         torch.cuda.empty_cache()
 
+        if norm_targets:
+            train_data.data.y = (train_data.data.y * args.label_std) + args.label_mean
+
+        if norm_dist:
+            train_data.data.edge_attr[:, 0] = (train_data.data.edge_attr[:, 0] * args.distance_std) + args.distance_mean
 
     return None, evals
 

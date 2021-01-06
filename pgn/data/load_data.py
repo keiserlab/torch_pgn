@@ -71,7 +71,10 @@ def load_proximity_graphs(args):
         train_names, valid_names, test_names = _load_splits(split_dir)
         train_names = np.hstack((train_names, valid_names))
 
-        num_examples = train_names.shape[0] + valid_names.shape[0] + test_names.shape[0]
+        if valid_names is not None:
+            num_examples = train_names.shape[0] + valid_names.shape[0] + test_names.shape[0]
+        else:
+            num_examples = train_names.shape[0] + test_names.shape[0]
 
         if dataset_type == 'fp':
             train_dataset = FingerprintDataset(args)
@@ -176,6 +179,10 @@ def _load_data_cross_validation(args):
         train_index = list(permutations[train_begin:train_end])
         test_index = list(permutations[test_begin:test_end])
 
+        if args.save_splits:
+            _save_splits(args.save_dir, (train_dataset, train_index),
+                         test=(train_dataset[test_index], test_index))
+
 
     elif split_type == 'defined':
 
@@ -202,6 +209,8 @@ def _load_data_cross_validation(args):
 
     args.train_index = train_index
 
+
+
     if load_test:
         return train_dataset, test_dataset
 
@@ -209,7 +218,7 @@ def _load_data_cross_validation(args):
         return train_dataset
 
 
-def _save_splits(base_dir, train, validation, test):
+def _save_splits(base_dir, train, test, validation=None):
     """
     Helper function to save the working_data splits.
     :param base_dir: The base_directory to write the splits directory containing the saved splits
@@ -236,11 +245,15 @@ def _load_splits(split_dir):
     :return: the name lists for each of the defined splits (train, valid, test).
     """
     train_path = osp.join(split_dir, 'train.npy')
-    valid_path = osp.join(split_dir, 'validation.npy')
+    try:
+        valid_path = osp.join(split_dir, 'validation.npy')
+        valid_name = np.load(valid_path)
+    except:
+        valid_name = None
+        print("No validation_splits")
     test_path = osp.join(split_dir, 'test.npy')
 
     train_name = np.load(train_path)
-    valid_name = np.load(valid_path)
     test_name = np.load(test_path)
 
     return train_name, valid_name, test_name

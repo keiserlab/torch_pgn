@@ -4,7 +4,7 @@ from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
 import numpy as np
 
-def evaluate(model, data_loader, args, metrics, mean=0, std=1):
+def evaluate(model, data_loader, args, metrics, mean=0, std=1, remove_norm=True):
     """
     Function used to evaluate the model performance on a given dataset.
     :param model: The model to be evaluated.
@@ -17,7 +17,7 @@ def evaluate(model, data_loader, args, metrics, mean=0, std=1):
     """
     predictions, labels = predict(model=model,
                           data_loader=data_loader,
-                          args=args, return_labels=True)
+                          args=args, return_labels=True, remove_norm=remove_norm)
 
     results = {}
     if 'rmse' in metrics:

@@ -85,7 +85,8 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    args=args,
                                    metrics=args.metrics,
                                    mean=args.label_mean,
-                                   std=args.label_std)
+                                   std=args.label_std,
+                                   remove_norm=False)
 
         print(f'Train loss_{loss_fucntion} = {train_loss:.4e}')
         print("Validation evaluation: ", validation_eval)

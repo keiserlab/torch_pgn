@@ -34,7 +34,7 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
         args.seed = np.random.randint(0, 1e4)
         args.epochs = epochs
         args.cross_validate = False
-        args.validation_percent = 0.2
+        args.validation_percent = 0.1
         trainer = run_training(args)
         val_evals.append(trainer.valid_eval)
         test_evals.append(trainer.test_eval)

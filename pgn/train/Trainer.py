@@ -47,7 +47,7 @@ class Trainer():
             self.model, self.valid_eval = cross_validation(self.args, self.train_data)
         else:
             if self.args.load_test:
-                self.model, self.valid_eval, self.test_eval = train_model(self.args, self.train_data, self.valid_data)
+                self.model, self.valid_eval, self.test_eval = train_model(self.args, self.train_data, self.valid_data, self.test_data)
             else:
                 self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
 

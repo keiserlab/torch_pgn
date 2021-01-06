@@ -26,6 +26,7 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     test_evals = []
     label_stats = []
     args = load_checkpoint(checkpoint_path, device=device, return_args=True)[1]
+    args.construct_graphs = False
     args.split_type = 'defined_test'
     args.split_dir = split_path
     args.load_test = True

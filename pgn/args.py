@@ -232,6 +232,7 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
     tensorboard_logging: bool = True
     """Whether or not to track model training with tensorboard."""
+    mode: Literal['experiment', 'evaluate'] = 'experiment'
 
     def process_args(self):
         if self.ff_dim_1 is None:
@@ -249,7 +250,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
         if self.dataset_type == 'fp':
             self.normalize_dist = False
             self.encoder_type = 'fp'
-
+        if self.mode == 'evaluate':
+            self.load_test = True
 
 
 class HyperoptArgs(TrainArgs):

@@ -12,14 +12,6 @@ import json
 
 from pgn.train.Trainer import Trainer
 
-SPACES = {
-    'ffn_hidden_size': hp.quniform('ffn_hidden_size', low=200, high=2400, q=100),
-    'depth': hp.quniform('depth', low=2, high=6, q=1),
-    'dropout': hp.quniform('dropout', low=0.0, high=0.4, q=0.05),
-    'ffn_num_layers': hp.quniform('ffn_num_layers', low=1, high=5, q=1),
-    'fp_dim': hp.choice('fp_dim', [1024, 4096, 8192])
-}
-
 
 INT_KEYS = ['ffn_hidden_size', 'fp_dim', 'ffn_num_layers']
 
@@ -30,6 +22,15 @@ def hyperopt(args):
     and training.
     :return: None
     """
+    SPACES = {
+        'ffn_hidden_size': hp.quniform('ffn_hidden_size', low=200, high=1400, q=200),
+        'depth': hp.quniform('depth', low=3, high=6, q=1),
+        'dropout': hp.quniform('dropout', low=0.0, high=0.4, q=0.1),
+        'ffn_num_layers': hp.quniform('ffn_num_layers', low=1, high=5, q=1),
+        'fp_dim': hp.choice('fp_dim', [1024, 4096, 8192])
+    }
+
+
     results = []
     trainer = Trainer(args)
     trainer.load_data()

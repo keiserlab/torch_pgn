@@ -43,7 +43,7 @@ class Trainer():
         if self.args.cross_validate:
             self.model, self.valid_eval = cross_validation(self.args, self.train_data)
         else:
-            self.model, self.valid_eval, self.test_eval = train_model(self.args, self.train_data, self.valid_data)
+            self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
 
     def get_score(self):
         """

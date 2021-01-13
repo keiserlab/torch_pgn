@@ -47,10 +47,6 @@ def train_model(args, train_data, validation_data, test_data=None):
         valid_dataloader = DataListLoader(validation_data, batch_size=args.batch_size,
                                       num_workers=num_workers, shuffle=False,
                                       timeout=0)
-        if args.load_test is True:
-            test_dataloader = DataListLoader(test_data, batch_size=args.batch_size,
-                                         num_workers=num_workers, shuffle=False,
-                                         timeout=0)
     else:
         train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
                                       num_workers=num_workers, shuffle=True,
@@ -58,10 +54,11 @@ def train_model(args, train_data, validation_data, test_data=None):
         valid_dataloader = DataLoader(validation_data, batch_size=args.batch_size,
                                       num_workers=num_workers, shuffle=False,
                                       timeout=0)
-        if args.load_test is True:
-            test_dataloader = DataLoader(test_data, batch_size=args.batch_size,
-                                         num_workers=num_workers, shuffle=False,
-                                         timeout=0)
+
+    if args.mode == 'experiment':
+        validation_name = 'validation'
+    if args.mode == 'evaluate':
+        validation_name = 'test'
 
     save_dir = args.save_dir
     # Format the save_dir for the output of training working_data
@@ -107,15 +104,15 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    std=args.label_std,
                                    remove_norm=False)
 
-        print(f'Train loss_{loss_fucntion} = {train_loss:.4e}')
-        print("Validation evaluation: ", validation_eval)
+        print(f'Train loss_{args.loss_function} = {train_loss:.4e}')
+        print(f"{validation_name} evaluation: ", validation_eval)
 
         if args.weight_decay:
             writer.add_scalar(f'learning_rate', lr, epoch + 1)
 
         writer.add_scalar(f'train loss_{args.loss_function}', train_loss, epoch+1)
         for metric, value in validation_eval.items():
-            writer.add_scalar(f'validation_{metric}', value, epoch+1)
+            writer.add_scalar(f'{validation_name}_{metric}', value, epoch+1)
 
 
         validation_loss = validation_eval[args.loss_function]
@@ -147,14 +144,6 @@ def train_model(args, train_data, validation_data, test_data=None):
                                mean=args.label_mean,
                                std=args.label_std)
 
-    if args.load_test:
-        test_eval = evaluate(model=model,
-                               data_loader=test_dataloader,
-                               args=args,
-                               metrics=args.metrics,
-                               mean=args.label_mean,
-                               std=args.label_std)
-
 
     if args.plot_correlations:
         plot_correlation(model=model,
@@ -167,23 +156,10 @@ def train_model(args, train_data, validation_data, test_data=None):
         plot_correlation(model=model,
                          args=args,
                          data_loader=valid_dataloader,
-                         filename='valid_correlation',
+                         filename=f'{validation_name}_correlation',
                          metrics=validation_eval
                          )
 
-        if args.load_test:
-            plot_correlation(model=model,
-                             args=args,
-                             mean=args.label_mean,
-                             std=args.label_std,
-                             data_loader=test_dataloader,
-                             filename='test_correlation',
-                             metrics=test_eval
-                             )
-
-        if args.load_test:
-            return model, validation_eval, test_eval
-        else:
-            return model, validation_eval
+        return model, validation_eval
 
 

@@ -71,7 +71,7 @@ class PFPEncoder(torch.nn.Module):
             readout = self.sparsify(intermediate)
             # skip connections if specified or final message passing step to readout vector
             if self.skip_connections or i == self.depth - 1:
-                fingerprint = fingerprint + readout
+                fingerprint = fingerprint.to(readout.device) + readout
         fingerprint = fingerprint.squeeze()
         if self.fp_norm:
             return self.norm_layer(fingerprint)

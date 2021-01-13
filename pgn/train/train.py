@@ -23,7 +23,8 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
     total_loss = 0
 
     for batch in tqdm(data_loader):
-        batch = batch.to(device)
+        if not train_args.multi_gpu:
+            batch = batch.to(device)
         optimizer.zero_grad()
         loss = loss_function(model(format_batch(train_args, batch)), batch.y, batch.num_graphs)
         loss.backward()

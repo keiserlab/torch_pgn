@@ -29,7 +29,7 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
         optimizer.zero_grad()
         if train_args.multi_gpu:
             y = torch.cat([data.y for data in batch]).to(device)
-            num_graphs = sum([data.num_graphs for data in batch])
+            num_graphs = len(batch)
         else:
             y = batch.y
             num_graphs = batch.num_graphs

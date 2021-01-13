@@ -55,8 +55,8 @@ def train_model(args, train_data, validation_data, test_data=None):
     # Format the save_dir for the output of training working_data
     make_save_directories(save_dir)
 
-    torch.cuda.set_device(args.device)
     if args.device != 'cpu':
+        torch.cuda.set_device(args.device)
         model.cuda(args.device)
 
     lr = args.lr

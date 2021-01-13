@@ -7,11 +7,13 @@ from pgn.evaluate.plot_utils import plot_correlation
 from torch.utils.tensorboard import SummaryWriter
 
 
+
 import os.path as osp
 
 from tqdm import trange
 
 from torch_geometric.data import DataLoader
+from torch_geometric.nn import DataParallel
 import torch
 
 
@@ -33,6 +35,9 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     model = PFPNetwork(args, args.node_dim, args.edge_dim)
 
+    if args.multi_gpu == True:
+        model = DataParallel(model)
+
     torch.manual_seed(args.seed)
 
     train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
@@ -50,7 +55,9 @@ def train_model(args, train_data, validation_data, test_data=None):
     # Format the save_dir for the output of training working_data
     make_save_directories(save_dir)
 
-    model = model.to(args.device)
+    torch.cuda.set_device(args.device)
+    if args.device != 'cpu':
+        model.cuda(args.device)
 
     lr = args.lr
     #TODO: Add options to allow for optimizer choice

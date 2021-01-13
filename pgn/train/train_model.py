@@ -12,7 +12,7 @@ import os.path as osp
 
 from tqdm import trange
 
-from torch_geometric.data import DataLoader
+from torch_geometric.data import DataLoader, DataListLoader
 from torch_geometric.nn import DataParallel
 import torch
 
@@ -40,16 +40,28 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     torch.manual_seed(args.seed)
 
-    train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
-                                  num_workers=num_workers, shuffle=True,
-                                  timeout=0)
-    valid_dataloader = DataLoader(validation_data, batch_size=args.batch_size,
-                                  num_workers=num_workers, shuffle=False,
-                                  timeout=0)
-    if args.load_test is True:
-        test_dataloader = DataLoader(test_data, batch_size=args.batch_size,
-                                     num_workers=num_workers, shuffle=False,
-                                     timeout=0)
+    if args.multi_gpu:
+        train_dataloader = DataListLoader(train_data, batch_size=args.batch_size,
+                                      num_workers=num_workers, shuffle=True,
+                                      timeout=0)
+        valid_dataloader = DataListLoader(validation_data, batch_size=args.batch_size,
+                                      num_workers=num_workers, shuffle=False,
+                                      timeout=0)
+        if args.load_test is True:
+            test_dataloader = DataListLoader(test_data, batch_size=args.batch_size,
+                                         num_workers=num_workers, shuffle=False,
+                                         timeout=0)
+    else:
+        train_dataloader = DataLoader(train_data, batch_size=args.batch_size,
+                                      num_workers=num_workers, shuffle=True,
+                                      timeout=0)
+        valid_dataloader = DataLoader(validation_data, batch_size=args.batch_size,
+                                      num_workers=num_workers, shuffle=False,
+                                      timeout=0)
+        if args.load_test is True:
+            test_dataloader = DataLoader(test_data, batch_size=args.batch_size,
+                                         num_workers=num_workers, shuffle=False,
+                                         timeout=0)
 
     save_dir = args.save_dir
     # Format the save_dir for the output of training working_data

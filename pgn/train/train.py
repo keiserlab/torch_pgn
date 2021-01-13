@@ -35,7 +35,7 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
             num_graphs = batch.num_graphs
         loss = loss_function(model(format_batch(train_args, batch)), y, num_graphs)
         loss.backward()
-        total_loss += loss.item() * batch.num_graphs
+        total_loss += loss.item() * num_graphs
         optimizer.step()
 
     return total_loss / len(data_loader.dataset)

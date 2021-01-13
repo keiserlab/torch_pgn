@@ -50,7 +50,7 @@ class PFPEncoder(torch.nn.Module):
 
     def forward(self, data):
         # Define output vector
-        fingerprint = torch.zeros(self.fp_dim, dtype=torch.float32, requires_grad=True, device=self.device)
+        fingerprint = torch.zeros(self.fp_dim, dtype=torch.float32, requires_grad=True, device=data.device)
         # Expand atom featurization for input to NNConv
         # print(working_data.x.size())
         message = self.atom_expand_nn(data.x)

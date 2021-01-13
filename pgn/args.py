@@ -233,6 +233,10 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     tensorboard_logging: bool = True
     """Whether or not to track model training with tensorboard."""
     mode: Literal['experiment', 'evaluate'] = 'experiment'
+    """Whether the model is being used to experimentally tune model performace (evaluated with the validation set)
+    or evaluate model performance (test set)."""
+    multi_gpu: bool = False
+    """Whether to train the model across multiple gpus or not."""
 
     def process_args(self):
         if self.ff_dim_1 is None:

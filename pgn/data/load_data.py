@@ -52,18 +52,26 @@ def load_proximity_graphs(args):
         test_begin, test_end = valid_end, int(args.test_percent * num_examples) + valid_end
         train_begin, train_end = test_end, num_examples
 
-        train_index = permutations[train_begin:train_end]
-        valid_index = permutations[valid_begin:valid_end]
+        if args.mode == 'experiment':
+            train_index = permutations[train_begin:train_end]
+            valid_index = permutations[valid_begin:valid_end]
+        else:
+            train_index = permutations[train_begin:valid_end]
         test_index = permutations[test_begin:test_end]
 
-        validation_dataset = train_dataset[list(valid_index)]
+        if args.mode == 'experiment':
+            validation_dataset = train_dataset[list(valid_index)]
         test_dataset = train_dataset[list(test_index)]
         train_dataset = train_dataset[list(train_index)]
 
         if args.save_splits:
-            _save_splits(args.save_dir, (train_dataset, train_index),
-                         validation=(validation_dataset, valid_index),
-                         test=(test_dataset, test_index))
+            if args.mode == 'experiment':
+                _save_splits(args.save_dir, (train_dataset, train_index),
+                             validation=(validation_dataset, valid_index),
+                             test=(test_dataset, test_index))
+            else:
+                _save_splits(args.save_dir, (train_dataset, train_index),
+                             test=(test_dataset, test_index))
 
     elif split_type == 'defined_test':
         # TODO: make sure error handling of no split dir happens somewhere
@@ -85,16 +93,18 @@ def load_proximity_graphs(args):
         test_index = _split_data(train_dataset, test_names)
         train_index = _split_data(train_dataset, train_names)
 
-        valid_end = int(args.validation_percent * num_examples)
-        train_begin = valid_end
 
-        rand = np.random.RandomState(args.seed)
-        permutations = rand.choice(len(train_index), len(train_index))
 
-        valid_index = list(np.array(train_index)[list(permutations[:valid_end])])
-        train_index = list(np.array(train_index)[list(permutations[train_begin:])])
+        if args.mode == 'experiment':
+            valid_end = int(args.validation_percent * num_examples)
+            train_begin = valid_end
+            rand = np.random.RandomState(args.seed)
+            permutations = rand.choice(len(train_index), len(train_index))
+            valid_index = list(np.array(train_index)[list(permutations[:valid_end])])
+            train_index = list(np.array(train_index)[list(permutations[train_begin:])])
+            validation_dataset = train_dataset[valid_index]
 
-        validation_dataset = train_dataset[valid_index]
+
         test_dataset = train_dataset[test_index]
         train_dataset = train_dataset[train_index]
 
@@ -113,9 +123,14 @@ def load_proximity_graphs(args):
         train_index = _split_data(train_dataset, train_names)
         valid_index = _split_data(train_dataset, valid_names)
 
-        validation_dataset = train_dataset[valid_index]
+        if args.mode == 'experiment':
+            validation_dataset = train_dataset[valid_index]
+            train_dataset = train_dataset[train_index]
+        else:
+            train_dataset = [train_index + valid_index]
+
         test_dataset = train_dataset[test_index]
-        train_dataset = train_dataset[train_index]
+
 
 
 
@@ -136,11 +151,10 @@ def load_proximity_graphs(args):
         args.distance_mean, args.distance_std = dist_stats
 
 
-    if load_test:
-        return train_dataset, validation_dataset, test_dataset
-
-    else:
+    if args.mode == 'experiment':
         return train_dataset, validation_dataset
+    else:
+        return train_dataset, test_dataset
 
 
 def _load_data_cross_validation(args):
@@ -212,13 +226,7 @@ def _load_data_cross_validation(args):
 
     args.train_index = train_index
 
-
-
-    if load_test:
-        return train_dataset, test_dataset
-
-    else:
-        return train_dataset
+    return train_dataset
 
 
 def _save_splits(base_dir, train, test, validation=None):

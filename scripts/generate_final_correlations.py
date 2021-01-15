@@ -23,12 +23,12 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     :return: None
     """
     val_evals = []
-    test_evals = []
     label_stats = []
     args = load_checkpoint(checkpoint_path, device=device, return_args=True)[1]
     args.construct_graphs = False
     args.split_type = 'defined_test'
     args.split_dir = split_path
+    args.mode = 'evaluate'
     args.load_test = True
     args.num_workers = 0
     args.epochs = epochs
@@ -44,19 +44,17 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
         args.seed = np.random.randint(0, 1e4)
         trainer = run_training(args)
         val_evals.append(trainer.valid_eval)
-        test_evals.append(trainer.test_eval)
         label_stats.append((float(args.label_mean), float(args.label_std)))
         # Cleanup
         trainer = None
         del trainer
-    df = _format_evals(val_evals, test_evals, label_stats)
+    df = _format_evals(val_evals, label_stats)
     df.to_csv(osp.join(base_dir, 'eval_stats.csv'))
 
 
-def _format_evals(val_evals, test_evals, label_stats):
+def _format_evals(val_evals, label_stats):
     evals = {}
     for key in val_evals[0].keys():
-        evals['val_' + key] = []
         evals['test_' + key] = []
     evals['mean'] = []
     evals['std'] = []
@@ -64,8 +62,7 @@ def _format_evals(val_evals, test_evals, label_stats):
         evals['mean'].append(label_stats[idx][0])
         evals['std'].append(label_stats[idx][1])
         for key in val_evals[idx].keys():
-            evals['val_' + key].append(val_evals[idx][key])
-            evals['test_' + key].append(test_evals[idx][key])
+            evals['test_' + key].append(val_evals[idx][key])
     return pd.DataFrame(evals)
 
 if __name__ == '__main__':

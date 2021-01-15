@@ -88,9 +88,14 @@ def predict(model, data_loader, args, progress_bar=True, return_labels=False, re
     preds = []
     labels = []
     for data in data_loader:
-        data = data.to(args.device)
+        if not args.multi_gpu:
+            data = data.to(args.device)
         preds.append(model(format_batch(args, data)).detach().cpu().numpy())
-        labels.append(data.y.detach().cpu().numpy())
+        if args.multi_gpu:
+            y = torch.cat([data.y for data in data])
+        else:
+            y = data.y
+        labels.append(y.detach().cpu().numpy())
     preds = np.hstack(preds)
     labels = np.hstack(labels)
     if remove_norm:
@@ -108,6 +113,7 @@ def get_labels(data_loader):
     :param data_loader: dataloader to be get the ground truth values from
     :return: A labels array (np)
     """
+    #TODO: Maybe delete this function, I think predict is used in every case.
     labels = []
     for data in data_loader:
         labels.append(data.y.detach().cpu().numpy())

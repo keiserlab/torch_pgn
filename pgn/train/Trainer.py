@@ -20,10 +20,7 @@ class Trainer():
         if self.args.cross_validate:
             self.train_data = load_proximity_graphs(self.args)
         else:
-            if self.args.load_test:
-                self.train_data, self.valid_data, self.test_data = load_proximity_graphs(self.args)
-            else:
-                self.train_data, self.valid_data = load_proximity_graphs(self.args)
+            self.train_data, self.valid_data = load_proximity_graphs(self.args)
 
     def set_hyperopt_args(self, hyperopt_args, reload_data=False):
         """
@@ -46,10 +43,7 @@ class Trainer():
         if self.args.cross_validate:
             self.model, self.valid_eval = cross_validation(self.args, self.train_data)
         else:
-            if self.args.load_test:
-                self.model, self.valid_eval, self.test_eval = train_model(self.args, self.train_data, self.valid_data, self.test_data)
-            else:
-                self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
+            self.model, self.valid_eval = train_model(self.args, self.train_data, self.valid_data)
 
     def get_score(self):
         """
@@ -72,8 +66,4 @@ class Trainer():
                                       device=self.args.device,
                                       return_args=True)
 
-    def evaluate_test_set(self):
-        """
-        Evaluated the test set setting test_val to evaluation metrics and plotting mean corrected correlations
-        :return: None
-        """
+

@@ -89,8 +89,7 @@ def predict(model, data_loader, args, progress_bar=True, return_labels=False, re
     labels = []
     for data in data_loader:
         if not args.multi_gpu:
-            data = args.to(args.device)
-
+            data = data.to(args.device)
         preds.append(model(format_batch(args, data)).detach().cpu().numpy())
         if args.multi_gpu:
             y = torch.cat([data.y for data in data])

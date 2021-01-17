@@ -200,6 +200,30 @@ def _load_data_cross_validation(args):
             _save_splits(args.save_dir, (train_dataset, train_index),
                          test=(train_dataset[test_index], test_index))
 
+    elif split_type == 'defined_test':
+        # TODO: make sure error handling of no split dir happens somewhere
+        split_dir = args.split_dir
+        train_names, valid_names, test_names = _load_splits(split_dir)
+        train_names = np.hstack((train_names, valid_names))
+
+        if valid_names is not None:
+            num_examples = train_names.shape[0] + valid_names.shape[0] + test_names.shape[0]
+        else:
+            num_examples = train_names.shape[0] + test_names.shape[0]
+
+        if dataset_type == 'fp':
+            train_dataset = FingerprintDataset(args)
+        else:
+            train_dataset = ProximityGraphDataset(args)
+            train_dataset.data = transforms(train_dataset.data)
+
+        test_index = _split_data(train_dataset, test_names)
+        train_index = _split_data(train_dataset, train_names)
+
+        if args.save_splits:
+            _save_splits(args.save_dir, (train_dataset, train_index),
+                         test=(train_dataset[test_index], test_index))
+
 
     elif split_type == 'defined':
 

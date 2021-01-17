@@ -15,6 +15,7 @@ checkpoint_dirs = ['dropout_0p15000000000000002_ffn_hidden_size_1900_ffn_num_lay
 
 
 final_dirs = ['PLEC_pdbbind_general_random', 'PGN_pdbbind_refined', 'PGN_pdbbind_general']
+epochs = [100, 250, 400]
 
 for i in range(len(checkpoint_dirs)):
     model_dir = model_dirs[i]
@@ -25,6 +26,6 @@ for i in range(len(checkpoint_dirs)):
     final_path = osp.join(base_dir, 'repeats', final_dir)
     device = 'cuda:3'
     try:
-        generate_final_correlations(checkpoint_path, final_path, split_path, device)
+        generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs[i])
     except:
         pass

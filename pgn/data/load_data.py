@@ -46,7 +46,7 @@ def load_proximity_graphs(args):
         num_examples = len(train_dataset.data.name)
 
         rand = np.random.RandomState(args.seed)
-        permutations = rand.choice(num_examples, num_examples)
+        permutations = rand.permutation(num_examples)
 
         valid_begin, valid_end = 0, int(args.validation_percent * num_examples)
         test_begin, test_end = valid_end, int(args.test_percent * num_examples) + valid_end
@@ -99,7 +99,7 @@ def load_proximity_graphs(args):
             valid_end = int(args.validation_percent * num_examples)
             train_begin = valid_end
             rand = np.random.RandomState(args.seed)
-            permutations = rand.choice(len(train_index), len(train_index))
+            permutations = rand.permutation(len(train_index))
             valid_index = list(np.array(train_index)[list(permutations[:valid_end])])
             train_index = list(np.array(train_index)[list(permutations[train_begin:])])
             validation_dataset = train_dataset[valid_index]
@@ -188,7 +188,7 @@ def _load_data_cross_validation(args):
         num_examples = len(train_dataset.data.name)
 
         rand = np.random.RandomState(args.seed)
-        permutations = rand.choice(num_examples, num_examples)
+        permutations = rand.permutation(num_examples)
 
         test_begin, test_end = 0, int(args.test_percent * num_examples)
         train_begin, train_end = test_end, num_examples

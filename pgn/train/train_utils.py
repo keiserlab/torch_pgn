@@ -19,10 +19,11 @@ import os
 from torch_geometric.nn import DataParallel
 
 def format_batch(train_args, data):
+    data = data.to(train_args.device)
     if train_args.encoder_type == 'dmpnn':
         return BatchProxGraph(data.molgraph, train_args.node_dim, train_args.edge_dim)
     else:
-        return data.to(train_args.device)
+        return data
 
 
 def rmse_loss(predicted, actual, num_graphs):

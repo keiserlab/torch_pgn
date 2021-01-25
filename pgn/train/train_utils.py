@@ -20,7 +20,6 @@ from torch_geometric.nn import DataParallel
 
 def format_batch(train_args, data):
     if train_args.encoder_type == 'dmpnn':
-        data.molgraph.to(train_args.device)
         return BatchProxGraph(data.molgraph, train_args.node_dim, train_args.edge_dim)
     else:
         return data.to(train_args.device)

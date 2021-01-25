@@ -24,8 +24,6 @@ def train(model, data_loader, loss_function, optimizer, scheduler,
     total_loss = 0
 
     for batch in tqdm(data_loader):
-        if not train_args.multi_gpu:
-            batch = batch.to(device)
         optimizer.zero_grad()
         if train_args.multi_gpu:
             y = torch.cat([data.y for data in batch]).to(device)

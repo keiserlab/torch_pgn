@@ -22,7 +22,7 @@ class MPNEncoder(torch.nn.Module):
         self.atom_fdim = atom_fdim
         self.bond_fdim = bond_fdim + atom_fdim
         self.atom_messages = False
-        self.hidden_size = args.fp_dim
+        self.hidden_size = args.hidden_dim
         self.bias = False
         self.depth = 3
         self.dropout = args.nn_conv_dropout_prob

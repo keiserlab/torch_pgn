@@ -16,6 +16,8 @@ import numpy as np
 import os.path as osp
 import os
 
+from torch_geometric.nn import DataParallel
+
 def format_batch(train_args, data):
     if train_args.encoder_type == 'dmpnn':
         return BatchProxGraph(data.molgraph, train_args.node_dim, train_args.edge_dim)
@@ -150,9 +152,13 @@ def save_checkpoint(path, model, args):
     """
     if args is not None:
         args = Namespace(**args.as_dict())
+    if args.multi_gpu:
+        state_dict = model.module.state_dict()
+    else:
+        state_dict = model.state_dict()
     state = {
         'args': args,
-        'state_dict': model.state_dict(),
+        'state_dict': state_dict,
     }
     torch.save(state, path)
 
@@ -176,6 +182,9 @@ def load_checkpoint(path, device, return_args=False):
     model = PFPNetwork(args, args.node_dim, args.edge_dim)
     model.load_state_dict(model_state_dict)
     model.to(device)
+
+    if args.multi_gpu:
+        model = DataParallel(model)
 
     if return_args:
         return model, args

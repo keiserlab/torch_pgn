@@ -114,6 +114,10 @@ class DataArgs(Tap):
     transforms: List[str] = ['one_hot']
     """Transforms to apply to the dataset."""
 
+    ligand_only: bool = False
+    """Whether to make a ligand only dataset (i.e. proximity edges and protein atoms are excluded. The raw data
+    processing remains the same, but a ligand only pre-transform is applied during ProximityGraphDataset loading."""
+
     split_type: Literal['random', 'defined', 'defined_test'] = 'random'
     """The mode used to split the working_data into train, validation and test. Random will randomly split the working_data. Defined
     will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading

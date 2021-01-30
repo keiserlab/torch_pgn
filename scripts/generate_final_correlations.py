@@ -33,9 +33,6 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     args.num_workers = 0
     args.epochs = epochs
     args.cross_validate = False
-    args.multi_gpu = True
-    args.validation_percent = 0.2
-    args.batch_size = 512
     base_dir = final_path
     for iter in range(repeats):
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))

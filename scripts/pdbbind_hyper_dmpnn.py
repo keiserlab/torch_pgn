@@ -11,18 +11,22 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 'raw_mol_path': '/srv/nas/mk2/projects/D4_screen/working_data/Results/Test_Code/medium_diverse_stratified.mol2',
                 'data_path': '/srv/home/zgaleday/IG_data/pdb_bind_random/',
                 'dataset_type': 'many_v_many',
+                'encoder_type': 'dmpnn',
                 'split_type': 'defined_test',
+                'split_dir': '/srv/home/zgaleday/IG_data/refined_protein_splits',
                 'construct_graphs': False,
-                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_pgn_protein_splits',
+                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_dmpnn_protein_splits',
                 'device': 'cuda:1',
-                'epochs': 200,
+                'epochs': 100,
                 'cv_folds': 5,
                 'save_splits': True,
                 'num_iters': 20,
 		'num_workers': 0,
 		'batch_size': 128,
+                'multi_gpu': False,
 		'weight_decay': True,
-                'split_dir': '/srv/home/zgaleday/IG_data/general_protein_splits' 
+                'split_dir': '/srv/home/zgaleday/IG_data/general_protein_splits',
+                'search_keys': ['depth', 'ffn_num_layers', 'dropout', 'ffn_hidden_size'] 
                 })
 args.process_args()
 

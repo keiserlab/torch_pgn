@@ -13,14 +13,16 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 'dataset_type': 'one_v_many',
                 'split_type': 'random',
                 'construct_graphs': False,
-                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/d4_pgn_splits',
-                'device': 'cuda:1',
+                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/d4_final_pgn',
+                'device': 'cuda:6',
                 'epochs': 150,
                 'cv_folds': 5,
                 'save_splits': True,
                 'num_iters': 20,
                 'batch_size': 128,
-                'num_workers': 0})
+                'num_workers': 0,
+                'multi_gpu': False,
+                'weight_decay': True})
 args.process_args()
 
 print(args)

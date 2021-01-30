@@ -25,18 +25,14 @@ def parse_chunk(chunk_id, mol_name):
 exp_df = pd.read_csv(TEST_FILE)
 
 mol2_list = []
-for zid, chunk in tqdm(zip(exp_df['ZINC ID'].values, exp_df['chunk'].values)):
+for zid, chunk in tqdm(zip(exp_df['ZINC ID'], exp_df['chunk'])):
     print(zid)
     mol2_list.append(parse_chunk(chunk, zid))
 
-mols = []
-names = []
-for mol2 in mol2_list:
-    for _, mol, name in mol2.itertuples():
-        mols.append(mol)
-        names.append(name)
 
-data_dict = {'mol': mols, 'mol_name': names}
-mol_df_final = opd.ChemDataFrame(data=data_dict)
 
-mol_df_final.to_mol2(osp.join(OUTDIR, 'experimental_ds.mol2'))
+#full_mol2 = mol2_list[0]
+full_mol2 = pd.concat(mol2_list)
+print(full_mol2)
+
+full_mol2.to_mol2(osp.join(OUTDIR, 'experimental_ds.mol2'))

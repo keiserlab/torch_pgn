@@ -14,17 +14,19 @@ args.from_dict({'raw_data_path': '/srv/home/zgaleday/IG_data/pdbbind_refined_163
                 'encoder_type': 'fp',
                 'fp_dim': 1024*16,
                 'split_type': 'random',
-                'construct_graphs': True,
-                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/pdbbind_refined_rand_PLEC_hyper',
-                'device': 'cuda:5',
-                'epochs': 30,
+                'construct_graphs': False,
+                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_PLEC',
+                'device': 'cuda:3',
+                'epochs': 100,
                 'cv_folds': 5,
                 'save_splits': True,
                 'num_iters': 15,
                 'num_workers': 0,
                 'label_col': 2,
-                'batch_size': 128,
-                'weight_decay': True})
+                'batch_size': 1024,
+                'weight_decay': True,
+                'multi_gpu': False })
+                # 'split_dir': '/srv/home/zgaleday/IG_data/refined_protein_splits'})
 args.process_args()
 
 print(args)

@@ -26,6 +26,18 @@ class OneHotTransform(object):
         data.x = torch.from_numpy(data.x).type(torch.FloatTensor).to(device)
         return data
 
+class LigandOnlyPretransform(object):
+    """
+    Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and removes
+    any interaction edges/protein atoms from the graph.
+    """
+    def __call__(self, data):
+        device = data.x.device
+        x = data.x.to_numpy
+        num_nodes = x.shape[0]
+        ligand_index = np.arange(num_nodes)[data.x[:, -1] == 1]
+        print(ligand_index)
+
 
 def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True):
     """

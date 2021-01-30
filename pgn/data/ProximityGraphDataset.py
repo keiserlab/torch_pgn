@@ -7,6 +7,8 @@ from torch_geometric.data import Data
 
 from tqdm import tqdm
 
+from pgn.data.data_utils import LigandOnlyPretransform
+
 """
 Code to load in the processed InteractionGraphs to pytorch geometric.
 """
@@ -17,6 +19,10 @@ class ProximityGraphDataset(InMemoryDataset):
         self.include_dist = args.include_dist
         self.enable_interacting_mask = args.enable_interacting_mask
         self.enable_molgraph = args.enable_molgraph
+        self.args = args
+        self.transform = transform
+        self.pre_transform = pre_transform
+        self.parse_pre_transforms()
         self.mode = 'train'
         super(ProximityGraphDataset, self).__init__(args.data_path, transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
@@ -33,6 +39,10 @@ class ProximityGraphDataset(InMemoryDataset):
 
     def download(self):
         pass
+
+    def parse_pre_transforms(self):
+        if self.args.ligand_only:
+            self.pre_transform = LigandOnlyPretransform()
 
     def process(self):
         data_list = []

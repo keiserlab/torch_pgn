@@ -54,11 +54,11 @@ class PGDataset(ABC):
         :return: None
         """
         current_dir = osp.join(self.data_path, 'raw', 'train', prefix)
-        if osp.isdir(current_dir):
-            count = 1
-            while osp.isdir(current_dir):
-                current_dir = osp.join(self.data_path, 'raw', 'train', prefix + '_pose{0}'.format(count))
-                count += 1
+        # if osp.isdir(current_dir):
+        #     count = 1
+        #     while osp.isdir(current_dir):
+        #         current_dir = osp.join(self.data_path, 'raw', 'train', prefix + '_pose{0}'.format(count))
+        #         count += 1
         prefix = prefix + '_'
         nodes = np.array(G.nodes)
         edges = G.edges

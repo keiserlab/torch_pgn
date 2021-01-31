@@ -7,7 +7,7 @@ from torch_geometric.data import Data
 
 from tqdm import tqdm
 
-from pgn.data.data_utils import LigandOnlyPretransform
+from pgn.data.data_utils import LigandOnlyPretransform, RemoveProximityEdgesPretransform
 
 """
 Code to load in the processed InteractionGraphs to pytorch geometric.
@@ -41,6 +41,8 @@ class ProximityGraphDataset(InMemoryDataset):
         pass
 
     def parse_pre_transforms(self):
+        if self.args.interaction_edges_removed:
+            self.pre_transform = RemoveProximityEdgesPretransform()
         if self.args.ligand_only:
             self.pre_transform = LigandOnlyPretransform()
 

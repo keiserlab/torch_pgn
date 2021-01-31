@@ -51,6 +51,32 @@ class LigandOnlyPretransform(object):
         return data
 
 
+class RemoveProximityEdgesPretransform(object):
+    """
+    Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and removes
+    any interaction edges/protein atoms from the graph.
+    """
+    def __call__(self, data):
+        x = data.x.numpy()
+        edge_index = data.edge_index.numpy()
+        edge_attr = data.edge_attr.numpy()
+        num_nodes = x.shape[0]
+        ligand_index = np.arange(num_nodes)[data.x[:, -1] == 1]
+        protein_index = np.arange(num_nodes)[data.x[:, -1] == 0]
+        ligand_edge_mask = np.isin(edge_index, ligand_index)
+        ligand_edge_mask = np.logical_and(ligand_edge_mask[0, :], ligand_edge_mask[1, :])
+        protein_edge_mask = np.isin(edge_index, protein_index)
+        protein_edge_mask = np.logical_and(protein_edge_mask[0, :], protein_edge_mask[1, :])
+        edge_mask = np.logical_or(ligand_edge_mask, protein_edge_mask)
+        edge_index = edge_index[:, edge_mask]
+        edge_attr = edge_attr[edge_mask, :]
+        edge_index = torch.from_numpy(edge_index).type(torch.LongTensor)
+        edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
+        data.edge_index = edge_index
+        data.edge_attr = edge_attr
+        return data
+
+
 def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True):
     """
     Normalizes the training target to have mean 0 and stddev 1

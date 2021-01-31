@@ -27,7 +27,7 @@ class MPNEncoder(torch.nn.Module):
         self.depth = 3
         self.dropout = args.nn_conv_dropout_prob
         self.layers_per_message = 1
-        self.undirected = args.directed
+        self.undirected = args.mpnn_directed
         self.use_input_features = False
         self.device = args.device
         self.aggregation = args.nn_conv_aggr

@@ -42,6 +42,8 @@ class EncoderArgs(Tap):
     skip_connections: bool = True
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
         vectors by adding the readout after each message passing step to the final readout vector."""
+    mpnn_direct: bool = True
+    """Toggle whether to use directed message passing for the dmpnn encoder type."""
 
 
 class FFArgs(Tap):
@@ -82,8 +84,8 @@ class DataArgs(Tap):
     ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
     a decent amount of time depending upon the dataset size and complexity of the proximity graph."""
 
-    directed: bool = True
-    """Boolean toggle for whether to make the proximity graph undirected. Only valid for use with dmpnn."""
+    directed: bool = False
+    """Boolean toggle for whether to make the proximity graph undirected."""
     #TODO: Figure out how to make certain arguments required conditional upon other requirements.
 
     raw_data_path: str = None

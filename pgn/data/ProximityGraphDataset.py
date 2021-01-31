@@ -83,7 +83,6 @@ class ProximityGraphDataset(InMemoryDataset):
             data_list = [data for data in data_list if self.pre_filter(data)]
 
         if self.pre_transform is not None:
-            print('here')
             data_list = [self.pre_transform(data) for data in data_list]
 
         data, slices = self.collate(data_list)

@@ -32,11 +32,23 @@ class LigandOnlyPretransform(object):
     any interaction edges/protein atoms from the graph.
     """
     def __call__(self, data):
-        device = data.x.device
-        x = data.x.to_numpy
+        x = data.x.numpy()
+        edge_index = data.edge_index.numpy()
+        edge_attr = data.edge_attr.numpy()
         num_nodes = x.shape[0]
         ligand_index = np.arange(num_nodes)[data.x[:, -1] == 1]
-        print(ligand_index)
+        x = x[ligand_index, :]
+        edge_mask = np.isin(edge_index, ligand_index)
+        edge_mask = np.logical_and(edge_mask[0, :], edge_mask[1, :])
+        edge_index = edge_index[:, edge_mask]
+        edge_attr = edge_attr[edge_mask, :]
+        x = torch.from_numpy(x).type(torch.FloatTensor)
+        edge_index = torch.from_numpy(edge_index).type(torch.LongTensor)
+        edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
+        data.x = x
+        data.edge_index = edge_index
+        data.edge_attr = edge_attr
+        return data
 
 
 def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True):

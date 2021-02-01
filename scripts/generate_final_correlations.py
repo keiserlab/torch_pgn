@@ -12,7 +12,7 @@ import os.path as osp
 import os
 
 
-def generate_final_correlations(checkpoint_path, final_path, split_path, device, repeats=5, epochs=300):
+def generate_final_correlations(checkpoint_path, final_path, split_path, device, repeats=5, epochs=300, data_path=None, control=None):
     """
     Loads the checkpoint. Gives a random seed and generates <repeats> models with the same hyperparamters and different initialization.
     :param checkpoint_path: The path of the checkpoint file to load the args from.
@@ -33,6 +33,13 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     args.num_workers = 0
     args.epochs = epochs
     args.cross_validate = False
+    if control is not None:
+        if control == 'ligand':
+            args.ligand_only = True
+        elif control == 'PE':
+            args.interaction_edges_removed = True
+    if data_path is not None:
+        args.data_path = data_path
     base_dir = final_path
     for iter in range(repeats):
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
@@ -68,4 +75,9 @@ if __name__ == '__main__':
     split_path = sys.argv[3]
     device = sys.argv[4]
     epochs = int(sys.argv[5])
-    generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs)
+    data_path = None
+    control = None
+    if len(sys.argv) > 6:
+        data_path = sys.argv[6]
+        control = sys.argv[7]
+    generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs, data_path=data_path, control=control)

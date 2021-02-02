@@ -37,7 +37,7 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     if args.straw_model and args.encoder_type != 'fp':
         for param in model.encoder.parameters():
-            param.required_grad = False
+            param.requires_grad = False
 
     for param in model.encoder.parameters():
         print(param)

@@ -30,15 +30,16 @@ class PGDataset(ABC):
         for i, entry in tqdm(enumerate(self.graphs)):
             name, graph, energy = entry
             current_dir = osp.join(self.data_path, 'raw', 'train', name)
-            os.mkdir(current_dir)
-            if i % 100 == 0:
-                print("Writing " + name)
-            node_num = len(graph.nodes)
-            edge_num = len(graph.edges)
-            label_path = osp.join(current_dir, name + "_label")
-            label = np.array(([energy]))
-            np.save(label_path, label)
-            self._write_graph(graph, prefix=name)
+            if not os.path.isdir(current_dir):
+                os.mkdir(current_dir)
+                if i % 100 == 0:
+                    print("Writing " + name)
+                node_num = len(graph.nodes)
+                edge_num = len(graph.edges)
+                label_path = osp.join(current_dir, name + "_label")
+                label = np.array(([energy]))
+                np.save(label_path, label)
+                self._write_graph(graph, prefix=name)
 
     def _write_graph(self, G, prefix=''):
         """

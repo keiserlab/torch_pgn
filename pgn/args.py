@@ -124,6 +124,10 @@ class DataArgs(Tap):
     """Whether to make a ligand/protein only dataset (i.e. proximity edges excluded). The raw data processing remains 
     the same, but a remove interaction edges pre-transform is applied during ProximityGraphDataset loading."""
 
+    straw_model: bool = False
+    """Whether to freeze the encoder params in order to ensure that results perform better than a so-called straw
+    model."""
+
     split_type: Literal['random', 'defined', 'defined_test'] = 'random'
     """The mode used to split the working_data into train, validation and test. Random will randomly split the working_data. Defined
     will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading

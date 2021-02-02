@@ -38,6 +38,8 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
             args.ligand_only = True
         elif control == 'PE':
             args.interaction_edges_removed = True
+        elif control == 'straw':
+            args.straw_model = True
     if data_path is not None:
         args.data_path = data_path
     base_dir = final_path

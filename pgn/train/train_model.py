@@ -35,6 +35,10 @@ def train_model(args, train_data, validation_data, test_data=None):
 
     model = PFPNetwork(args, args.node_dim, args.edge_dim)
 
+    if args.straw_model and args.encoder_type != 'fp':
+        for param in model.encoder.parameters():
+            param.required_grad = False
+
     if args.multi_gpu == True:
         model = DataParallel(model)
 

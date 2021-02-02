@@ -32,7 +32,7 @@ class OneVsManyDataset(PGDataset):
         name = data['Name']
         mol = data['mol']
         inputs = []
-        for i, molecule in tqdm(enumerate(name), prefix="Formating raw working_data for graph creation"):
+        for i, molecule in tqdm(enumerate(name)):
             inputs.append((receptor, mol[i], energy[i], molecule))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:

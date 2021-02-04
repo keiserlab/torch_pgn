@@ -98,7 +98,7 @@ class BatchProxGraph():
         :param mol_graphs: A list of :class:`MolGraph`\ s from which to construct the :class:`BatchMolGraph`.
         """
         self.atom_fdim = atom_fdim
-        self.bond_fdim = bond_fdim + atom_fdim
+        self.bond_fdim = bond_fdim
 
         # Start n_atoms and n_bonds at 1 b/c zero padding
         self.n_atoms = 1  # number of atoms (start at 1 b/c need index 0 as padding)
@@ -112,8 +112,8 @@ class BatchProxGraph():
         a2b = [[]]  # mapping from atom index to incoming bond indices
         b2a = [0]  # mapping from bond index to the index of the atom the bond is coming from
         b2revb = [0]  # mapping from bond index to the index of the reverse bond
+        mol_graphs = [item for sublist in mol_graphs for item in sublist]
         for mol_graph in mol_graphs:
-
             f_atoms.extend(mol_graph.f_atoms)
             f_bonds.extend(mol_graph.f_bonds)
 

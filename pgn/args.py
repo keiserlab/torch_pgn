@@ -42,7 +42,7 @@ class EncoderArgs(Tap):
     skip_connections: bool = True
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
         vectors by adding the readout after each message passing step to the final readout vector."""
-    mpnn_direct: bool = True
+    mpnn_directed: bool = True
     """Toggle whether to use directed message passing for the dmpnn encoder type."""
 
 

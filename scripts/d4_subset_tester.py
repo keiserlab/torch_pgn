@@ -66,7 +66,6 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             args.save_dir = repeat_dir
 
             trainer.args = args
-            trainer.args.process_args()
             trainer.run_training()
 
             val_evals.append(trainer.valid_eval)

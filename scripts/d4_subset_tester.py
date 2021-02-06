@@ -38,6 +38,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
     args.cross_validate = False
     trainer = Trainer(args)
     trainer.load_data()
+    train_data = trainer.train_data
     for subset_size in DATASET_SIZES:
         subset_dir = osp.join(output_dir, 'subset_{0}'.format(subset_size))
         os.mkdir(subset_dir)
@@ -51,13 +52,14 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             permutations = rand.permutation(len(train_names))
 
             train_index = permutations[:subset_size]
+            trainer.train_data = train_data[list(train_index)]
 
             if args.normalize_targets:
-                trainer.train_data.data.y, label_stats = normalize_targets(trainer.train_data, index=train_index)
+                train_data.data.y, label_stats = normalize_targets(train_data, index=train_index)
                 args.label_mean, args.label_std = label_stats
 
             if args.normalize_dist:
-                trainer.train_data.data.edge_attr, dist_stats = normalize_distance(trainer.train_data, args=args,
+                train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
                                                                               index=train_index)
                 args.distance_mean, args.distance_std = dist_stats
 
@@ -72,10 +74,10 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             label_stats.append((float(args.label_mean), float(args.label_std)))
 
             if args.normalize_targets:
-                trainer.train_data.data.y = (trainer.train_data.data.y * args.label_std) + args.label_mean
+                train_data.data.y = (trainer.train_data.data.y * args.label_std) + args.label_mean
 
             if args.normalize_dist:
-                trainer.train_data.data.edge_attr[:, 0] = (trainer.train_data.data.edge_attr[:,
+                train_data.data.edge_attr[:, 0] = (trainer.train_data.data.edge_attr[:,
                                                    0] * args.distance_std) + args.distance_mean
         df = _format_evals(val_evals, label_stats)
         df.to_csv(osp.join(subset_dir, 'eval_stats.csv'))

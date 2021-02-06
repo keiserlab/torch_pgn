@@ -43,7 +43,9 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     if data_path is not None:
         args.data_path = data_path
     base_dir = final_path
+
     for iter in range(repeats):
+
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
         os.mkdir(save_dir)
         args.save_dir = save_dir

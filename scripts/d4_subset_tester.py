@@ -32,6 +32,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
     args.split_type = 'defined_test'
     args.split_dir = split_path
     args.mode = 'evaluate'
+    args.data_path = '~/IG_data/d4_graphs_pgn'
     args.load_test = True
     args.num_workers = 0
     args.cross_validate = False

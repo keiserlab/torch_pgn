@@ -24,7 +24,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
     :return: None
     """
     val_evals = []
-    label_stats = []
+    label_stat_list = []
 
     checkpoint_path = osp.join(source_path, 'repeat_0', 'best_checkpoint.pt')
     args = load_checkpoint(checkpoint_path, device=device, return_args=True)[1]
@@ -71,7 +71,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             trainer.run_training()
 
             val_evals.append(trainer.valid_eval)
-            label_stats.append((float(args.label_mean), float(args.label_std)))
+            label_stat_list.append((float(args.label_mean), float(args.label_std)))
 
             if args.normalize_targets:
                 train_data.data.y = (trainer.train_data.data.y * args.label_std) + args.label_mean
@@ -79,7 +79,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             if args.normalize_dist:
                 train_data.data.edge_attr[:, 0] = (trainer.train_data.data.edge_attr[:,
                                                    0] * args.distance_std) + args.distance_mean
-        df = _format_evals(val_evals, label_stats)
+        df = _format_evals(val_evals, label_stat_list)
         df.to_csv(osp.join(subset_dir, 'eval_stats.csv'))
 
 

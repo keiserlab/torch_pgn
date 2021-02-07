@@ -14,7 +14,7 @@ import os.path as osp
 DATASET_SIZES = [1000, 5000, 10000, 25000, 50000]
 
 
-def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASET_SIZES, repeats=5):
+def test_subsets(source_path, split_path, output_dir, device, data_path, subset_size=DATASET_SIZES, repeats=5):
     """
     A method to test the effect of dataset size on the performance of a model. Takes the result of generate_final_correlations
     as the input and generates a subset with the same test set of the training data. Repeats reruns of this are done.
@@ -37,13 +37,11 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
     args.num_workers = 0
     args.cross_validate = False
     trainer = Trainer(args)
-    trainer.load_data()
-    train_data = trainer.train_data
     for subset_size in DATASET_SIZES:
         subset_dir = osp.join(output_dir, 'subset_{0}'.format(subset_size))
         os.mkdir(subset_dir)
         for repeat in range(repeats):
-
+            trainer.load_data()
             train_names, valid_names, test_names = _load_splits(split_path)
             train_names = np.hstack((train_names, valid_names))
 
@@ -52,14 +50,14 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             permutations = rand.permutation(len(train_names))
 
             train_index = permutations[:subset_size]
-            trainer.train_data = train_data[list(train_index)]
+            trainer.train_data = trainer.train_data[list(train_index)]
 
             if args.normalize_targets:
-                train_data.data.y, label_stats = normalize_targets(train_data, index=train_index)
+                trainer.train_data.data.y, label_stats = normalize_targets(trainer.train_data, index=train_index)
                 args.label_mean, args.label_std = label_stats
 
             if args.normalize_dist:
-                train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
+                trainer.train_data.data.edge_attr, dist_stats = normalize_distance(trainer.train_data, args=args,
                                                                               index=train_index)
                 args.distance_mean, args.distance_std = dist_stats
 
@@ -73,12 +71,7 @@ def test_subsets(source_path, split_path, output_dir, device, subset_size=DATASE
             val_evals.append(trainer.valid_eval)
             label_stat_list.append((float(args.label_mean), float(args.label_std)))
 
-            if args.normalize_targets:
-                train_data.data.y = (trainer.train_data.data.y * args.label_std) + args.label_mean
 
-            if args.normalize_dist:
-                train_data.data.edge_attr[:, 0] = (trainer.train_data.data.edge_attr[:,
-                                                   0] * args.distance_std) + args.distance_mean
         df = _format_evals(val_evals, label_stat_list)
         df.to_csv(osp.join(subset_dir, 'eval_stats.csv'))
 
@@ -101,4 +94,5 @@ if __name__ == '__main__':
     final_path = sys.argv[2]
     split_path = sys.argv[3]
     device = sys.argv[4]
-    test_subsets(source_path, split_path, final_path, device)
+    data_path = sys.argv[5]
+    test_subsets(source_path, split_path, final_path, device, data_path)

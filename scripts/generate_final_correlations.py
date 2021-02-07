@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+
 from pgn.train.Trainer import Trainer
 from pgn.train.train_utils import load_checkpoint
 from pgn.train.run_training import run_training

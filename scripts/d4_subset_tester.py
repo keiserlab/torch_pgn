@@ -14,7 +14,7 @@ import os.path as osp
 DATASET_SIZES = [1000, 5000, 10000, 25000, 50000]
 
 
-def test_subsets(source_path, split_path, output_dir, device, data_path, subset_size=DATASET_SIZES, repeats=5):
+def test_subsets(source_path, split_path, output_dir, device, data_path=None, subset_size=DATASET_SIZES, repeats=5):
     """
     A method to test the effect of dataset size on the performance of a model. Takes the result of generate_final_correlations
     as the input and generates a subset with the same test set of the training data. Repeats reruns of this are done.
@@ -32,7 +32,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path, subset_
     args.split_type = 'defined_test'
     args.split_dir = split_path
     args.mode = 'evaluate'
-    args.data_path = '~/IG_data/d4_graphs_pgn'
+    if data_path is not None:
+        args.data_path = data_path
     args.load_test = True
     args.num_workers = 0
     args.cross_validate = False
@@ -94,5 +95,8 @@ if __name__ == '__main__':
     final_path = sys.argv[2]
     split_path = sys.argv[3]
     device = sys.argv[4]
-    data_path = sys.argv[5]
+    if len(sys.argv) > 5:
+        data_path = sys.argv[5]
+    else:
+        data_path = None
     test_subsets(source_path, split_path, final_path, device, data_path)

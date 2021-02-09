@@ -51,7 +51,7 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
             permutations = rand.permutation(len(train_names))
 
             train_index = permutations[:subset_size]
-            trainer.train_data = trainer.train_data[list(train_index)]
+            trainer.train_data = _split_data(trainer.train_data, train_names[list(train_index)])
 
             if args.normalize_targets:
                 trainer.train_data.data.y, label_stats = normalize_targets(trainer.train_data, index=train_index)

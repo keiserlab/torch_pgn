@@ -4,8 +4,8 @@ sys.path.insert(0, "/srv/home/zgaleday/pgn")
 from pgn.train.Trainer import Trainer
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.train.train_utils import load_checkpoint
-from pgn.data.load_data import _load_splits, _split_data
-from pgn.data.data_utils import normalize_targets, normalize_distance
+from pgn.data.load_data import _load_splits, _split_data, _save_splits
+from pgn.data.data_utils import normalize_targets, normalize_distance, parse_transforms
 
 import numpy as np
 import pandas as pd
@@ -46,33 +46,23 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
             train_names, valid_names, test_names = _load_splits(split_path)
             train_names = np.hstack((train_names, valid_names))
 
-            train_data = ProximityGraphDataset(args)
-
             args.seed = np.random.randint(0, 1e4)
             rand = np.random.RandomState(args.seed)
             permutations = rand.permutation(len(train_names))
 
             train_index = permutations[:subset_size]
-            train_index = _split_data(train_data, train_names[list(train_index)])
-            test_index = _split_data(train_data, test_names)
-            test_data = train_data[test_index]
-            train_data = train_data[train_index]
-
-            if args.normalize_targets:
-                train_data.data.y, label_stats = normalize_targets(train_data, index=train_index)
-                args.label_mean, args.label_std = label_stats
-
-            if args.normalize_dist:
-                train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
-                                                                              index=train_index)
-                args.distance_mean, args.distance_std = dist_stats
+            train_names = train_names[list(train_index)]
 
             repeat_dir = osp.join(subset_dir, 'repeat_{0}'.format(repeat))
             os.mkdir(repeat_dir)
             args.save_dir = repeat_dir
+            current_splits = osp.join(repeat_dir, 'splits')
+            os.mkdir(current_splits)
+            args.split_dir = current_splits
+            np.save(osp.join(current_splits, 'train.npy'), train_names)
+            np.save(osp.join(current_splits, 'test.npy'), test_names)
 
-            trainer.train_data = train_data
-            trainer.valid_data = test_data
+            trainer.load_data(args)
             trainer.args = args
             trainer.run_training()
 

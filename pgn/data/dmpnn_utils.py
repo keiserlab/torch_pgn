@@ -112,10 +112,7 @@ class BatchProxGraph():
         a2b = [[]]  # mapping from atom index to incoming bond indices
         b2a = [0]  # mapping from bond index to the index of the atom the bond is coming from
         b2revb = [0]  # mapping from bond index to the index of the reverse bond
-        try:
-            mol_graphs = [item for sublist in mol_graphs for item in sublist]
-        except:
-            pass
+        mol_graphs = [item for sublist in mol_graphs for item in sublist]
         for mol_graph in mol_graphs:
             f_atoms.extend(mol_graph.f_atoms)
             f_bonds.extend(mol_graph.f_bonds)
@@ -220,14 +217,14 @@ def prox2graph(mols) -> BatchProxGraph:
 class MolGraphTransform(object):
     def __call__(self, data, transforms=None):
         molgraphs = []
-        x_slice = data.molgraph['x']
-        edge_slice = data.molgraph['edge_index']
-        for i in tqdm(range(len(x_slice) - 1)):
-            x_start, x_end = x_slice[i], x_slice[i+1]
-            edge_start, edge_end = edge_slice[i], edge_slice[i+1]
-            input_tuple = ((data.x.numpy()[x_start: x_end, :]),
-                           data.edge_attr.numpy()[edge_start: edge_end, :],
-                           data.edge_index.numpy()[:, edge_start: edge_end])
+        x_ind, edge_ind = 0, 0
+        for molgraph in tqdm(data.molgraph):
+            x_size, edge_size, _ = molgraph
+            input_tuple = ((data.x.numpy()[x_ind: x_ind + x_size, :]),
+                           data.edge_attr.numpy()[edge_ind: edge_ind + edge_size, :],
+                           data.edge_index.numpy()[:, edge_ind: edge_ind + edge_size])
             molgraphs.append(ProxGraph(input_tuple))
+            x_ind += x_size
+            edge_ind += edge_size
         data.molgraph = molgraphs
         return data

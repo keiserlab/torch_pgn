@@ -42,13 +42,14 @@ class LigandOnlyPretransform(object):
         edge_mask = np.logical_and(edge_mask[0, :], edge_mask[1, :])
         edge_index = edge_index[:, edge_mask]
         edge_attr = edge_attr[edge_mask, :]
+        data.molgraph = (x.shape[0], edge_attr.shape[0], edge_index.shape[1])
         x = torch.from_numpy(x).type(torch.FloatTensor)
         edge_index = torch.from_numpy(edge_index).type(torch.LongTensor)
         edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
         data.x = x
         data.edge_index = edge_index
         data.edge_attr = edge_attr
-        data.molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
+
         return data
 
 
@@ -71,11 +72,12 @@ class RemoveProximityEdgesPretransform(object):
         edge_mask = np.logical_or(ligand_edge_mask, protein_edge_mask)
         edge_index = edge_index[:, edge_mask]
         edge_attr = edge_attr[edge_mask, :]
+        data.molgraph = (x.shape[0], edge_attr.shape[0], edge_index.shape[1])
         edge_index = torch.from_numpy(edge_index).type(torch.LongTensor)
         edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
         data.edge_index = edge_index
         data.edge_attr = edge_attr
-        data.molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
+
         return data
 
 

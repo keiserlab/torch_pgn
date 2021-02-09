@@ -59,8 +59,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
             current_splits = osp.join(repeat_dir, 'splits')
             os.mkdir(current_splits)
             args.split_dir = current_splits
-            np.save(osp.join(current_splits, 'train.npy'), train_names)
-            np.save(osp.join(current_splits, 'test.npy'), test_names)
+            np.save(osp.join(current_splits, 'train.npy'), np.array(train_names, dtype=str))
+            np.save(osp.join(current_splits, 'test.npy'), np.array(test_names, dtype=str))
 
             trainer.args = args
             trainer.load_data()

@@ -220,14 +220,14 @@ def prox2graph(mols) -> BatchProxGraph:
 class MolGraphTransform(object):
     def __call__(self, data, transforms=None):
         molgraphs = []
-        x_ind, edge_ind = 0, 0
-        for molgraph in tqdm(data.molgraph):
-            x_size, edge_size, _ = molgraph
-            input_tuple = ((data.x.numpy()[x_ind: x_ind + x_size, :]),
-                           data.edge_attr.numpy()[edge_ind: edge_ind + edge_size, :],
-                           data.edge_index.numpy()[:, edge_ind: edge_ind + edge_size])
+        x_slice = data.molgraph['x']
+        edge_slice = data.molgraph['edge_index']
+        for i in tqdm(range(len(x_slice) - 1)):
+            x_start, x_end = x_slice[i], x_slice[i+1]
+            edge_start, edge_end = edge_slice[i], edge_slice[i+1]
+            input_tuple = ((data.x.numpy()[x_start: x_end, :]),
+                           data.edge_attr.numpy()[edge_start: edge_end, :],
+                           data.edge_index.numpy()[:, edge_start: edge_end])
             molgraphs.append(ProxGraph(input_tuple))
-            x_ind += x_size
-            edge_ind += edge_size
         data.molgraph = molgraphs
         return data

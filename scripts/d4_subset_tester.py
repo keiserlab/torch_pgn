@@ -2,6 +2,7 @@ import sys
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
 from pgn.train.Trainer import Trainer
+from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.train.train_utils import load_checkpoint
 from pgn.data.load_data import _load_splits, _split_data
 from pgn.data.data_utils import normalize_targets, normalize_distance
@@ -42,24 +43,27 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
         subset_dir = osp.join(output_dir, 'subset_{0}'.format(subset_size))
         os.mkdir(subset_dir)
         for repeat in range(repeats):
-            trainer.load_data()
             train_names, valid_names, test_names = _load_splits(split_path)
             train_names = np.hstack((train_names, valid_names))
+
+            train_data = ProximityGraphDataset(args)
 
             args.seed = np.random.randint(0, 1e4)
             rand = np.random.RandomState(args.seed)
             permutations = rand.permutation(len(train_names))
 
             train_index = permutations[:subset_size]
-            train_index = _split_data(trainer.train_data, train_names[list(train_index)])
-            trainer.train_data = trainer.train_data[train_index]
+            train_index = _split_data(train_data, train_names[list(train_index)])
+            test_index = _split_data(train_data, test_names)
+            test_data = train_data[test_index]
+            train_data = train_data[train_index]
 
             if args.normalize_targets:
-                trainer.train_data.data.y, label_stats = normalize_targets(trainer.train_data, index=train_index)
+                train_data.data.y, label_stats = normalize_targets(train_data, index=train_index)
                 args.label_mean, args.label_std = label_stats
 
             if args.normalize_dist:
-                trainer.train_data.data.edge_attr, dist_stats = normalize_distance(trainer.train_data, args=args,
+                train_data.data.edge_attr, dist_stats = normalize_distance(train_data, args=args,
                                                                               index=train_index)
                 args.distance_mean, args.distance_std = dist_stats
 
@@ -67,6 +71,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
             os.mkdir(repeat_dir)
             args.save_dir = repeat_dir
 
+            trainer.train_data = train_data
+            trainer.valid_data = test_data
             trainer.args = args
             trainer.run_training()
 

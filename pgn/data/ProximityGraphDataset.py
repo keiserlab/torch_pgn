@@ -73,9 +73,7 @@ class ProximityGraphDataset(InMemoryDataset):
                 edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
                 pos = torch.from_numpy(np.load(pos_path)).type(torch.FloatTensor)
                 y = torch.from_numpy(np.load(label_path).astype(np.float)).type(torch.FloatTensor)
-                molgraph = None
-                if self.enable_molgraph:
-                    molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
+                molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
                 data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, pos=pos, y=y, name=subdir,
                             mask=interacting_mask, molgraph=molgraph)
                 data_list.append(data)

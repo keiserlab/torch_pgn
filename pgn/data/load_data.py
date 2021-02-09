@@ -293,7 +293,7 @@ def _load_splits(split_dir):
 
     return train_name, valid_name, test_name
 
-
+#TODO: Split this into different file.
 def _split_data(dataset, names):
     mask = np.vectorize(lambda value: value in names)(np.array(dataset.data.name))
     index = list(np.arange(mask.shape[0])[mask])

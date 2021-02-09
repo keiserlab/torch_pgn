@@ -48,6 +48,7 @@ class LigandOnlyPretransform(object):
         data.x = x
         data.edge_index = edge_index
         data.edge_attr = edge_attr
+        data.molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
         return data
 
 
@@ -74,6 +75,7 @@ class RemoveProximityEdgesPretransform(object):
         edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
         data.edge_index = edge_index
         data.edge_attr = edge_attr
+        data.molgraph = (x.numpy().shape[0], edge_attr.numpy().shape[0], edge_index.numpy().shape[1])
         return data
 
 

@@ -56,7 +56,7 @@ class MPNEncoder(torch.nn.Module):
         self.W_o = nn.Linear(self.atom_fdim + self.hidden_size, self.hidden_size)
 
     def forward(self,
-                mol_graph: list,
+                data,
                 features_batch=None):
         """
         Encodes a batch of molecular graphs.
@@ -66,6 +66,8 @@ class MPNEncoder(torch.nn.Module):
         :param atom_descriptors_batch: A list of numpy arrays containing additional atomic descriptors
         :return: A PyTorch tensor of shape :code:`(num_molecules, hidden_size)` containing the encoding of each molecule.
         """
+        molgraph = data.molgraph
+        print(type(data.molgraph))
         mol_graph = BatchProxGraph(mol_graph, self.atom_fdim, self.bond_fdim)
         f_atoms, f_bonds, a2b, b2a, b2revb, a_scope, b_scope = mol_graph.get_components(
             atom_messages=self.atom_messages)

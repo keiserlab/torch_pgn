@@ -68,7 +68,6 @@ class MPNEncoder(torch.nn.Module):
         """
         mol_graph = data.molgraph
         mol_graph = BatchProxGraph(mol_graph, self.atom_fdim, self.bond_fdim)
-        print(self.device, data.x.get_device())
         self.device = data.x.get_device()
         f_atoms, f_bonds, a2b, b2a, b2revb, a_scope, b_scope = mol_graph.get_components(
             atom_messages=self.atom_messages)

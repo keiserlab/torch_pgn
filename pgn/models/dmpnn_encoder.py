@@ -67,15 +67,14 @@ class MPNEncoder(torch.nn.Module):
         :return: A PyTorch tensor of shape :code:`(num_molecules, hidden_size)` containing the encoding of each molecule.
         """
         mol_graph = data.molgraph
-        self.device = self.data.device
         mol_graph = BatchProxGraph(mol_graph, self.atom_fdim, self.bond_fdim)
         f_atoms, f_bonds, a2b, b2a, b2revb, a_scope, b_scope = mol_graph.get_components(
             atom_messages=self.atom_messages)
-        f_atoms, f_bonds, a2b, b2a, b2revb = f_atoms.to(self.device), f_bonds.to(self.device), a2b.to(
-            self.device), b2a.to(self.device), b2revb.to(self.device)
+        # f_atoms, f_bonds, a2b, b2a, b2revb = f_atoms.to(self.device), f_bonds.to(self.device), a2b.to(
+        #     self.device), b2a.to(self.device), b2revb.to(self.device)
 
-        if self.atom_messages:
-            a2a = mol_graph.get_a2a().to(self.device)
+        # if self.atom_messages:
+        #     a2a = mol_graph.get_a2a().to(self.device)
 
         # Input
         if self.atom_messages:

@@ -73,6 +73,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
 
         df = _format_evals(val_evals, label_stat_list)
         df.to_csv(osp.join(subset_dir, 'eval_stats.csv'))
+        val_evals = []
+        label_stat_list = []
 
 
 def _format_evals(val_evals, label_stats):

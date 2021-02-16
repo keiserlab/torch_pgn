@@ -13,5 +13,5 @@ mol2_df['best_energy'] = mol2_df.groupby(['mol_name'])['Total Energy'].transform
 print(mol2_df)
 mol2_df = mol2_df[mol2_df['Total Energy'] == mol2_df['best_energy']]
 mol2_df.drop(columns='best_energy')
-print(mol2_df)
+print(mol2_df[['Total Energy', 'best_energy']])
 mol2_df.to_mol2(OUTFILE)

@@ -12,6 +12,6 @@ print(mol2_df)
 mol2_df['best_energy'] = mol2_df.groupby(['mol_name'])['Total Energy'].transform(min)
 print(mol2_df)
 mol2_df = mol2_df[mol2_df['Total Energy'] == mol2_df['best_energy']]
-mol2_df.drop(['best_energy'])
+mol2_df.drop('best_energy')
 print(mol2_df)
 mol2_df.to_mol2(OUTFILE)

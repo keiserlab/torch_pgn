@@ -11,7 +11,7 @@ mol2_df = opd.read_mol2(MOL_FILE, skip_bad_mols=True)
 print(mol2_df)
 mol2_df['best_energy'] = mol2_df.groupby(['mol_name'])['Total Energy'].transform(min)
 print(mol2_df)
-mol2_df = mol2_df[mol2_df['Total_Energy'] == mol2_df['best_energy']]
+mol2_df = mol2_df[mol2_df['Total Energy'] == mol2_df['best_energy']]
 mol2_df.drop(['best_energy'])
 print(mol2_df)
 mol2_df.to_mol2(OUTFILE)

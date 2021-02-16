@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, "/srv/home/zgaleday/pgn")
+
 from pgn.datasets.OneVsManyDataset import OneVsManyDataset
 from pgn.datasets.ManyVsManyDataset import ManyVsManyDataset
 from pgn.datasets.FPDataset import FPDataset
@@ -23,13 +26,7 @@ if __name__ == "__main__":
 
     args = DataArgs()
     # For parsing from terminal
-    # args.parse_args()
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/test/working_data/toy_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/test/working_data/',
-                    'dataset_type': 'many_v_many',
-                    'split_type': 'random',
-                    'construct_graphs': True
-                    })
+    args.parse_args()
     args.process_args()
 
     process_raw(args)

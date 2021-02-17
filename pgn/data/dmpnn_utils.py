@@ -236,7 +236,7 @@ class MolGraphTransform(object):
 
         # TODO: Fix hardcode here
         with multiprocessing.Pool(processes=16) as p:
-            molgraphs = list(tqdm(p.map(_generate_molgraphs, input_tuples)))
+            molgraphs = list(tqdm(p.imap(_generate_molgraphs, input_tuples)))
 
 
         data.molgraph = molgraphs

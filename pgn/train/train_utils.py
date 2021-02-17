@@ -21,6 +21,7 @@ from torch_geometric.nn import DataParallel
 def format_batch(train_args, data):
     # TODO: I think this is now vistigial. Make safe to remove
     if train_args.encoder_type == 'dmpnn':
+        print(data)
         return data.molgraph
     else:
         return data

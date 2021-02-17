@@ -230,10 +230,13 @@ class MolGraphTransform(object):
             input_tuples.append(input_tuple)
             x_ind += x_size
             edge_ind += edge_size
-        generate_molgraphs = lambda input_tuple: ProxGraph(input_tuple)
+
+        def _generate_molgraphs(input_tuple):
+            return ProxGraph(input_tuple)
+
         # TODO: Fix hardcode here
         with multiprocessing.Pool(processes=16) as p:
-            molgraphs = list(tqdm(p.map(generate_molgraphs, input_tuples)))
+            molgraphs = list(tqdm(p.map(_generate_molgraphs, input_tuples)))
 
 
         data.molgraph = molgraphs

@@ -5,7 +5,7 @@ graph dataset compatible with using the D-MPNN with edge messages.
 import numpy as np
 import torch
 from tqdm import tqdm
-
+import multiprocessing
 from torch_geometric.data import DataLoader
 
 
@@ -221,13 +221,19 @@ class MolGraphTransform(object):
     def __call__(self, data, transforms=None):
         molgraphs = []
         x_ind, edge_ind = 0, 0
+        input_tuples = []
         for molgraph in tqdm(data.molgraph):
             x_size, edge_size, _ = molgraph
             input_tuple = ((data.x.numpy()[x_ind: x_ind + x_size, :]),
                            data.edge_attr.numpy()[edge_ind: edge_ind + edge_size, :],
                            data.edge_index.numpy()[:, edge_ind: edge_ind + edge_size])
-            molgraphs.append(ProxGraph(input_tuple))
+            input_tuples.append(input_tuple)
             x_ind += x_size
             edge_ind += edge_size
+        generate_molgraphs = lambda input_tuple: ProxGraph(input_tuple)
+        with multiprocessing.Pool(processes=self.num_workers) as p:
+            molgraphs = list(tqdm(p.imap(generate_molgraphs, input_tuples)))
+
+
         data.molgraph = molgraphs
         return data

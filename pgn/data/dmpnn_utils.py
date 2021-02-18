@@ -43,6 +43,7 @@ class ProxGraph():
             self.f_atoms = [f_atoms + descs.tolist() for f_atoms, descs in zip(self.f_atoms, atom_descriptors)]
 
         self.n_atoms = x.shape[0]
+        self.num_nodes = self.n_atoms
 
         # Initialize atom to bond mapping for each atom
         for _ in range(self.n_atoms):

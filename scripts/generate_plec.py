@@ -35,7 +35,6 @@ def generate_plec_pdbbind(raw_path, label_file, output_dir, dim=1024*16):
                     labels.append(label)
                     names.append(name)
             except:
-                print('Fuck I broke')
                 continue
     df = pd.DataFrame({'name': names, 'fp': fps, 'label': labels})
     df.to_csv(osp.join(output_dir, 'formatted_plec.csv'), index=False)
@@ -49,7 +48,7 @@ def generate_plec_d4(raw_pdb_path, raw_mol_path, output_dir, dim=1024*16):
     mol = data['mol']
     fps = []
     labels = []
-    for i, name in enumerate(names):
+    for i, name in tqdm(enumerate(names)):
         ligand = mol[i]
         label = energy[i]
         if ligand is not None:
@@ -71,7 +70,6 @@ if __name__ == "__main__":
                               path_2,
                               output_path)
     elif type == 'd4':
-        print('here')
         generate_plec_d4(path_1,
                          path_2,
                          output_path)

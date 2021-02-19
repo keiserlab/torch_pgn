@@ -35,6 +35,7 @@ def generate_plec_pdbbind(raw_path, label_file, output_dir, dim=1024*16):
                     labels.append(label)
                     names.append(name)
             except:
+                print('Fuck I broke')
                 continue
     df = pd.DataFrame({'name': names, 'fp': fps, 'label': labels})
     df.to_csv(osp.join(output_dir, 'formatted_plec.csv'), index=False)

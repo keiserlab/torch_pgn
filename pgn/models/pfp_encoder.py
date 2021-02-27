@@ -26,6 +26,7 @@ class PFPEncoder(torch.nn.Module):
         self.fp_dim = args.fp_dim
         self.depth = args.depth
         self.skip_connections = args.skip_connections
+        self.ligand_only_readout = args.ligand_only_readout
 
         # define model layers
         self.construct_nn_conv()
@@ -52,23 +53,23 @@ class PFPEncoder(torch.nn.Module):
         # Define output vector
         fingerprint = torch.zeros(self.fp_dim, dtype=torch.float32, requires_grad=True, device=self.device)
         # Expand atom featurization for input to NNConv
-        # print(working_data.x.size())
         message = self.atom_expand_nn(data.x)
-        # print(message.size())
         # Begin message passing steps
         for i in range(self.depth):
-            # print(message.size())
-            # print(working_data.edge_index.size())
-            # print(working_data.edge_attr.size())
             message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
-            # print("yay! Message size: ", message.size())
             # expand message for incorporation into final feature vector
             expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
-            # print("Expand message: ", expanded_message.size())
             # readout for depth i
-            intermediate = self.pool(expanded_message, data.batch)
-            # print("Intermediate: ", intermediate.size())
+            if self.ligand_only_readout:
+                ligand_message_mask = data.x[:, -1] == 1.
+                expanded_message = expanded_message.squeeze()[ligand_message_mask].unsqueeze(0)
+                ligand_batch = data.batch[ligand_message_mask]
+                intermediate = self.pool(expanded_message, ligand_batch)
+            else:
+                intermediate = self.pool(expanded_message, data.batch)
+
             readout = self.sparsify(intermediate)
+
             # skip connections if specified or final message passing step to readout vector
             if self.skip_connections or i == self.depth - 1:
                 fingerprint = fingerprint.to(readout.device) + readout

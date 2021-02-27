@@ -42,6 +42,8 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
             args.interaction_edges_removed = True
         elif control == 'straw':
             args.straw_model = True
+        elif control == 'ligand_readout':
+            args.ligand_only_readout = True
     if data_path is not None:
         args.data_path = data_path
     base_dir = final_path

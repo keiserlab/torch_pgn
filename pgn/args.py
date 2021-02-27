@@ -45,6 +45,10 @@ class EncoderArgs(Tap):
     mpnn_directed: bool = True
     """Toggle whether to use directed message passing for the dmpnn encoder type."""
 
+    ligand_only_readout: bool = False
+    """Toggle whether the output encoding should only use the ligand atoms or should readout on the entire proximity 
+    graph. (Currently only enabled in pgn)."""
+
 
 class FFArgs(Tap):
     """Class used to store the arguments used for input to the readout network."""

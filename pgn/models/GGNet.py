@@ -18,6 +18,8 @@ class GGNet(torch.nn.Module):
         self.nn_conv_internal_dim = args.nn_conv_internal_dim
         self.nn_conv_out_dim = args.nn_conv_out_dim
         self.nn_conv_aggr = args.nn_conv_aggr
+        self.depth = args.depth
+        self.ligand_only_readout = args.ligand_only_readout
 
         self.atom_expand_nn = Sequential(Linear(self.node_dim, self.nn_conv_in_dim), ReLU())
 
@@ -33,11 +35,18 @@ class GGNet(torch.nn.Module):
         out = self.atom_expand_nn(data.x)
         h = out.unsqueeze(0)
 
-        for i in range(3):
+        for i in range(self.depth):
             m = F.relu(self.conv(out, data.edge_index, data.edge_attr))
             out, h = self.gru(m.unsqueeze(0), h)
             out = out.squeeze(0)
 
-        out = self.set2set(out, data.batch)
+        if self.ligand_only_readout:
+            ligand_message_mask = data.x[:, -1] == 1.
+            print(out.size())
+            batch = data.batch[ligand_message_mask]
+            out = out[ligand_message_mask]
+        else:
+            batch = data.batch
+        out = self.set2set(out, batch)
 
         return out

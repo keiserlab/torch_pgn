@@ -9,7 +9,7 @@ args = HyperoptArgs()
 
 args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_with_h.pdb',
                 'raw_mol_path': '/srv/nas/mk2/projects/D4_screen/working_data/Results/Test_Code/medium_diverse_stratified.mol2',
-                'data_path': '/srv/home/zgaleday/IG_data/pdb_bind_random/',
+                'data_path': '/srv/home/zgaleday/IG_data/pdbbind_refined_2019/',
                 'dataset_type': 'many_v_many',
                 'split_type': 'defined_test',
                 'construct_graphs': False,
@@ -22,7 +22,7 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
 		'num_workers': 0,
 		'batch_size': 128,
 		'weight_decay': True,
-                'split_dir': '/srv/home/zgaleday/IG_data/general_protein_splits' 
+                'split_dir': '/srv/home/zgaleday/IG_data/refined_protein_splits' 
                 })
 args.process_args()
 

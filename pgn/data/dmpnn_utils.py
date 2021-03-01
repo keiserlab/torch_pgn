@@ -232,9 +232,10 @@ class MolGraphTransform(object):
             edge_ind += edge_size
 
         # TODO: Fix hardcode here
-        with multiprocessing.Pool(processes=32) as p:
-            molgraphs = list(tqdm(p.imap(_generate_molgraphs, input_tuples), total=len(input_tuples)))
+        # with multiprocessing.Pool(processes=32) as p:
+        #     molgraphs = list(tqdm(p.imap(_generate_molgraphs, input_tuples), total=len(input_tuples)))
 
+        molgraphs = [_generate_molgraphs(input_tuple) for input_tuple in input_tuples]
 
         data.molgraph = molgraphs
         return data

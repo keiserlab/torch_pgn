@@ -13,7 +13,7 @@ import json
 from pgn.train.Trainer import Trainer
 
 
-INT_KEYS = ['ffn_hidden_size', 'fp_dim', 'ffn_num_layers']
+INT_KEYS = ['ffn_hidden_size', 'fp_dim', 'ffn_num_layers', 'depth']
 
 def hyperopt(args):
     """

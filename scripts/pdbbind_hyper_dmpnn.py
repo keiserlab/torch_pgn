@@ -16,7 +16,7 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 #'split_dir': '/srv/home/zgaleday/IG_data/general_protein_splits',
                 'construct_graphs': False,
                 'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/d4_final_dmpnn/',
-                'device': 'cuda:1',
+                'device': 'cuda:7',
                 'epochs': 100,
                 'cv_folds': 3,
                 'save_splits': True,

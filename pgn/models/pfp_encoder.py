@@ -71,7 +71,7 @@ class PFPEncoder(torch.nn.Module):
         message = self.atom_expand_nn(data.x)
         # Begin message passing steps
         for i in range(self.depth):
-            message = self.apply_convolution(message, data, i)
+            message = self._apply_convolution(message, data, i)
             # expand message for incorporation into final feature vector
             expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
             # readout for depth i

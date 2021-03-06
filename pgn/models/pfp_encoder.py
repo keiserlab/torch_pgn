@@ -94,7 +94,7 @@ class PFPEncoder(torch.nn.Module):
         else:
             return fingerprint
 
-    def _apply_split_convolution(self, message, data, depth):
+    def _apply_convolution(self, message, data, depth):
         """In the case where covalent and spacial bonds have different message passing functions this function applies
         the relevant message passing for the given bond types."""
         # Should probably reimplement this with a custon nnconv layer in order to allow for other aggregation schemes

@@ -26,7 +26,7 @@ class GGNet(torch.nn.Module):
         nn = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                         ReLU(),
                         Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
-        self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, nn, aggr=self.nn_conv_aggr)
+        self.conv  = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, nn, aggr=self.nn_conv_aggr)
         self.gru = GRU(self.nn_conv_in_dim, self.nn_conv_in_dim)
 
         self.set2set = Set2Set(self.nn_conv_in_dim, processing_steps=3)

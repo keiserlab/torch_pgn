@@ -54,7 +54,7 @@ class EncoderArgs(Tap):
     steps or whether to include all edges in messing passing. By default the convolution steps are done at the same 
     time regardless of edge type."""
 
-    covalent_only_depth: int = None
+    covalent_only_depth: int = 0
     """Integer number of covalent only message passing steps. One_step_convolutions must have been set to false
     for this argument to have any effect. If covalent only depth >= depth then spacial edges are not taken into
     account during message passing."""

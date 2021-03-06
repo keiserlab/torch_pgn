@@ -30,7 +30,6 @@ class PFPEncoder(torch.nn.Module):
         self.split_conv = args.split_conv
         self.covalent_only_depth = args.covalent_only_depth
         self.one_step_convolution = args.one_step_convolution
-        self.covalent_only_depth = args.covalent_only_depth
 
         # define model layers
         self.construct_nn_conv()
@@ -75,7 +74,7 @@ class PFPEncoder(torch.nn.Module):
             if self.one_step_convolution:
                 message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
             else:
-                message = self._apply_split_convolution(message, data)
+                message = self._apply_split_convolution(message, data, i)
             # expand message for incorporation into final feature vector
             expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
             # readout for depth i
@@ -98,12 +97,18 @@ class PFPEncoder(torch.nn.Module):
         else:
             return fingerprint
 
-    def _apply_split_convolution(self, message, data):
+    def _apply_split_convolution(self, message, data, depth):
         """In the case where covalent and spacial bonds have different message passing functions this function applies
         the relevant message passing for the given bond types."""
-        covalent_mask = data.edge_attr[:,-1] == 0
-        spacial_mask = data.edge_attr[:, -1] == 1
-        covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
-        spacial_output = self.conv_spacial(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
-        message = F.relu(covalent_output + spacial_output)
+        if depth < self.covalent_only_depth:
+            covalent_mask = data.edge_attr[:,-1] == 0
+            covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask],
+                                                 data.edge_attr[covalent_mask, :])
+            message = F.relu(covalent_output)
+        else:
+            covalent_mask = data.edge_attr[:, -1] == 0
+            spacial_mask = data.edge_attr[:, -1] == 1
+            covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
+            spacial_output = self.conv_spacial(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
+            message = F.relu(covalent_output + spacial_output)
         return message

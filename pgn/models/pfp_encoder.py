@@ -51,8 +51,6 @@ class PFPEncoder(torch.nn.Module):
                                       Dropout(p=self.nn_conv_dropout_prob),
                                       Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
             self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward, aggr=self.nn_conv_aggr)
-            self.conv_covalent = self.conv
-            self.conv_spacial = self.conv
         else:
             feed_forward_covalent = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                                       ReLU(),
@@ -101,16 +99,20 @@ class PFPEncoder(torch.nn.Module):
         the relevant message passing for the given bond types."""
         # Should probably reimplement this with a custon nnconv layer in order to allow for other aggregation schemes
         # aside from the add hardcoded here.
+        if self.split_conv:
+            conv_covalent, conv_spacial = self.conv_covalent, self.conv_spacial
+        else:
+            conv_covalent, conv_spacial = self.conv, self.conv
         if depth < self.covalent_only_depth:
             covalent_mask = data.edge_attr[:,-1] == 0
-            covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask],
+            covalent_output = conv_covalent(message, data.edge_index[:, covalent_mask],
                                                  data.edge_attr[covalent_mask, :])
             message = F.relu(covalent_output)
         else:
             # In the case of one-step convolution conv_covalent == conv_spacial.
             covalent_mask = data.edge_attr[:, -1] == 0
             spacial_mask = data.edge_attr[:, -1] == 1
-            covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
-            spacial_output = self.conv_spacial(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
+            covalent_output = conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
+            spacial_output = conv_spacial(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
             message = F.relu(covalent_output + spacial_output)
         return message

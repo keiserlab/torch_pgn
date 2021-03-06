@@ -61,9 +61,8 @@ class PFPEncoder(torch.nn.Module):
                                       ReLU(),
                                       Dropout(p=self.nn_conv_dropout_prob),
                                       Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
-            conv_covalent = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_covalent, aggr=self.nn_conv_aggr)
-            conv_spacial = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_spacial, aggr=self.nn_conv_aggr)
-            self.conv = [conv_covalent, conv_spacial]
+            self.conv_covalent = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_covalent, aggr=self.nn_conv_aggr)
+            self.conv_spacial = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_spacial, aggr=self.nn_conv_aggr)
 
 
     def forward(self, data):
@@ -106,7 +105,7 @@ class PFPEncoder(torch.nn.Module):
         spacial_conv = self.conv[1]
         covalent_mask = data.edge_attr[:,-1] == 0
         spacial_mask = data.edge_attr[:, -1] == 1
-        covalent_output = covalent_conv(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
-        spacial_output = spacial_conv(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
+        covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
+        spacial_output = self.conv_spacial(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
         message = F.relu(covalent_output + spacial_output)
         return message

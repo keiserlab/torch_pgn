@@ -51,6 +51,8 @@ class PFPEncoder(torch.nn.Module):
                                       Dropout(p=self.nn_conv_dropout_prob),
                                       Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
             self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward, aggr=self.nn_conv_aggr)
+            self.conv_covalent = self.conv
+            self.conv_spacial = self.conv
         else:
             feed_forward_covalent = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                                       ReLU(),
@@ -71,10 +73,7 @@ class PFPEncoder(torch.nn.Module):
         message = self.atom_expand_nn(data.x)
         # Begin message passing steps
         for i in range(self.depth):
-            if self.one_step_convolution:
-                message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
-            else:
-                message = self._apply_split_convolution(message, data, i)
+            message = self.apply_convolution(message, data, i)
             # expand message for incorporation into final feature vector
             expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
             # readout for depth i
@@ -100,12 +99,15 @@ class PFPEncoder(torch.nn.Module):
     def _apply_split_convolution(self, message, data, depth):
         """In the case where covalent and spacial bonds have different message passing functions this function applies
         the relevant message passing for the given bond types."""
+        # Should probably reimplement this with a custon nnconv layer in order to allow for other aggregation schemes
+        # aside from the add hardcoded here.
         if depth < self.covalent_only_depth:
             covalent_mask = data.edge_attr[:,-1] == 0
             covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask],
                                                  data.edge_attr[covalent_mask, :])
             message = F.relu(covalent_output)
         else:
+            # In the case of one-step convolution conv_covalent == conv_spacial.
             covalent_mask = data.edge_attr[:, -1] == 0
             spacial_mask = data.edge_attr[:, -1] == 1
             covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])

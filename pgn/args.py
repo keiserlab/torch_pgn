@@ -49,6 +49,20 @@ class EncoderArgs(Tap):
     """Toggle whether the output encoding should only use the ligand atoms or should readout on the entire proximity 
     graph. (Currently only enabled in pgn)."""
 
+    one_step_convolution: bool = True
+    """Toggle of whether or not to break the message passing into discrete covalent only and covalent/spacial combined
+    steps or whether to include all edges in messing passing. By default the convolution steps are done at the same 
+    time regardless of edge type."""
+
+    covalent_only_depth: int = None
+    """Integer number of covalent only message passing steps. One_step_convolutions must have been set to false
+    for this argument to have any effect. If covalent only depth >= depth then spacial edges are not taken into
+    account during message passing."""
+
+    split_conv: bool = False
+    """Boolean toggle of whether to have seperate message functions for covalent and non-covalent interactions.
+    By default the same message function is applied regardless of edge type."""
+
 
 class FFArgs(Tap):
     """Class used to store the arguments used for input to the readout network."""

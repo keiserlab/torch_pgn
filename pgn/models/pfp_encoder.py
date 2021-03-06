@@ -27,6 +27,10 @@ class PFPEncoder(torch.nn.Module):
         self.depth = args.depth
         self.skip_connections = args.skip_connections
         self.ligand_only_readout = args.ligand_only_readout
+        self.split_conv = args.split_conv
+        self.covalent_only_depth = args.covalent_only_depth
+        self.one_step_convolution = args.one_step_convolution
+        self.covalent_only_depth = args.covalent_only_depth
 
         # define model layers
         self.construct_nn_conv()
@@ -42,11 +46,24 @@ class PFPEncoder(torch.nn.Module):
 
     def construct_nn_conv(self):
         #Construct the NN Conv network
-        feed_forward = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
-                                  ReLU(),
-                                  Dropout(p=self.nn_conv_dropout_prob),
-                                  Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
-        self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward, aggr=self.nn_conv_aggr)
+        if self.one_step_convolution:
+            feed_forward = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
+                                      ReLU(),
+                                      Dropout(p=self.nn_conv_dropout_prob),
+                                      Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
+            self.conv = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward, aggr=self.nn_conv_aggr)
+        else:
+            feed_forward_covalent = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
+                                      ReLU(),
+                                      Dropout(p=self.nn_conv_dropout_prob),
+                                      Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
+            feed_forward_spacial = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
+                                      ReLU(),
+                                      Dropout(p=self.nn_conv_dropout_prob),
+                                      Linear(self.nn_conv_internal_dim, self.nn_conv_out_dim))
+            conv_covalent = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_covalent, aggr=self.nn_conv_aggr)
+            conv_spacial = NNConv(self.nn_conv_in_dim, self.nn_conv_in_dim, feed_forward_spacial, aggr=self.nn_conv_aggr)
+            self.conv = [conv_covalent, conv_spacial]
 
 
     def forward(self, data):

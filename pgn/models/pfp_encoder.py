@@ -73,7 +73,10 @@ class PFPEncoder(torch.nn.Module):
         message = self.atom_expand_nn(data.x)
         # Begin message passing steps
         for i in range(self.depth):
-            message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
+            if self.one_step_convolution:
+                message = F.relu(self.conv(message, data.edge_index, data.edge_attr))
+            else:
+                message = self._apply_split_convolution(message, data)
             # expand message for incorporation into final feature vector
             expanded_message = F.relu(self.expand_to_fp_nn(message.unsqueeze(0)))
             # readout for depth i
@@ -96,3 +99,14 @@ class PFPEncoder(torch.nn.Module):
         else:
             return fingerprint
 
+    def _apply_split_convolution(self, message, data):
+        """In the case where covalent and spacial bonds have different message passing functions this function applies
+        the relevant message passing for the given bond types."""
+        covalent_conv = self.conv[0]
+        spacial_conv = self.conv[1]
+        covalent_mask = data.edge_attr[:,-1] == 0
+        spacial_mask = data.edge_attr[:, -1] == 1
+        covalent_output = covalent_conv(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])
+        spacial_output = spacial_conv(message, data.edge_index[:, spacial_mask], data.edge_attr[spacial_mask, :])
+        message = F.relu(covalent_output + spacial_output)
+        return message

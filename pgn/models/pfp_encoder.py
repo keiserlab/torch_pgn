@@ -101,8 +101,6 @@ class PFPEncoder(torch.nn.Module):
     def _apply_split_convolution(self, message, data):
         """In the case where covalent and spacial bonds have different message passing functions this function applies
         the relevant message passing for the given bond types."""
-        covalent_conv = self.conv[0]
-        spacial_conv = self.conv[1]
         covalent_mask = data.edge_attr[:,-1] == 0
         spacial_mask = data.edge_attr[:, -1] == 1
         covalent_output = self.conv_covalent(message, data.edge_index[:, covalent_mask], data.edge_attr[covalent_mask, :])

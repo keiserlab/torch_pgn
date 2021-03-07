@@ -99,7 +99,7 @@ class PFPEncoder(torch.nn.Module):
         the relevant message passing for the given bond types."""
         # Should probably reimplement this with a custon nnconv layer in order to allow for other aggregation schemes
         # aside from the add hardcoded here.
-        if self.split_conv:
+        if self.one_step_convolution:
             conv_covalent, conv_spacial = self.conv_covalent, self.conv_spacial
         else:
             conv_covalent, conv_spacial = self.conv, self.conv

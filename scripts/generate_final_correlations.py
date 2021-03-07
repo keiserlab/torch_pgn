@@ -45,17 +45,17 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
         elif control == 'ligand_readout':
             args.ligand_only_readout = True
         elif control == 'split_conv':
-            args.one_step_convolution = False
+            args.split_conv = True
         elif control == 'two_step_mpnn':
             args.covalent_only_depth = 2
             args.depth = 4
         elif control == 'two_step_split':
-            args.one_step_convolution = False
+            args.split_conv = True
             args.covalent_only_depth = 2
             args.depth = 4
         elif control == 'two_step_split_ligand':
             args.ligand_only_readout = True
-            args.one_step_convolution = False
+            args.split_conv = True
             args.covalent_only_depth = 2
             args.depth = 4
     if data_path is not None:

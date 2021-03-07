@@ -45,7 +45,7 @@ class PFPEncoder(torch.nn.Module):
 
     def construct_nn_conv(self):
         #Construct the NN Conv network
-        if self.one_step_convolution:
+        if self.split_conv:
             feed_forward = Sequential(Linear(self.bond_dim, self.nn_conv_internal_dim),
                                       ReLU(),
                                       Dropout(p=self.nn_conv_dropout_prob),
@@ -99,7 +99,7 @@ class PFPEncoder(torch.nn.Module):
         the relevant message passing for the given bond types."""
         # Should probably reimplement this with a custon nnconv layer in order to allow for other aggregation schemes
         # aside from the add hardcoded here.
-        if self.one_step_convolution:
+        if not self.split_conv:
             conv_covalent, conv_spacial = self.conv_covalent, self.conv_spacial
         else:
             conv_covalent, conv_spacial = self.conv, self.conv

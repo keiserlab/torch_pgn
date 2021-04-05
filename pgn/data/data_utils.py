@@ -172,3 +172,41 @@ def split_test_graphs(graph_path, test_list):
     for dir in directories:
         if dir in test_ids:
             shutil.move(os.path.join(graph_path, 'raw', 'train', dir), os.path.join(graph_path, 'raw', 'test'))
+
+
+class RandomLigandTranslationTransform(object):
+    """
+    TODO: Not applied. Will go back latter to implement. Need to figure out DMPNN complications.
+    Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and updates
+    any interaction edges/protein atoms from the graph.
+    """
+    def __init__(self, mean=None, std=None, scale=0.05):
+        """
+        Instantiation with modifying parameters.
+        :param mean: The mean to normalize the distances calculated with the translated
+        :param std:
+        :param scale:
+        """
+        self.mean = mean
+        self.std = std
+        self.scale = scale
+
+    def __call__(self, data):
+        """
+        Take a data object and applied a random rigid-body translation of the average size scale to the ligand and recalculates
+        proximity edges based off of this new position.
+        :param data: Data to be transformed.
+        :return: Transformed data object.
+        """
+        tranlation = np.random.normal(0., self.scale, (1,3))
+        ligand_mask = data.x[:, -1] == 1
+        data.pos[ligand_mask, :] += tranlation
+        prox_edge_mask = data.edge_attr[:, -1] == 1
+        prox_edges = data.edge_index[:, prox_edge_mask]
+        pos1 = data.pos[prox_edges[0, :]]
+        pos2 = data.pos[prox_edges[1, :]]
+        dist = torch.sqrt(torch.sum(torch.pow((pos1 - pos2), 2)))
+        if self.mean is not None:
+            dist = (dist - self.mean) / self.std
+        data.edge_attr[prox_edge_mask, 0] = dist
+        return data

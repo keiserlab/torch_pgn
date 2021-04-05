@@ -38,7 +38,6 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
     args.load_test = True
     args.num_workers = 0
     args.cross_validate = False
-    trainer = Trainer(args)
     for subset_size in DATASET_SIZES:
         subset_dir = osp.join(output_dir, 'subset_{0}'.format(subset_size))
         os.mkdir(subset_dir)
@@ -62,9 +61,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
             np.save(osp.join(current_splits, 'train.npy'), np.array(train_names, dtype=str))
             np.save(osp.join(current_splits, 'test.npy'), np.array(test_names, dtype=str))
 
-            trainer.args = args
+            trainer = Trainer(args)
             trainer.load_data()
-            trainer.args = args
             trainer.run_training()
 
             val_evals.append(trainer.valid_eval)

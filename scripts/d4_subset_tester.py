@@ -69,6 +69,8 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
 
             val_evals.append(trainer.valid_eval)
             label_stat_list.append((float(args.label_mean), float(args.label_std)))
+            trainer = None
+            del trainer
 
 
         df = _format_evals(val_evals, label_stat_list)

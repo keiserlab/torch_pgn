@@ -7,6 +7,7 @@ import torch
 from tqdm import tqdm
 import multiprocessing
 from torch_geometric.data import DataLoader
+multiprocessing.set_start_method('forkserver')
 
 
 class ProxGraph():

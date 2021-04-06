@@ -7,7 +7,7 @@ import torch
 from tqdm import tqdm
 import multiprocessing
 from torch_geometric.data import DataLoader
-multiprocessing.set_start_method('forkserver')
+import warnings
 
 
 class ProxGraph():
@@ -232,6 +232,11 @@ class MolGraphTransform(object):
             x_ind += x_size
             edge_ind += edge_size
 
+        try:
+            multiprocessing.set_start_method('forkserver')
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+        except:
+            pass
         # TODO: Fix hardcode here
         with multiprocessing.Pool(processes=32) as p:
             molgraphs = list(tqdm(p.imap(_generate_molgraphs, input_tuples), total=len(input_tuples)))

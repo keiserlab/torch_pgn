@@ -232,7 +232,6 @@ class MolGraphTransform(object):
             x_ind += x_size
             edge_ind += edge_size
 
-        data.molgraph = molgraphs
 
         # try:
         #     multiprocessing.set_start_method('forkserver')
@@ -243,7 +242,11 @@ class MolGraphTransform(object):
         # with multiprocessing.Pool(processes=32) as p:
         #     molgraphs = list(tqdm(p.imap(_generate_molgraphs, input_tuples), total=len(input_tuples)))
 
-        molgraphs = [_generate_molgraphs(input_tuple) for input_tuple in input_tuples]
+        molgraphs = []
+        for input_tuple in tqdm(input_tuples):
+            molgraphs.append(_generate_molgraphs(input_tuple))
+
+        data.molgraph = molgraphs
 
         return data
 

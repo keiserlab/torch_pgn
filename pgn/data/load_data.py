@@ -26,7 +26,7 @@ def load_proximity_graphs(args):
     split_type = args.split_type
     norm_targets = args.normalize_targets
     include_dist = args.include_dist
-    norm_dist = args.normalize_dist
+    norm_dist = args.normalize_dist and args.include_dist
     load_test = args.load_test
     cross_validate = args.cross_validate
     dataset_type = args.dataset_type

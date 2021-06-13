@@ -171,7 +171,7 @@ def _load_data_cross_validation(args):
     split_type = args.split_type
     norm_targets = args.normalize_targets
     include_dist = args.include_dist
-    norm_dist = args.normalize_dist
+    norm_dist = args.normalize_dist and args.include_dist
     load_test = args.load_test
     dataset_type = args.dataset_type
 

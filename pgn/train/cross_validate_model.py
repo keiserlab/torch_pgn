@@ -25,7 +25,7 @@ def cross_validation(args, train_data):
     base_dir = args.save_dir
     seed = args.seed
     norm_targets = args.normalize_targets
-    norm_dist = args.normalize_dist
+    norm_dist = args.normalize_dist and args.include_dist
     train_index = args.train_index
     # Ensure the test set is not loaded.
     args.load_test = False

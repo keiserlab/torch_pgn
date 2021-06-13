@@ -26,6 +26,8 @@ class ProximityGraphDataset(InMemoryDataset):
         self.mode = 'train'
         super(ProximityGraphDataset, self).__init__(args.data_path, self.transform, self.pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
+        if not self.include_dist:
+            self.data.edge_attr = self.data.edge_attr[:, 1:]
 
 
 
@@ -66,12 +68,7 @@ class ProximityGraphDataset(InMemoryDataset):
                     interacting_mask[interacting_index] = True
                     interacting_mask = torch.from_numpy(interacting_mask).type(torch.BoolTensor)
                 edge_index = torch.from_numpy(edge_index).type(torch.LongTensor)
-                if not self.include_dist:
-                    print('here!')
-                    edge_attr = np.load(edge_attr_path)[:, 1:]
-                else:
-                    edge_attr = np.load(edge_attr_path)
-                print(edge_attr.shape)
+                edge_attr = np.load(edge_attr_path)
                 edge_attr = torch.from_numpy(edge_attr).type(torch.FloatTensor)
                 pos = torch.from_numpy(np.load(pos_path)).type(torch.FloatTensor)
                 y = torch.from_numpy(np.load(label_path).astype(np.float)).type(torch.FloatTensor)

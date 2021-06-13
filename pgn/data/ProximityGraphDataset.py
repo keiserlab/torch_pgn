@@ -28,7 +28,9 @@ class ProximityGraphDataset(InMemoryDataset):
         self.data, self.slices = torch.load(self.processed_paths[0])
         print(self.include_dist)
         if not self.include_dist:
+            print(self.data.edge_attr)
             self.data.edge_attr = self.data.edge_attr[:, 1:]
+            print(self.data.edge_attr)
 
 
 

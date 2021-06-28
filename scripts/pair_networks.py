@@ -95,18 +95,14 @@ def calculate_confusion_matrix(args, classifier):
     experimental_df = pd.read_csv(experimental_path)
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
-    disp = plot_confusion_matrix(classifier, test[['x', 'y']], test[['labels']], display_labels=["Non\nBinder", "Binder"])
+    disp = plot_confusion_matrix(classifier, test[['x', 'y']], test[['labels']], display_labels=["Non Binder", "Binder"])
     plt.tight_layout()
-    for tick in disp.ax_.yaxis.get_majorticklabels():
-        tick.set_horizontalalignment("left")
-    disp.ax_.tick_params(axis='both', which='major', label_size='8')
+    disp.ax_.tick_params(axis='both', which='major', labelsize='8')
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_test.png'))
     plt.close()
-    disp = plot_confusion_matrix(classifier, train[['x', 'y']], train[['labels']], display_labels=["Non\nBinder", "Binder"])
+    disp = plot_confusion_matrix(classifier, train[['x', 'y']], train[['labels']], display_labels=["Non Binder", "Binder"])
     plt.tight_layout()
-    for tick in disp.ax_.yaxis.get_majorticklabels():
-        tick.set_horizontalalignment("left")
-    disp.ax_.tick_params(axis='both', which='major', label_size='8')
+    disp.ax_.tick_params(axis='both', which='major', labelsize='8')
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))
     plt.close()
 

@@ -24,7 +24,7 @@ import matplotlib
 
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
-from pgn.train.train_utils import load_checkpoint, make_save_directories
+from pgn.train.train_utils import load_checkpoint, make_save_directories, save_checkpoint
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.data.FingerprintDataset import FingerprintDataset
 from pgn.data.data_utils import parse_transforms
@@ -88,6 +88,7 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
         test_predict, test_labels, full_predict, classifier = classify_SVC(args)
 
         calculate_confusion_matrix(args, classifier)
+
 
 
 def calculate_confusion_matrix(args, classifier):
@@ -321,6 +322,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
                 val_loss += local_loss.item()
         if val_loss < best_loss:
             best_params = model.state_dict()
+            save_checkpoint(args.savedir, model, args)
         avg_val_loss = val_loss / len(val_loader)
         writer.add_scalar("Validation loss", avg_val_loss, epoch+1)
         print('Epoch [{}/{}],Train Loss: {:.4f}, Valid Loss: {:.8f}'

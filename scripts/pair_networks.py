@@ -102,7 +102,6 @@ def calculate_confusion_matrix(args, classifier):
     plt.close()
 
 
-
 def classify_SVC(args):
     experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
     full_path = osp.join(args.save_dir, 'full_df.csv')
@@ -275,9 +274,10 @@ def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256
     full_dataset_path = args.data_path
     args.data_path = dataset_path
     args.save_dir = savedir
-    args.fp_dim = 256
+    if args.encoder_type != 'fp':
+        args.fp_dim = fp_dim
     args.batch_size = 128
-    args.epochs = 500
+    args.epochs = epochs
 
     return args, full_dataset_path
 

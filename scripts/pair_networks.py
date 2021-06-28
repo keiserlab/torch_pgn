@@ -363,7 +363,7 @@ class SiameseNetwork(nn.Module):
         if self.args.encoder_type == 'fp':
             self.encoder = FPSiameseEncoder(args)
         else:
-            self.encoder = GraphSiameseEncoder(args, args.node_dim, args.bond_dim)
+            self.encoder = GraphSiameseEncoder(args, args.node_dim, args.edge_dim)
         self.fc_1 = nn.Linear(args.fp_dim, 128)
         self.fc_2 = nn.Linear(128, 2)
         self.activation = nn.ReLU()

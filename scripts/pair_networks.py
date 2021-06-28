@@ -24,7 +24,7 @@ import matplotlib
 
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
-from pgn.train.train_utils import load_checkpoint, predict
+from pgn.train.train_utils import load_checkpoint, make_save_directories
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.data.FingerprintDataset import FingerprintDataset
 from pgn.data.data_utils import parse_transforms
@@ -42,6 +42,7 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
         os.mkdir(save_dir)
         args.save_dir = save_dir
+        make_save_directories(save_dir)
         args.seed = np.random.randint(0, 1e4)
         torch.manual_seed(args.seed)
         if args.encoder_type == 'fp':

@@ -31,7 +31,7 @@ from pgn.data.FingerprintDataset import FingerprintDataset
 from pgn.data.data_utils import parse_transforms
 from pgn.models.pfp_encoder import PFPEncoder
 from pgn.models.FPEncoder import FPEncoder
-from scripts.pair_networks import calculate_confusion_matrix, load_args
+from scripts.pair_networks import load_args
 
 from torch.utils.tensorboard import SummaryWriter
 
@@ -82,7 +82,24 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         evaluate_classifier_experimental(model, args, train_idx, val_idx)
 
         classifier = lambda y: 0 if y < 0.5 else 1
-        calculate_confusion_matrix(args, classifier)
+        calculate_classifier_confusion_matrix(args, classifier)
+
+
+def calculate_classifier_confusion_matrix(args, classifier):
+    experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
+    experimental_df = pd.read_csv(experimental_path)
+    train = experimental_df[experimental_df['set'] == 'train']
+    test = experimental_df[experimental_df['set'] == 'test']
+    disp = plot_confusion_matrix(classifier, test[['predicted']], test[['labels']], display_labels=["Non Binder", "Binder"])
+    plt.tight_layout()
+    disp.ax_.tick_params(axis='both', which='major', labelsize='8')
+    plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_test.png'))
+    plt.close()
+    disp = plot_confusion_matrix(classifier, train[['predicted']], train[['labels']], display_labels=["Non Binder", "Binder"])
+    plt.tight_layout()
+    disp.ax_.tick_params(axis='both', which='major', labelsize='8')
+    plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))
+    plt.close()
 
 
 def evaluate_classifier_experimental(model, args, train_idx, val_idx):

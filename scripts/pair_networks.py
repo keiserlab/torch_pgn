@@ -90,7 +90,6 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
         calculate_confusion_matrix(args, classifier)
 
 
-
 def calculate_confusion_matrix(args, classifier):
     experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
     experimental_df = pd.read_csv(experimental_path)

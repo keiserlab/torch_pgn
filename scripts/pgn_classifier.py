@@ -66,7 +66,6 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
 
             transforms = parse_transforms(args.transforms)
             train_dataset.data = transforms(train_dataset.data)
-            val_dataset.data = transforms(val_dataset.data)
 
             args.node_dim, args.edge_dim = train_dataset.getNodeDim(), train_dataset.getEdgeDim()
 

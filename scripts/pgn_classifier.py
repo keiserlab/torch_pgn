@@ -81,11 +81,10 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
 
         evaluate_classifier_experimental(model, args, train_idx, val_idx)
 
-        classifier = lambda y: 0 if y < 0.5 else 1
-        calculate_classifier_confusion_matrix(args, classifier)
+        calculate_classifier_confusion_matrix(args)
 
 
-def calculate_classifier_confusion_matrix(args, classifier):
+def calculate_classifier_confusion_matrix(args):
     experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
     experimental_df = pd.read_csv(experimental_path)
     experimental_df['predicted'][experimental_df['predicted'] < 0.5] = 0

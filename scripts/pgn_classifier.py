@@ -88,8 +88,6 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         calculate_confusion_matrix(args, classifier)
 
 
-
-
 def evaluate_classifier_experimental(model, args, train_idx, val_idx):
     if args.encoder_type != 'fp':
         train_examples = ProximityGraphDataset(args)[list(train_idx)]
@@ -326,11 +324,12 @@ class ClassificationNetwork(nn.Module):
         self.fc_2 = nn.Linear(128, 1)
         self.activation = nn.ReLU()
         self.dropout = nn.Dropout(p=0.2)
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, d1):
         fp1 = self.encoder.forward(d1)
         fp1 = self.dropout(self.activation(self.fc_1(fp1)))
         fp1 = self.fc_2(fp1)
-        return F.sigmoid(fp1)
+        return self.sigmoid(fp1)
 
 

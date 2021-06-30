@@ -50,10 +50,15 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         torch.manual_seed(args.seed)
         if args.encoder_type == 'fp':
             train_dataset = ClassificationFPDataset(args, LABEL_FILE)
-            val_dataset = ClassificationFPDataset(args, LABEL_FILE)
+            train_idx, val_idx = train_dataset.generate_split_indices()
+            val_dataset = train_dataset[val_idx]
+            train_dataset = train_dataset[train_idx]
         else:
             train_dataset = ClassificationProximityGraphDataset(args, LABEL_FILE)
-            val_dataset = ClassificationProximityGraphDataset(args, LABEL_FILE)
+            train_idx, val_idx = train_dataset.generate_split_indices()
+            val_dataset = train_dataset[val_idx]
+            train_dataset = train_dataset[train_idx]
+
             dist_mean, dist_std = args.distance_mean, args.distance_std
 
             train_dataset.data.edge_attr[:, 0] = (train_dataset.data.edge_attr[:, 0] - dist_mean) / dist_std
@@ -73,14 +78,6 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0)
 
         model = train(model, optimizer, train_dataloader, val_dataloader, args, criterion)
-
-        val_binders = train_dataset.val_binders
-        train_binders = train_dataset.train_binders
-        val_non_binders = train_dataset.val_non_binders
-        train_non_binders = train_dataset.train_non_binders
-
-        train_idx = np.concatenate([train_binders, train_non_binders])
-        val_idx = np.concatenate([val_binders, val_non_binders])
 
         evaluate_classifier_experimental(model, args, train_idx, val_idx)
 

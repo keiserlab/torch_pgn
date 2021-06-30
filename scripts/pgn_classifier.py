@@ -59,8 +59,6 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
             val_dataset = train_dataset[val_idx]
             train_dataset = train_dataset[train_idx]
 
-            args.node_dim, args.edge_dim = train_dataset.getNodeDim(), train_dataset.getEdgeDim()
-
             dist_mean, dist_std = args.distance_mean, args.distance_std
 
             train_dataset.data.edge_attr[:, 0] = (train_dataset.data.edge_attr[:, 0] - dist_mean) / dist_std
@@ -69,6 +67,8 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
             transforms = parse_transforms(args.transforms)
             train_dataset.data = transforms(train_dataset.data)
             val_dataset.data = transforms(val_dataset.data)
+
+            args.node_dim, args.edge_dim = train_dataset.getNodeDim(), train_dataset.getEdgeDim()
 
         train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
         val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)

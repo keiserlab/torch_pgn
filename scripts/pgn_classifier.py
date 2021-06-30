@@ -13,7 +13,7 @@ import torch.functional as F
 
 from tqdm import tqdm
 
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -88,14 +88,20 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
 def calculate_classifier_confusion_matrix(args, classifier):
     experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
     experimental_df = pd.read_csv(experimental_path)
+    experimental_df['predicted'][experimental_df['predicted'] < 0.5] = 0
+    experimental_df['predicted'][experimental_df['predicted'] >= 0.5] = 1
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
-    disp = plot_confusion_matrix(classifier, test[['predicted']], test[['labels']], display_labels=["Non Binder", "Binder"])
+    cm_test = confusion_matrix(test['labels'], test['predicted'])
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm_test, display_labels=["Non Binder", "Binder"])
+    disp = disp.plot()
     plt.tight_layout()
     disp.ax_.tick_params(axis='both', which='major', labelsize='8')
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_test.png'))
     plt.close()
-    disp = plot_confusion_matrix(classifier, train[['predicted']], train[['labels']], display_labels=["Non Binder", "Binder"])
+    cm_train = confusion_matrix(train['labels'], train['predicted'])
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm_train, display_labels=["Non Binder", "Binder"])
+    disp = disp.plot()
     plt.tight_layout()
     disp.ax_.tick_params(axis='both', which='major', labelsize='8')
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))

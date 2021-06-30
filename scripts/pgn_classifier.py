@@ -59,6 +59,8 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
             val_dataset = train_dataset[val_idx]
             train_dataset = train_dataset[train_idx]
 
+            args.node_dim, args.edge_dim = train_dataset.getNodeDim(), train_dataset.getEdgeDim()
+
             dist_mean, dist_std = args.distance_mean, args.distance_std
 
             train_dataset.data.edge_attr[:, 0] = (train_dataset.data.edge_attr[:, 0] - dist_mean) / dist_std

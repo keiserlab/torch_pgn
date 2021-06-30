@@ -295,9 +295,6 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
     best_loss = float('inf')
     best_params = model.state_dict()
     writer = SummaryWriter(log_dir=args.save_dir)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
-                                                           factor=0.7, patience=50,
-                                                           min_lr=1e-8)
     for epoch in tqdm(range(args.epochs)):
         loss = 0.
         model.train()

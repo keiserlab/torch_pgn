@@ -87,8 +87,10 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
 def calculate_classifier_confusion_matrix(args):
     experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
     experimental_df = pd.read_csv(experimental_path)
-    experimental_df.loc[: experimental_df['predicted'] < 0.5] = 0
-    experimental_df.loc[: experimental_df['predicted'] >= 0.5] = 1
+    binary_predictions = experimental_df['predicted'].values
+    binary_predictions[binary_predictions < 0.5] = 0
+    binary_predictions[binary_predictions >= 0.5] = 1
+    experimental_df.loc[: ['predicted']] = binary_predictions
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
     cm_test = confusion_matrix(test['labels'], test['predicted'])

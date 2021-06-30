@@ -342,6 +342,7 @@ class ClassificationNetwork(nn.Module):
         if self.args.encoder_type == 'fp':
             self.encoder = FPEncoder(args)
         else:
+            print(args.node_dim)
             self.encoder = PFPEncoder(args, args.node_dim, args.edge_dim)
         self.fc_1 = nn.Linear(args.fp_dim, 128)
         self.fc_2 = nn.Linear(128, 1)
@@ -350,6 +351,7 @@ class ClassificationNetwork(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, d1):
+        print(d1)
         fp1 = self.encoder.forward(d1)
         fp1 = self.dropout(self.activation(self.fc_1(fp1)))
         fp1 = self.fc_2(fp1)

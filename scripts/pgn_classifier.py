@@ -90,7 +90,7 @@ def calculate_classifier_confusion_matrix(args):
     binary_predictions = experimental_df['predicted'].values
     binary_predictions[binary_predictions < 0.5] = 0
     binary_predictions[binary_predictions >= 0.5] = 1
-    experimental_df.loc[: ['predicted']] = binary_predictions
+    experimental_df['predicted'] = binary_predictions
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
     cm_test = confusion_matrix(test['labels'], test['predicted'])

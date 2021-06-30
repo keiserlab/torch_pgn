@@ -301,7 +301,6 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
     for epoch in tqdm(range(args.epochs)):
         loss = 0.
         model.train()
-        lr = scheduler.optimizer.param_groups[0]['lr']
         for g1, g2, labels in train_loader:
             g1.to(args.device)
             g2.to(args.device)
@@ -328,10 +327,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
             best_params = model.state_dict()
             save_checkpoint(osp.join(args.save_dir, 'best_checkpoint.pt'), model, args)
         avg_val_loss = val_loss / len(val_loader)
-        if epoch > 1000:
-            scheduler.step(avg_val_loss)
         writer.add_scalar("Validation loss", avg_val_loss, epoch+1)
-        writer.add_scalar("Learning Rate", lr, epoch + 1)
         print('Epoch [{}/{}],Train Loss: {:.4f}, Valid Loss: {:.8f}'
             .format(epoch+1, args.epochs, avg_train_loss, avg_val_loss))
     model.load_state_dict(best_params)

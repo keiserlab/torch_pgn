@@ -38,7 +38,7 @@ from torch.utils.tensorboard import SummaryWriter
 LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_test_chunkmap.csv'
 
 
-def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5):
+def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5):
     for iter in range(repeats):
         args, full_dataset_path = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
         base_dir = savedir

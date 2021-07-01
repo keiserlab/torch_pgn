@@ -293,7 +293,7 @@ class ClassificationFPDataset(FingerprintDataset):
 
     def __getitem__(self, idx):
         if not self.class_balancing:
-            super(ClassificationFPDataset, self).__getitem__(idx)
+            return super(ClassificationFPDataset, self).__getitem__(idx)
         else:
             if isinstance(idx, int):
                 category = np.random.choice([0, 1])

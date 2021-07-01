@@ -310,8 +310,9 @@ class ClassificationFPDataset(FingerprintDataset):
 
 
 class ClassificationProximityGraphDataset(ProximityGraphDataset):
-    def __init__(self, args, binding_file, val_percent=0.2, transform=None, pre_transform=None):
+    def __init__(self, args, binding_file, class_balancing=False, val_percent=0.2, transform=None, pre_transform=None):
         self.binding_file = binding_file
+        self.class_balancing = class_balancing
         self.args = args
         self.val_percent = val_percent
         super(ClassificationProximityGraphDataset, self).__init__(args, transform=transform,
@@ -343,6 +344,8 @@ class ClassificationProximityGraphDataset(ProximityGraphDataset):
         val_non_binders = np.array(self.categories[0])[non_binder_permutations[:int(num_non_binder * self.val_percent)]]
         train_non_binders = np.array(self.categories[0])[
             non_binder_permutations[int(num_non_binder * self.val_percent):]]
+        self.train_non_binders = train_non_binders
+        self.train_binders = train_binders
         val_indices = np.concatenate([val_binders, val_non_binders])
         train_indices = np.concatenate([train_binders, train_non_binders])
         return list(train_indices), list(val_indices)
@@ -352,6 +355,23 @@ class ClassificationProximityGraphDataset(ProximityGraphDataset):
 
     def getEdgeDim(self):
         return self.data.edge_attr.numpy().shape[1]
+
+    def __getitem__(self, idx):
+        if not self.class_balancing:
+            return super(ClassificationProximityGraphDataset, self).__getitem__(idx)
+        else:
+            if isinstance(idx, int):
+                category = np.random.choice([0, 1])
+                if category == 0:
+                    current_idx = self.train_non_binders[np.random.randint(
+                        self.train_non_binders.shape[0])]
+                else:
+                    current_idx = self.train_binders[np.random.randint(
+                        self.train_binders.shape[0])]
+                data = self.get(current_idx)
+                return data
+            else:
+                return self.index_select(idx)
 
 
 class ClassificationNetwork(nn.Module):

@@ -87,23 +87,41 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
 
         test_predict, test_labels, full_predict, classifier = classify_SVC(args)
 
-        calculate_confusion_matrix(args, classifier)
+        calculate_confusion_matrix(args.save_dir, classifier)
+        save_classifications(args.save_dir, classifier)
 
 
-def calculate_confusion_matrix(args, classifier):
-    experimental_path = osp.join(args.save_dir, 'experimental_df.csv')
+def save_classifications(save_dir, classifier):
+    experimental_path = osp.join(save_dir, 'experimental_df.csv')
+    full_path = osp.join(save_dir, 'full_df.csv')
+    experimental_df = pd.read_csv(experimental_path)
+    experimental_df['predicted class'] = classifier.predict(experimental_df[['x', 'y']])
+    experimental_df['predicted prob'] = classifier.predicted_proba(experimental_df[['x', 'y']])
+    experimental_df.to_csv(osp.join(save_dir, 'results', 'experimental_classifications.csv'), index=False)
+    full_df = pd.read_csv(full_path)
+    full_df['predicted class'] = classifier.predict(full_df[['x', 'y']])
+    full_df['predicted prob'] = classifier.predicted_proba(full_df[['x', 'y']])
+    full_df.to_csv(osp.join(save_dir, 'results', 'full_classifications.csv'), index=False)
+
+
+def compute_auc_metrics(save_dir, classifier):
+    #TODO: Compute and save PR AUC and AUCROC scores and curves to save_dir results folder
+
+
+def calculate_confusion_matrix(save_dir, classifier):
+    experimental_path = osp.join(save_dir, 'experimental_df.csv')
     experimental_df = pd.read_csv(experimental_path)
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
     disp = plot_confusion_matrix(classifier, test[['x', 'y']], test[['labels']], display_labels=["Non Binder", "Binder"])
     plt.tight_layout()
     disp.ax_.tick_params(axis='both', which='major', labelsize='8')
-    plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_test.png'))
+    plt.savefig(osp.join(save_dir, 'results', 'classifier_CM_test.png'))
     plt.close()
     disp = plot_confusion_matrix(classifier, train[['x', 'y']], train[['labels']], display_labels=["Non Binder", "Binder"])
     plt.tight_layout()
     disp.ax_.tick_params(axis='both', which='major', labelsize='8')
-    plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))
+    plt.savefig(osp.join(save_dir, 'results', 'classifier_CM_train.png'))
     plt.close()
 
 

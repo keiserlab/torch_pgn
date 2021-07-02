@@ -84,6 +84,7 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         model = train(model, optimizer, train_dataloader, val_dataloader, args, criterion)
 
         evaluate_classifier_experimental(model, args, train_idx, val_idx)
+        evaluate_classifier_full(model, args, full_dataset_path)
 
         calculate_classifier_confusion_matrix(args)
 

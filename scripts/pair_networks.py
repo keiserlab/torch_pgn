@@ -13,6 +13,7 @@ import torch.nn as nn
 from tqdm import tqdm
 
 from sklearn.metrics import plot_confusion_matrix
+from sklearn.externals import joblib
 from sklearn.metrics import roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -106,6 +107,7 @@ def save_classifications(save_dir, classifier):
 
 def compute_auc_metrics(save_dir, classifier):
     #TODO: Compute and save PR AUC and AUCROC scores and curves to save_dir results folder
+    pass
 
 
 def calculate_confusion_matrix(save_dir, classifier):
@@ -131,8 +133,11 @@ def classify_SVC(args):
     experimental_df = pd.read_csv(experimental_path)
     train = experimental_df[experimental_df['set'] == 'train']
     test = experimental_df[experimental_df['set'] == 'test']
-    neigh = make_pipeline(StandardScaler(), SVC(gamma='auto', class_weight='balanced'))
+    # Fit classification model
+    neigh = make_pipeline(StandardScaler(), SVC(gamma='auto', class_weight='balanced', probability=True))
     neigh.fit(train[['x', 'y']], train['labels'])
+    # Save model to disk
+    joblib.dump(neigh, osp.join(args.save_dir, 'models', 'svc_classifier.pkl'))
     test_predictions = neigh.predict(test[['x', 'y']])
     test_labels = test[['labels']]
     full_data = pd.read_csv(full_path)

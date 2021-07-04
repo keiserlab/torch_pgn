@@ -101,7 +101,7 @@ def save_classifications(save_dir, classifier):
     experimental_df.to_csv(osp.join(save_dir, 'results', 'experimental_classifications.csv'), index=False)
     full_df = pd.read_csv(full_path)
     full_df['predicted class'] = classifier.predict(full_df[['x', 'y']])
-    full_df['predicted prob'] = classifier.predicted_proba(full_df[['x', 'y']])
+    full_df['predicted prob'] = classifier.predict_proba(full_df[['x', 'y']])[:,1]
     full_df.to_csv(osp.join(save_dir, 'results', 'full_classifications.csv'), index=False)
 
 

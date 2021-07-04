@@ -137,7 +137,7 @@ def classify_SVC(args):
     neigh = make_pipeline(StandardScaler(), SVC(gamma='auto', class_weight='balanced', probability=True))
     neigh.fit(train[['x', 'y']], train['labels'])
     # Save model to disk
-    joblib.dump(neigh, osp.join(args.save_dir, 'models', 'svc_classifier.pkl'))
+    joblib.dump(neigh, osp.join(args.save_dir, 'model', 'svc_classifier.pkl'))
     test_predictions = neigh.predict(test[['x', 'y']])
     test_labels = test[['labels']]
     full_data = pd.read_csv(full_path)

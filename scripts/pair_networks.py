@@ -13,7 +13,7 @@ import torch.nn as nn
 from tqdm import tqdm
 
 from sklearn.metrics import plot_confusion_matrix
-from sklearn.externals import joblib
+import joblib
 from sklearn.metrics import roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler

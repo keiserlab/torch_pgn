@@ -273,8 +273,9 @@ def evaluate_pair_network_full(model, args, full_dataset_path):
             full_name.append(name)
 
     full_fp = np.concatenate(full_fp)
+    name = np.concatenate(full_name)
 
-    full_df = pd.DataFrame({'x': full_fp[:, 0], 'y': full_fp[:, 1]})
+    full_df = pd.DataFrame({'x': full_fp[:, 0], 'y': full_fp[:, 1], 'name': name})
     full_df.to_csv(osp.join(args.save_dir, 'full_df.csv'), index=False)
 
 

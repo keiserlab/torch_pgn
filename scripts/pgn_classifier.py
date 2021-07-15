@@ -85,6 +85,7 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
 
         evaluate_classifier_experimental(model, args, train_idx, val_idx)
         evaluate_classifier_full(model, args, full_dataset_path)
+        save_classifications(args.save_dir)
 
         calculate_classifier_confusion_matrix(args)
 
@@ -112,6 +113,23 @@ def calculate_classifier_confusion_matrix(args):
     disp.ax_.tick_params(axis='both', which='major', labelsize='8')
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))
     plt.close()
+
+
+def save_classifications(save_dir):
+    experimental_path = osp.join(save_dir, 'experimental_df.csv')
+    full_path = osp.join(save_dir, 'full_df.csv')
+    experimental_df = pd.read_csv(experimental_path)
+    experimental_df['predicted class'] = experimental_df.loc[:, 'predicted'].copy()
+    experimental_df.loc[experimental_df['predicted class'] < 0.5, 'predicted_class'] = 0
+    experimental_df.loc[experimental_df['predicted class'] >= 0.5, 'predicted_class'] = 1
+    experimental_df['probability binder'] = experimental_df.loc[:, 'predicted'].copy()
+    experimental_df.to_csv(osp.join(save_dir, 'results', 'experimental_classifications.csv'), index=False)
+    full_df = pd.read_csv(full_path)
+    full_df['predicted class'] = full_df.loc[:, 'predicted'].copy()
+    full_df.loc[full_df['predicted class'] < 0.5, 'predicted_class'] = 0
+    full_df.loc[full_df['predicted class'] >= 0.5, 'predicted_class'] = 1
+    full_df['probability binder'] = full_df.loc[:, 'predicted'].copy()
+    full_df.to_csv(osp.join(save_dir, 'results', 'full_classifications.csv'), index=False)
 
 
 def evaluate_classifier_experimental(model, args, train_idx, val_idx):

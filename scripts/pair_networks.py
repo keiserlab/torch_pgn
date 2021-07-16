@@ -15,7 +15,7 @@ import re
 
 from sklearn.metrics import plot_confusion_matrix
 import joblib
-from sklearn.metrics import roc_auc_score
+from sklearn import metrics
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -38,6 +38,7 @@ LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_
 
 
 def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5, pre_trained=False):
+    full_dataset_path = None
     for iter in range(repeats):
         args, full_dataset_path, stat_dict = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
         base_dir = savedir
@@ -95,6 +96,8 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
         calculate_confusion_matrix(args.save_dir, classifier)
         save_classifications(args.save_dir, classifier)
 
+    compute_metrics(savedir, checkpoint_path, dataset_path, device)
+
 
 def set_encoder_weights(model, loaded_state_dict):
     model_state_dict = model.state_dict()
@@ -138,9 +141,63 @@ def save_classifications(save_dir, classifier):
     full_df.to_csv(osp.join(save_dir, 'results', 'full_classifications.csv'), index=False)
 
 
-def compute_auc_metrics(save_dir, classifier):
-    #TODO: Compute and save PR AUC and AUCROC scores and curves to save_dir results folder
-    pass
+def compute_metrics(save_dir, checkpoint_path, experimental_ds_path, device):
+    args, full_dataset_path, _ = load_args(checkpoint_path, experimental_ds_path, save_dir, device, 500)
+    base_dir = args.save_dir
+    count = 0
+    AUCROCs = []
+    APs = []
+    CMs = []
+    jaccards = []
+    F1s = []
+    Repeats = []
+    for d in os.listdir(base_dir):
+        if osp.isdir(osp.join(base_dir, d)):
+            model_dir = osp.join(base_dir, d)
+            args.save_dir = model_dir
+            Repeats.append(d.split("_")[-1])
+            classifier = joblib.load(osp.join(args.save_dir, 'model', 'svc_classifier.pkl'))
+            count += 1
+            experimental_classifications = pd.read_csv(
+                osp.join(args.save_dir, 'results', 'experimental_classifications.csv'))
+            test_set = experimental_classifications[experimental_classifications['set'] == 'test']
+            # Calculate AUCROC
+            AUCROCs.append(
+                metrics.roc_auc_score(test_set['labels'], classifier.predict_proba(test_set[['x', 'y']])[:, 1]))
+            disp = metrics.plot_roc_curve(classifier, test_set[['x', 'y']], test_set['labels'])
+            plt.tight_layout()
+            disp.ax_.tick_params(axis='both', which='major', labelsize='8')
+            plt.savefig(osp.join(model_dir, 'results', 'classifier_AUCROC_test.png'))
+            plt.close()
+            # Calculate PRAUC
+            APs.append(metrics.average_precision_score(test_set['labels'],
+                                                       classifier.predict_proba(test_set[['x', 'y']])[:, 1]))
+            disp = metrics.plot_precision_recall_curve(classifier, test_set[['x', 'y']], test_set['labels'])
+            plt.tight_layout()
+            disp.ax_.tick_params(axis='both', which='major', labelsize='8')
+            plt.savefig(osp.join(model_dir, 'results', 'classifier_PRAUC_test.png'))
+            plt.close()
+            # Calculate confusion matrix
+            CMs.append(metrics.confusion_matrix(test_set['labels'], classifier.predict(test_set[['x', 'y']])))
+            disp = metrics.plot_confusion_matrix(classifier, test_set[['x', 'y']], test_set[['labels']],
+                                                 display_labels=["Non Binder", "Binder"])
+            plt.tight_layout()
+            disp.ax_.tick_params(axis='both', which='major', labelsize='8')
+            plt.savefig(osp.join(model_dir, 'results', 'classifier_CM_test.png'))
+            plt.close()
+            jaccards.append(metrics.jaccard_score(test_set['labels'], classifier.predict(test_set[['x', 'y']])))
+            F1s.append(metrics.f1_score(test_set['labels'], classifier.predict(test_set[['x', 'y']])))
+    CMs = np.array(CMs)
+    AUCROCs = np.array(AUCROCs)
+    APs = np.array(APs)
+    jaccards = np.array(jaccards)
+    F1s = np.array(F1s)
+    metric_df = pd.DataFrame(
+        {"Repeat": Repeats, "AUC ROC score": AUCROCs, "Average Precision score": APs, "True Negatives": CMs[:, 0, 0],
+         "True Positives": CMs[:, 1, 1], "False Positives": CMs[:, 0, 1], "False Negatives": CMs[:, 1, 0],
+         "Jaccard Score": jaccards, "F1 Score": F1s})
+    metric_df.sort_values(by='Repeat', inplace=True)
+    metric_df.to_csv(osp.join(base_dir, 'test_metrics.csv'), index=False)
 
 
 def calculate_confusion_matrix(save_dir, classifier):

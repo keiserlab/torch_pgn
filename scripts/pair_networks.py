@@ -11,6 +11,7 @@ import torch
 import torch.nn as nn
 
 from tqdm import tqdm
+import re
 
 from sklearn.metrics import plot_confusion_matrix
 import joblib
@@ -36,9 +37,9 @@ from torch.utils.tensorboard import SummaryWriter
 LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_test_chunkmap.csv'
 
 
-def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5):
+def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5, pre_trained=False):
     for iter in range(repeats):
-        args, full_dataset_path = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
+        args, full_dataset_path, stat_dict = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
         base_dir = savedir
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
         os.mkdir(save_dir)
@@ -68,6 +69,9 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
         val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
         model = SiameseNetwork(args)
+        if pre_trained:
+            model = set_encoder_weights(model, stat_dict)
+
         model.to(args.device)
         criterion = ContrastiveLoss()
         lr = 3e-5
@@ -90,6 +94,35 @@ def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, rep
 
         calculate_confusion_matrix(args.save_dir, classifier)
         save_classifications(args.save_dir, classifier)
+
+
+def set_encoder_weights(model, loaded_state_dict):
+    model_state_dict = model.state_dict()
+
+    # Skip missing parameters and parameters of mismatched size
+    pretrained_state_dict = {}
+    for loaded_param_name in loaded_state_dict.keys():
+        # Backward compatibility for parameter names
+        if re.match(r'(encoder\.encoder\.)([Wc])', loaded_param_name):
+            param_name = loaded_param_name.replace('encoder.encoder', 'encoder.encoder.0')
+        else:
+            param_name = loaded_param_name
+
+        # Load pretrained parameter, skipping unmatched parameters
+        if param_name not in model_state_dict:
+            print(f'Warning: Pretrained parameter "{loaded_param_name}" cannot be found in model parameters.')
+        elif model_state_dict[param_name].shape != loaded_state_dict[loaded_param_name].shape:
+            print(f'Warning: Pretrained parameter "{loaded_param_name}" '
+                  f'of shape {loaded_state_dict[loaded_param_name].shape} does not match corresponding '
+                  f'model parameter of shape {model_state_dict[param_name].shape}.')
+        else:
+            print(f'Loading pretrained parameter "{loaded_param_name}".')
+            pretrained_state_dict[param_name] = loaded_state_dict[loaded_param_name]
+
+    # Load pretrained weights
+    model_state_dict.update(pretrained_state_dict)
+    model.load_state_dict(model_state_dict)
+    return model
 
 
 def save_classifications(save_dir, classifier):
@@ -294,11 +327,13 @@ def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256
     :return: An object of type TrainArgs for training
     """
     args = None
+    stat_dict = None
     for subdir in os.listdir(checkpoint_path):
         current = osp.join(checkpoint_path, subdir)
         if os.path.isdir(current):
             checkpoint = osp.join(current, 'best_checkpoint.pt')
             model, args = load_checkpoint(checkpoint, device, return_args=True)
+            stat_dict = model.state_dict
             break
     full_dataset_path = args.data_path
     args.data_path = dataset_path
@@ -308,7 +343,7 @@ def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256
     args.batch_size = 128
     args.epochs = epochs
 
-    return args, full_dataset_path
+    return args, full_dataset_path, stat_dict
 
 
 def train(model, optimizer, train_loader, val_loader, args, criterion):

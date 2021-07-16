@@ -390,7 +390,7 @@ def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256
         if os.path.isdir(current):
             checkpoint = osp.join(current, 'best_checkpoint.pt')
             model, args = load_checkpoint(checkpoint, device, return_args=True)
-            stat_dict = model.state_dict
+            stat_dict = model.state_dict()
             break
     full_dataset_path = args.data_path
     args.data_path = dataset_path

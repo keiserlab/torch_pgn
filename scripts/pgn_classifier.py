@@ -40,7 +40,7 @@ LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_
 
 def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5, class_balancing=False):
     for iter in range(repeats):
-        args, full_dataset_path = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
+        args, full_dataset_path, state_dict = load_args(checkpoint_path, dataset_path, savedir, device, epochs)
         base_dir = savedir
         save_dir = osp.join(base_dir, 'repeat_{0}'.format(iter))
         os.mkdir(save_dir)

@@ -436,6 +436,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
                 local_loss = criterion(output.squeeze(), labels)
                 val_loss += local_loss.item()
         if val_loss < best_loss:
+            best_loss = val_loss
             best_params = model.state_dict()
             save_checkpoint(osp.join(args.save_dir, 'best_checkpoint.pt'), model, args)
         avg_val_loss = val_loss / len(val_loader)

@@ -26,6 +26,7 @@ import matplotlib
 
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
+from pgn.train.train_utils import format_batch
 from pgn.train.train_utils import load_checkpoint, make_save_directories, save_checkpoint
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.data.FingerprintDataset import FingerprintDataset
@@ -298,13 +299,13 @@ def evaluate_pair_network_experimental(model, args, train_idx, val_idx):
         model.eval()
         for batch in train_support_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             train_fp.append(fp)
             train_name.append(name)
         for batch in test_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             test_fp.append(fp)
             test_name.append(name)
@@ -357,7 +358,7 @@ def evaluate_pair_network_full(model, args, full_dataset_path):
         model.eval()
         for batch in full_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             full_fp.append(fp)
             full_name.append(name)
@@ -417,7 +418,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
             g1.to(args.device)
             g2.to(args.device)
             labels = labels.to(args.device)
-            _, _, output = model(g1, g2)
+            _, _, output = model(format_batch(args, g1), format_batch(args, g2))
             local_loss = criterion(output.squeeze(), labels)
             optimizer.zero_grad()
             local_loss.backward()
@@ -432,7 +433,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
                 g1.to(args.device)
                 g2.to(args.device)
                 labels = labels.to(args.device)
-                _, _, output = model(g1, g2)
+                _, _, output = model(format_batch(args, g1), format_batch(args, g2))
                 local_loss = criterion(output.squeeze(), labels)
                 val_loss += local_loss.item()
         if val_loss < best_loss:

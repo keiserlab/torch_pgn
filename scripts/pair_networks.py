@@ -33,6 +33,7 @@ from pgn.data.FingerprintDataset import FingerprintDataset
 from pgn.data.data_utils import parse_transforms
 from pgn.models.pfp_encoder import PFPEncoder
 from pgn.models.FPEncoder import FPEncoder
+from pgn.models.dmpnn_encoder import MPNEncoder
 from torch.utils.tensorboard import SummaryWriter
 
 LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_test_chunkmap.csv'
@@ -448,10 +449,24 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
     return model
 
 
-class GraphSiameseEncoder(PFPEncoder):
+class PFPSiameseEncoder(PFPEncoder):
     def __init__(self, args, node_dim, bond_dim):
         #TODO: Add funcionality to other encoder types
-        super(GraphSiameseEncoder, self).__init__(args, node_dim, bond_dim)
+        super(PFPSiameseEncoder, self).__init__(args, node_dim, bond_dim)
+
+    def forward(self, d1, d2=None):
+        if d2 is not None:
+            fp1, fp2 = super().forward(d1), super().forward(d2)
+            return fp1, fp2
+        else:
+            fp1 = super().forward(d1)
+            return fp1
+
+
+class DMPNNSiameseEncoder(MPNEncoder):
+    def __init__(self, args, node_dim, bond_dim):
+        #TODO: Add funcionality to other encoder types
+        super(DMPNNSiameseEncoder, self).__init__(args, node_dim, bond_dim)
 
     def forward(self, d1, d2=None):
         if d2 is not None:
@@ -482,7 +497,12 @@ class SiameseNetwork(nn.Module):
         if self.args.encoder_type == 'fp':
             self.encoder = FPSiameseEncoder(args)
         else:
-            self.encoder = GraphSiameseEncoder(args, args.node_dim, args.edge_dim)
+            if args.encoder_type == 'pfp':
+                self.encoder = PFPSiameseEncoder(args, args.node_dim, args.edge_dim)
+            elif args.encoder_type == 'dmpnn':
+                self.encoder = DMPNNSiameseEncoder(args, args.node_dim, args.edge_dim)
+            else:
+                raise ValueError("Invalid encoder type for Siamese Network")
         self.fc_1 = nn.Linear(args.fp_dim, 128)
         self.fc_2 = nn.Linear(128, 2)
         self.activation = nn.ReLU()

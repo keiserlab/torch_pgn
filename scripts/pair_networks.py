@@ -397,7 +397,7 @@ def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256
     full_dataset_path = args.data_path
     args.data_path = dataset_path
     args.save_dir = savedir
-    if args.encoder_type != 'fp':
+    if args.encoder_type == 'pfp':
         args.fp_dim = fp_dim
     args.batch_size = 128
     args.epochs = epochs

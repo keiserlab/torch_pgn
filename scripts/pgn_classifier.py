@@ -25,11 +25,13 @@ import matplotlib
 
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
+from pgn.train.train_utils import format_batch
 from pgn.train.train_utils import make_save_directories, save_checkpoint
 from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 from pgn.data.FingerprintDataset import FingerprintDataset
 from pgn.data.data_utils import parse_transforms
 from pgn.models.pfp_encoder import PFPEncoder
+from pgn.models.dmpnn_encoder import MPNEncoder
 from pgn.models.FPEncoder import FPEncoder
 from scripts.pair_networks import load_args
 
@@ -160,13 +162,13 @@ def evaluate_classifier_experimental(model, args, train_idx, val_idx):
         model.eval()
         for batch in train_support_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             train_predicted.append(fp)
             train_name.append(name)
         for batch in test_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             test_predicted.append(fp)
             test_name.append(name)
@@ -220,7 +222,7 @@ def evaluate_classifier_full(model, args, full_dataset_path):
         model.eval()
         for batch in full_dataloader:
             batch.to(args.device)
-            fp = model(batch).detach().cpu().numpy()
+            fp = model(format_batch(args, batch)).detach().cpu().numpy()
             name = batch.name
             full_predicted.append(fp)
             full_name.append(name)
@@ -246,7 +248,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
             data.to(args.device)
             optimizer.zero_grad()
             labels = data.y.to(args.device)
-            output = model(data)
+            output = model(format_batch(args, data))
             local_loss = criterion(output.squeeze(), labels)
             local_loss.backward()
             optimizer.step()
@@ -259,7 +261,7 @@ def train(model, optimizer, train_loader, val_loader, args, criterion):
             for data in val_loader:
                 data.to(args.device)
                 labels = data.y.to(args.device)
-                output = model(data)
+                output = model(format_batch(args, data))
                 local_loss = criterion(output.squeeze(), labels)
                 val_loss += local_loss.item()
         if val_loss < best_loss:
@@ -403,8 +405,12 @@ class ClassificationNetwork(nn.Module):
         self.args = args
         if self.args.encoder_type == 'fp':
             self.encoder = FPEncoder(args)
-        else:
+        elif self.args.encoder_type == 'pfp':
             self.encoder = PFPEncoder(args, args.node_dim, args.edge_dim)
+        elif self.args.encoder_type == 'dmpnn':
+            self.encoder = MPNEncoder(args, args.node_dim, args.edge_dim)
+        else:
+            raise ValueError('Invalid Encoder Type for Classifier')
         self.fc_1 = nn.Linear(args.fp_dim, 128)
         self.fc_2 = nn.Linear(128, 1)
         self.activation = nn.ReLU()

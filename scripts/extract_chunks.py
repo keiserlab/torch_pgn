@@ -13,7 +13,8 @@ SCREEN_DIRECTORY = '/srv/nas/mk2/projects/D4_screen/'
 TEST_CHUNK = 'vs_run1_chunk28150'
 OUTDIR = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse'
 
-def parse_chunk(chunk_id, mol_names):
+def parse_chunk(input_tuple):
+    chunk_id, mol_names = input_tuple
     temp_file = osp.join(OUTDIR, 'temp.mol2')
     with gzip.open(osp.join(SCREEN_DIRECTORY, chunk_id, 'test.mol2.gz'), 'rb') as f:
         with open(temp_file, 'wb') as f_out:

@@ -26,8 +26,12 @@ exp_df = pd.read_csv(TEST_FILE)
 grouped_df = exp_df.groupby('chunk')['name'].apply(list)
 
 mol2_list = []
+failed_chunks = []
 for chunk in tqdm(grouped_df.index):
-    mol2_list.append(parse_chunk(chunk, grouped_df[chunk]))
+    try:
+        mol2_list.append(parse_chunk(chunk, grouped_df[chunk]))
+    except:
+        failed_chunks.append(chunk)
 
 
 
@@ -36,3 +40,5 @@ full_mol2 = pd.concat(mol2_list)
 print(full_mol2)
 
 full_mol2.to_mol2(osp.join(OUTDIR, 'diverse_900k_ds.mol2'))
+np.save(np.array(failed_chunks), osp.join(OUTDIR, 'diverse_900k_failed_chunks.npy'))
+print(failed_chunks)

@@ -6,15 +6,13 @@ import os
 import shutil
 import oddt.pandas as opd
 from tqdm import tqdm
-import multiprocessing
 
 TEST_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse/900k_diverse_chunk_map.csv'
 SCREEN_DIRECTORY = '/srv/nas/mk2/projects/D4_screen/'
 TEST_CHUNK = 'vs_run1_chunk28150'
 OUTDIR = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse'
 
-def parse_chunk(input_tuple):
-    chunk_id, mol_names = input_tuple
+def parse_chunk(chunk_id, mol_names):
     temp_file = osp.join(OUTDIR, 'temp.mol2')
     with gzip.open(osp.join(SCREEN_DIRECTORY, chunk_id, 'test.mol2.gz'), 'rb') as f:
         with open(temp_file, 'wb') as f_out:
@@ -28,12 +26,8 @@ exp_df = pd.read_csv(TEST_FILE)
 grouped_df = exp_df.groupby('chunk')['name'].apply(list)
 
 mol2_list = []
-input_tuples = []
 for chunk in tqdm(grouped_df.index):
-    input_tuples.append((chunk, grouped_df[chunk]))
-
-with multiprocessing.Pool(processes=32) as p:
-    mol2_list = list(tqdm(p.imap(parse_chunk, input_tuples), total=len(input_tuples)))
+    mol2_list.append(parse_chunk(chunk, grouped_df[chunk]))
 
 
 

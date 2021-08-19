@@ -7,7 +7,7 @@ import shutil
 import oddt.pandas as opd
 from tqdm import tqdm
 
-TEST_FILE = '/srv/home/zgaleday/IG_data/d4_test_compounds/900k_diverse_chunk_map.csv'
+TEST_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse/900k_diverse_chunk_map.csv'
 SCREEN_DIRECTORY = '/srv/nas/mk2/projects/D4_screen/'
 TEST_CHUNK = 'vs_run1_chunk28150'
 OUTDIR = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse'

@@ -6,6 +6,7 @@ import os
 import shutil
 import oddt.pandas as opd
 from tqdm import tqdm
+import multiprocessing
 
 TEST_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse/900k_diverse_chunk_map.csv'
 SCREEN_DIRECTORY = '/srv/nas/mk2/projects/D4_screen/'
@@ -26,8 +27,12 @@ exp_df = pd.read_csv(TEST_FILE)
 grouped_df = exp_df.groupby('chunk')['name'].apply(list)
 
 mol2_list = []
+input_tuples = []
 for chunk in tqdm(grouped_df.index):
-    mol2_list.append(parse_chunk(chunk, grouped_df[chunk]))
+    input_tuples.append((chunk, grouped_df[chunk]))
+
+with multiprocessing.Pool(processes=32) as p:
+    mol2_list = list(tqdm(p.imap(parse_chunk, input_tuples), total=len(input_tuples)))
 
 
 

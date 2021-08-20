@@ -32,7 +32,7 @@ for chunk in tqdm(grouped_df.index):
         mol2_list.append(parse_chunk(chunk, grouped_df[chunk]))
     except:
         failed_chunks.append(chunk)
-
+    break
 
 
 #full_mol2 = mol2_list[0]

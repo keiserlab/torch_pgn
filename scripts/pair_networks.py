@@ -337,7 +337,7 @@ def evaluate_pair_network_experimental(model, args, train_idx, val_idx):
     experimental_df.to_csv(osp.join(args.save_dir, 'experimental_df.csv'), index=False)
 
 
-def evaluate_pair_network_full(model, args, full_dataset_path):
+def evaluate_pair_network_full(model, args, full_dataset_path, outfile='full_df.csv'):
     args.data_path = full_dataset_path
     if args.encoder_type != 'fp':
         full_dataset = ProximityGraphDataset(args)
@@ -368,7 +368,7 @@ def evaluate_pair_network_full(model, args, full_dataset_path):
     name = np.concatenate(full_name)
 
     full_df = pd.DataFrame({'x': full_fp[:, 0], 'y': full_fp[:, 1], 'name': name})
-    full_df.to_csv(osp.join(args.save_dir, 'full_df.csv'), index=False)
+    full_df.to_csv(osp.join(args.save_dir, outfile), index=False)
 
 
 def load_args(checkpoint_path, dataset_path, savedir, device, epochs, fp_dim=256):

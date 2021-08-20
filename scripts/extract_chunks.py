@@ -38,6 +38,6 @@ for chunk in tqdm(grouped_df.index):
 full_mol2 = pd.concat(mol2_list)
 print(full_mol2)
 
-full_mol2.to_mol2(osp.join(OUTDIR, 'diverse_900k_ds.mol'))
+full_mol2.to_mol2(osp.join(OUTDIR, 'diverse_900k_ds.mol2'))
 np.save(osp.join(OUTDIR, 'diverse_900k_failed_chunks.npy'), np.array(failed_chunks))
 print(failed_chunks)

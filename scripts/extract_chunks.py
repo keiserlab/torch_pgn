@@ -7,10 +7,10 @@ import shutil
 import oddt.pandas as opd
 from tqdm import tqdm
 
-TEST_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse/900k_diverse_chunk_map_-55_to_-49.csv'
+TEST_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/chembl_binders_chunk_map.csv'
 SCREEN_DIRECTORY = '/srv/nas/mk2/projects/D4_screen/'
 TEST_CHUNK = 'vs_run1_chunk28150'
-OUTDIR = '/srv/home/zgaleday/IG_data/raw_data/d4_900k_diverse'
+OUTDIR = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds'
 
 def parse_chunk(chunk_id, mol_names):
     temp_file = osp.join(OUTDIR, 'temp.mol2')
@@ -38,6 +38,6 @@ for chunk in tqdm(grouped_df.index):
 full_mol2 = pd.concat(mol2_list)
 print(full_mol2)
 
-full_mol2.to_mol2(osp.join(OUTDIR, 'diverse_900k_ds_-55to-49.mol2'))
-np.save(osp.join(OUTDIR, 'diverse_900k_failed_chunks_-55to-49.npy'), np.array(failed_chunks))
+full_mol2.to_mol2(osp.join(OUTDIR, 'chembl_experimental.mol2'))
+np.save(osp.join(OUTDIR, 'chembl_experimental_failed_chunks.npy'), np.array(failed_chunks))
 print(failed_chunks)

@@ -36,7 +36,7 @@ from pgn.models.FPEncoder import FPEncoder
 from pgn.models.dmpnn_encoder import MPNEncoder
 from torch.utils.tensorboard import SummaryWriter
 
-LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_test_chunkmap.csv'
+LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/merged_chunk_map.csv'
 
 
 def run_pair_network(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5, pre_trained=False):

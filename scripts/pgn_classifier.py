@@ -37,7 +37,7 @@ from scripts.pair_networks import load_args
 
 from torch.utils.tensorboard import SummaryWriter
 
-LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/experimally_test_chunkmap.csv'
+LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/merged_chunk_map.csv'
 
 
 def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repeats=5, class_balancing=False):

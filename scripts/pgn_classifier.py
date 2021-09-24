@@ -23,6 +23,8 @@ import matplotlib.patches as mpatches
 from matplotlib.lines import Line2D
 import matplotlib
 
+from sklearn import metrics
+
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
 from pgn.train.train_utils import format_batch
@@ -90,6 +92,7 @@ def run_classifier(checkpoint_path, dataset_path, savedir, device, epochs, repea
         save_classifications(args.save_dir)
 
         calculate_classifier_confusion_matrix(args)
+    compute_metrics(savedir, checkpoint_path, dataset_path, device)
 
 
 def calculate_classifier_confusion_matrix(args):
@@ -116,6 +119,45 @@ def calculate_classifier_confusion_matrix(args):
     plt.savefig(osp.join(args.save_dir, 'results', 'classifier_CM_train.png'))
     plt.close()
 
+
+def compute_metrics(save_dir, checkpoint_path, experimental_ds_path, device):
+    args, full_dataset_path, state = load_args(checkpoint_path, experimental_ds_path, save_dir, device, 500)
+    base_dir = args.save_dir
+    AUCROCs = []
+    APs = []
+    CMs = []
+    jaccards = []
+    F1s = []
+    Repeats = []
+    for d in os.listdir(base_dir):
+        if osp.isdir(osp.join(base_dir, d)):
+            model_dir = osp.join(base_dir, d)
+            args.save_dir = model_dir
+            Repeats.append(d.split("_")[-1])
+            experimental_classifications = pd.read_csv(osp.join(args.save_dir, 'experimental_df.csv'))
+            experimental_classifications.loc[:, 'predicted_prob'] = experimental_classifications.loc[:,
+                                                                    'predicted'].values
+            pred = experimental_classifications.loc[:, 'predicted'].values
+            pred[pred < 0.5] = 0
+            pred[pred >= 0.5] = 1
+            experimental_classifications.loc[:, 'predicted'] = pred
+            test_set = experimental_classifications.loc[experimental_classifications['set'] == 'test', :]
+            AUCROCs.append(metrics.roc_auc_score(test_set['labels'], test_set['predicted_prob']))
+            APs.append(metrics.average_precision_score(test_set['labels'], test_set['predicted_prob']))
+            CMs.append(metrics.confusion_matrix(test_set['labels'], test_set['predicted']))
+            jaccards.append(metrics.jaccard_score(test_set['labels'], test_set['predicted']))
+            F1s.append(metrics.f1_score(test_set['labels'], test_set['predicted']))
+    CMs = np.array(CMs)
+    AUCROCs = np.array(AUCROCs)
+    APs = np.array(APs)
+    jaccards = np.array(jaccards)
+    F1s = np.array(F1s)
+    metric_df = pd.DataFrame(
+        {"Repeat": Repeats, "AUC ROC score": AUCROCs, "Average Precision score": APs, "True Negatives": CMs[:, 0, 0],
+         "True Positives": CMs[:, 1, 1], "False Positives": CMs[:, 0, 1], "False Negatives": CMs[:, 1, 0],
+         "Jaccard Score": jaccards, "F1 Score": F1s})
+    metric_df.sort_values(by='Repeat', inplace=True)
+    metric_df.to_csv(osp.join(base_dir, 'test_metrics.csv'), index=False)
 
 def save_classifications(save_dir):
     experimental_path = osp.join(save_dir, 'experimental_df.csv')

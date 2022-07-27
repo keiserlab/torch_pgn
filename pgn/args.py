@@ -269,6 +269,9 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     or evaluate model performance (test set)."""
     multi_gpu: bool = False
     """Whether to train the model across multiple gpus or not."""
+    fine_tuning_dir: str = None
+    "Directory to load args and checkpoint from as hot start to training"
+
 
     def process_args(self):
         if self.ff_dim_1 is None:

@@ -33,7 +33,10 @@ def train_model(args, train_data, validation_data, test_data=None):
     loss_fucntion = parse_loss(args)
     num_workers = args.num_workers
 
-    model = PFPNetwork(args, args.node_dim, args.edge_dim)
+    if args.fine_tuning_dir is None:
+        model = PFPNetwork(args, args.node_dim, args.edge_dim)
+    else:
+        model = load_checkpoint(args.fine_tuning_dir, args.device)
 
     if args.straw_model and args.encoder_type != 'fp':
         for param in model.encoder.parameters():

@@ -10,7 +10,10 @@ class Trainer():
     same working_data is going to be used multiple times."""
     def __init__(self, args):
         #Need to see if this is going to work with subparsers
-        self.args = args
+        if args.fine_tuning_dir is None:
+            self.args = args
+        else:
+            self.args = load_checkpoint(args.fine_tuning_dir, args.device)
         self.model = None
 
     def load_data(self):

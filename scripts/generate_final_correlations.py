@@ -58,6 +58,8 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
             args.split_conv = True
             args.covalent_only_depth = 2
             args.depth = 5
+        elif control == 'no_dist':
+            args.include_dist = False
     if data_path is not None:
         args.data_path = data_path
     base_dir = final_path

@@ -213,7 +213,7 @@ class DataArgs(Tap):
 
     def process_args(self):
         if self.raw_data_path is not None and self.label_file is None:
-            self.label_file = osp.join(self.raw_data_path, 'index', '2016_index.lst')
+            self.label_file = osp.join(self.raw_data_path, 'index', '2019_index.lst')
 
 
 class TrainArgs(DataArgs, FFArgs, EncoderArgs):

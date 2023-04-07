@@ -60,15 +60,15 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
     for node in receptor_nodes:
         G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node])
     for idx, ligand_node in enumerate(cross_edges[0]):
-        G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._euclidean_distance(pos3d, ligand_node, cross_edges[1, idx]),
+        G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._distance(pos3d, ligand_node, cross_edges[1, idx]),
                    features=edges_features[(ligand_node, cross_edges[1, idx])])
     for idx, receptor_node in enumerate(receptor_edges[0]):
         G.add_edge(receptor_node, receptor_edges[1, idx],
-                   weight=gu._euclidean_distance(pos3d, receptor_node, receptor_edges[1, idx]),
+                   weight=gu._distance(pos3d, receptor_node, receptor_edges[1, idx]),
                    features=edges_features[(receptor_node, receptor_edges[1, idx])])
     for idx, ligand_node in enumerate(ligand_edges[0]):
         G.add_edge(ligand_node, ligand_edges[1, idx],
-                   weight=gu._euclidean_distance(pos3d, ligand_node, ligand_edges[1, idx]),
+                   weight=gu._distance(pos3d, ligand_node, ligand_edges[1, idx]),
                    features=edges_features[(ligand_node, ligand_edges[1, idx])])
 
     T = nx.minimum_spanning_tree(G)
@@ -76,11 +76,11 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
     if local_connect:
         for idx, receptor_node in enumerate(receptor_edges[0]):
             T.add_edge(receptor_node, receptor_edges[1, idx],
-                       weight=gu._euclidean_distance(pos3d, receptor_node, receptor_edges[1, idx]),
+                       weight=gu._distance(pos3d, receptor_node, receptor_edges[1, idx]),
                        features=edges_features[(receptor_node, receptor_edges[1, idx])])
         for idx, ligand_node in enumerate(ligand_edges[0]):
             T.add_edge(ligand_node, ligand_edges[1, idx],
-                       weight=gu._euclidean_distance(pos3d, ligand_node, ligand_edges[1, idx]),
+                       weight=gu._distance(pos3d, ligand_node, ligand_edges[1, idx]),
                        features=edges_features[(ligand_node, ligand_edges[1, idx])])
 
     if visualize is not None:
@@ -150,15 +150,15 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
     for node in receptor_nodes:
         G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node])
     for idx, ligand_node in enumerate(cross_edges[0]):
-        G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._euclidean_distance(pos3d, ligand_node, cross_edges[1, idx]),
+        G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._distance(pos3d, ligand_node, cross_edges[1, idx]),
                    features=edges_features[(ligand_node, cross_edges[1, idx])])
     for idx, receptor_node in enumerate(receptor_edges[0]):
         G.add_edge(receptor_node, receptor_edges[1, idx],
-                   weight=gu._euclidean_distance(pos3d, receptor_node, receptor_edges[1, idx]),
+                   weight=gu._distance(pos3d, receptor_node, receptor_edges[1, idx]),
                    features=edges_features[(receptor_node, receptor_edges[1, idx])])
     for idx, ligand_node in enumerate(ligand_edges[0]):
         G.add_edge(ligand_node, ligand_edges[1, idx],
-                   weight=gu._euclidean_distance(pos3d, ligand_node, ligand_edges[1, idx]),
+                   weight=gu._distance(pos3d, ligand_node, ligand_edges[1, idx]),
                    features=edges_features[(ligand_node, ligand_edges[1, idx])])
 
     #TODO: Make visualize a helper function and make it work with args object

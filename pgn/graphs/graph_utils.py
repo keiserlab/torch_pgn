@@ -23,7 +23,7 @@ def _renumber_nodes(ligand_nodes, protein_nodes):
     return ligand_dict, protein_dict
 
 
-def _euclidean_distance(pos, idx1, idx2):
+def _distance(pos, idx1, idx2, norm_type='l1'):
     """
     Get the euclidean distance between two nodes
     :param pos: position dictionary indexed by node
@@ -31,7 +31,12 @@ def _euclidean_distance(pos, idx1, idx2):
     :param idx2: index of node 2 in pos dictionary
     :return: euclidean distance (float)
     """
-    dist = np.sum(np.sqrt(np.square((pos[idx1] - pos[idx2]))))
+    if norm_type == 'l1':
+        dist = np.sqrt(np.sum(np.square((pos[idx1] - pos[idx2]))))
+    elif norm_type == 'l2':
+        dist = np.sum(np.sqrt(np.square((pos[idx1] - pos[idx2]))))
+    else:
+        raise ValueError("norm_type must be either l1 or l2.")
     return dist
 
 

@@ -62,7 +62,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
         for u, v in bond_dict.keys():
             bond = bond_dict[(u, v)]
             order = bond.GetBondOrder()
-            feature = np.array([gu._euclidean_distance(position_dict, translate[u], translate[v]),
+            feature = np.array([gu._distance(position_dict, translate[u], translate[v]),
                                 int(order == 1), int(order == 2), int(order == 3),
                                 int(bond.IsAromatic()), int(molecule is None)])
             feature_dict[(translate[u], translate[v])]= feature
@@ -70,7 +70,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
     elif molecule is not None:
         for u, v in bond_dict.keys():
             bond = bond_dict[(u, v)]
-            feature = np.array([gu._euclidean_distance(position_dict, translate[u], translate[v]),
+            feature = np.array([gu._distance(position_dict, translate[u], translate[v]),
                                 int(bond.getIsSingle()), int(bond.getIsDouble()), int(bond.getIsTriple()),
                                 int(bond.getIsAromatic()), int(molecule is None)])
             feature_dict[(translate[u], translate[v])] = feature
@@ -79,7 +79,7 @@ def featurize_edges_simple(bond_list, molecule, translate, position_dict):
         ligand_translate, protein_translate = translate
         for u, v in bond_dict.keys():
             feature = np.array(
-                [gu._euclidean_distance(position_dict, ligand_translate[u], protein_translate[v]),
+                [gu._distance(position_dict, ligand_translate[u], protein_translate[v]),
                  0, 0, 0, 0, int(molecule is None)])
             feature_dict[(ligand_translate[u], protein_translate[v])] = feature
             feature_dict[(protein_translate[v], ligand_translate[u])] = feature

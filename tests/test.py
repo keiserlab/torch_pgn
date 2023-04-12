@@ -1,9 +1,39 @@
 from pgn.train.run_training import run_training
+from pgn.train.Trainer import Trainer
 from pgn.train.hyperopt import hyperopt
 from pgn.args import TrainArgs, HyperoptArgs, DataArgs
 from pgn.load_data import process_raw
 from scripts.generate_plec import generate_plec_pdbbind
 from scripts.generate_final_correlations import generate_final_correlations
+
+def test_many_v_many_dataloading():
+
+    args = DataArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+                    'dataset_type': 'many_v_many',
+                    'split_type': 'random'
+                    })
+
+    args.process_args()
+
+    process_raw(args)
+
+
+def test_one_v_many_dataloading():
+
+    args = DataArgs()
+
+    args.from_dict({'raw_mol_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/medium_diverse_toy.mol2',
+                    'raw_pdb_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/d4_receptor.pdb',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/ovm_toy_dataset',
+                    'dataset_type': 'one_v_many'
+                    })
+
+    args.process_args()
+
+    process_raw(args)
 
 def test_pfp_train():
     args = TrainArgs()
@@ -14,8 +44,7 @@ def test_pfp_train():
                     'split_type': 'random',
                     'construct_graphs': False,
                     'save_dir': '/Users/student/git/pgn/tests/output/pfp',
-                    'epochs': 1,
-                    'cv_folds': 3,
+                    'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
                     'save_splits': True
@@ -43,6 +72,7 @@ def test_hyperopt():
 
     hyperopt(args)
 
+
 def test_dmpnn_train():
 
     args = TrainArgs()
@@ -52,14 +82,13 @@ def test_dmpnn_train():
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output',
+                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
                     'epochs': 5,
-                    'validation_percent': 0.2,
-                    'test_percent': 0.2,
+                    'validation_percent': 0.25,
+                    'test_percent': 0.25,
                     'save_splits': True,
                     'split_dir': '/Users/student/git/pgn/tests/splits',
-                    'encoder_type': 'dmpnn',
-                    'cv_folds': 2
+                    'encoder_type': 'dmpnn'
                     })
     args.process_args()
 
@@ -86,6 +115,7 @@ def test_ggnet_train():
     args.process_args()
 
     run_training(args)
+
 
 def test_fp_dataloading():
 
@@ -128,9 +158,11 @@ def test_fp_train():
 
     run_training(args)
 
+
 def test_generate_plec_pdbbind():
 
     generate_plec_pdbbind('working_data/ManyVsManyToy', 'working_data/ManyVsManyToy/index/INDEX_general_PL_data.2019')
+
 
 def test_generate_final_correlations():
     generate_final_correlations('/Users/student/git/pgn/tests/output/pfp/cv_fold_0/best_checkpoint.pt',
@@ -139,4 +171,92 @@ def test_generate_final_correlations():
                                 device='cpu',
                                 epochs=5)
 
-test_generate_final_correlations()
+
+def test_ligand_only_dataset():
+    args = TrainArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'dataset_type': 'many_v_many',
+                    'ligand_only': True,
+                    'split_type': 'random',
+                    'construct_graphs': False,
+                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'epochs': 5,
+                    'validation_percent': 0.2,
+                    'test_percent': 0.2,
+                    'save_splits': True
+                    })
+
+    args.process_args()
+
+    trainer = Trainer(args)
+    trainer.load_data()
+
+
+def test_no_interactions_dataset():
+    args = TrainArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'dataset_type': 'many_v_many',
+                    'interaction_edges_removed': True,
+                    'split_type': 'random',
+                    'construct_graphs': False,
+                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'epochs': 5,
+                    'validation_percent': 0.2,
+                    'test_percent': 0.2,
+                    'save_splits': True
+                    })
+
+    args.process_args()
+
+    trainer = Trainer(args)
+    trainer.load_data()
+
+def test_ligand_only_readout():
+
+    args = TrainArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'dataset_type': 'many_v_many',
+                    'split_type': 'random',
+                    'encoder_type': 'ggnet',
+                    'construct_graphs': False,
+                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'epochs': 5,
+                    'validation_percent': 0.2,
+                    'test_percent': 0.2,
+                    'save_splits': True,
+                    'ligand_only_readout': True
+                    })
+    args.process_args()
+
+    run_training(args)
+
+
+def test_split_conv():
+
+    args = TrainArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'dataset_type': 'many_v_many',
+                    'split_type': 'random',
+                    'encoder_type': 'pfp',
+                    'construct_graphs': False,
+                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'epochs': 5,
+                    'validation_percent': 0.2,
+                    'test_percent': 0.2,
+                    'save_splits': True,
+                    'one_step_convolution': False
+                    })
+    args.process_args()
+
+    run_training(args)
+
+test_many_v_many_dataloading()
+

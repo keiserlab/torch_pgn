@@ -207,3 +207,4 @@ fabric.properties
 **/working_data
 
 /tests/ground_truth_dataset/
+/tests/output_data/

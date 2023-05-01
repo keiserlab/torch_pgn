@@ -320,6 +320,17 @@ def _compare_graphs(graph1, graph2, epsilon=0.001):
     distance_matrix = [np.sqrt(np.sum(np.square(g1_pos[i] - g2_pos[i]))) for i in g1_pos.keys()]
     # TODO: Switch from global epsilon to local epsilon with node level reporting
     assert np.sum(distance_matrix) < epsilon
+    #compare other node features
+    g1_features = nx.get_node_attributes(sorted_g1, 'features')
+    g2_features = nx.get_node_attributes(sorted_g2, 'features')
+    feature_comparison = [np.array_equal(g1_features[i], g2_features[i]) for i in g1_features.keys()]
+    assert np.all(feature_comparison)
+    #compare adj matrix
+    g1_edges = sorted(sorted_g1.edges())
+    g2_edges = sorted(sorted_g2.edges())
+    assert np.array_equal(g1_edges, g2_edges)
+
+
 
 
 def _compare_graph_dataset(truth_dataset, test_dataset):

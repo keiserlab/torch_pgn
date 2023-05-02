@@ -329,6 +329,17 @@ def _compare_graphs(graph1, graph2, epsilon=0.001):
     g1_edges = sorted(sorted_g1.edges())
     g2_edges = sorted(sorted_g2.edges())
     assert np.array_equal(g1_edges, g2_edges)
+    #compare edge distances within epsilon
+    g1_efs = nx.get_edge_attributes(sorted_g1, 'features')
+    g2_efs = nx.get_edge_attributes(sorted_g2, 'features')
+    g1_dists = np.array([g1_efs[e][0] for e in g1_edges])
+    g2_dists = np.array([g2_efs[e][0] for e in g2_edges])
+    dists_delta = np.abs(g1_dists - g2_dists)
+    assert np.sum(dists_delta) < epsilon
+    #compare categorical edge features
+    g1_cat_feats = np.array([g1_efs[e][1:] for e in g1_edges])
+    g2_cat_feats = np.array([g2_efs[e][1:] for e in g2_edges])
+    assert (np.array_equal(g1_cat_feats, g2_cat_feats))
 
 
 

@@ -194,3 +194,21 @@ def load_checkpoint(path, device, return_args=False):
         return model, args
     else:
         return model
+
+
+def load_args(path, device):
+    """
+    Loads args from checkpoint file.
+    :param path: The path which contains the checkpoint file.
+    :param device: The device to to set the args.device parameter to.
+    :return: The loaded model file.
+    """
+
+    state = torch.load(path, map_location=lambda storage, loc: storage)
+    args = TrainArgs()
+    args.from_dict(vars(state['args']), skip_unsettable=True)
+
+    if device is not None:
+        args.device = device
+
+    return args

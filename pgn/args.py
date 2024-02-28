@@ -238,7 +238,7 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """Pytorch dataloader seed."""
     seed: int = 0
     """Pytorch seed."""
-    num_workers: int = 8
+    num_workers: int = 0
     """The number of works used in dataloading and batch generation."""
     batch_size: int = 256
     """The batch size used in training."""

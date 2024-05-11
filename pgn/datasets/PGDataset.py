@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 import networkx as nx
 import numpy as np
+import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
@@ -13,11 +14,13 @@ class PGDataset(ABC):
     """Generic class for loading datasets. It has all of the methods required to write the dataset in order to be
     compatible with the rest of the processing pipeline."""
     def __init__(self, args):
+        self.args = args
         self.num_workers = args.num_workers
         self.data_path = args.data_path
         self.save_graphs = args.save_graphs
         self.graphs = []
         self.directed = args.directed
+        self.save_plots = args.save_plots
 
     @abstractmethod
     def process_raw_data(self):
@@ -77,4 +80,26 @@ class PGDataset(ABC):
         np.save(osp.join(current_dir, prefix + 'edges'), edges)
         np.save(osp.join(current_dir, prefix + 'edge_features'), edge_features)
         np.save(osp.join(current_dir, prefix + 'pos3d'), node_pos)
+        if self.save_plots:
+            self._visualize_graph(G, node_pos, node_features, current_dir)
         return nodes, edges, node_features, edge_features, node_pos
+
+    def _visualize_graph(self, G, node_pos, node_feats, save_dir):
+        #Assumes ligand toggle is last position feature matrix and 1 for ligand 0 for protein
+        ligand_nodes = np.where(node_feats[:, -1] == 1)[0]
+        prot_nodes = np.where(node_feats[:, -1] == 0)[0]
+        nx.draw_networkx_edges(G, node_pos[:,:-1], alpha=0.6)
+        nx.draw_networkx_nodes(G, node_pos[:,:-1],
+                               nodelist=list(ligand_nodes),
+                               node_color='r',
+                               alpha=0.6)
+        if prot_nodes.size > 0:
+            nx.draw_networkx_nodes(G, node_pos[:, :-1],
+                                   nodelist=list(prot_nodes),
+                                   node_color='b',
+                                   alpha=0.6)
+        plt.axis('off')
+        plt.title(G.name)
+        plt.savefig(osp.join(save_dir, G.name + '_prox_graph_proj.png'))
+        plt.clf()
+

@@ -10,7 +10,7 @@ The code in this module is mostly modified versions of the ODDT implementations 
 """
 
 
-def get_interacting_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
+def get_interacting_atoms(ligand, protein, distance_cutoff=3.5, ignore_hoh=True):
     """
     Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions
     to output the interacting residue.
@@ -42,7 +42,7 @@ def get_interacting_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True)
     return protein_atoms, ligand_atoms
 
 
-def get_proximal_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
+def get_proximal_atoms(ligand, protein, distance_cutoff=3.5, ignore_hoh=True):
     """
     Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions
     to output the interacting residue.
@@ -59,6 +59,7 @@ def get_proximal_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
     :return: ???? (Probably start with the interacting residues for testing and then move on for there (Need to figure
      this out.)
     """
+    #TODO: Allow toggle for hydrogen and water enables by args
     # removing h
     protein_mask = protein_no_h = (protein.atom_dict['atomicnum'] != 1)
     if ignore_hoh:
@@ -151,6 +152,8 @@ def get_molecule_graph(molecule, molecule_atoms, depth=1):
                 envs.append(tmp)
 
     final_edges = np.array(list(edges)).T
+    if final_edges.size == 0:
+        final_edges = np.array([[],[]])
     return node_set.union(neighbor_nodes), final_edges
 
 

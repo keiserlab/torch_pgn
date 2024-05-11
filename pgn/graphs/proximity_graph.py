@@ -6,10 +6,11 @@ from pgn.featurization.featurize import get_all_features
 
 import networkx as nx
 import matplotlib.pyplot as plt
+import os.path as osp
 
 #TODO: Add argument object for passing parameters other than ligand and protein
 
-def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, visualize=None, local_connect=True):
+def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=True, visualize=None, local_connect=True):
     """
     Takes in the receptor and the docked ligand and produces a tree version of this working_data. Calculated using Kruskal's and
     networkx.
@@ -71,6 +72,7 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
                    weight=gu._distance(pos3d, ligand_node, ligand_edges[1, idx]),
                    features=edges_features[(ligand_node, ligand_edges[1, idx])])
 
+    G.name = name
     T = nx.minimum_spanning_tree(G)
 
     if local_connect:
@@ -89,12 +91,14 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
                                nodelist=list(ligand_nodes),
                                node_color='r',
                                alpha=0.6)
-        nx.draw_networkx_nodes(T, pos2d,
-                               nodelist=list(receptor_nodes),
-                               node_color='b',
-                               alpha=0.6)
+        if len(receptor_nodes) > 0:
+            nx.draw_networkx_nodes(T, pos2d,
+                                   nodelist=list(receptor_nodes),
+                                   node_color='b',
+                                   alpha=0.6)
         plt.axis('off')
         if visualize is True:
+            plt.title(G.name)
             plt.show()
         else:
             plt.savefig(visualize)
@@ -103,7 +107,7 @@ def yield_tree_reduction(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, 
     return T
 
 
-def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_hoh=True, visualize=None):
+def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=True, visualize=False, maintain_lig=True):
     """
     Takes in the receptor and the docked ligand and produces a graph working_data.
     :param ligand: oddt.toolkit.Molecule object
@@ -115,12 +119,18 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
     :param ignore_hoh: bool (default = True) Should the water molecules be ignored. This is based on the name of the
             residue ('HOH').
     :param visualize: whether to visualize the final output graph using matplotlib projection into 2d space
+    :param maintain_lig: If True the entire ligand will be maintained regardless of atom proximity. Otherwise the ligand
+    will be allowed to fragment based on the proximity graph.
     :return: A networkx graph of featurized nodes and edges representing the interaction of the protein and ligand.
     """
     protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein)
     cross_edges = extract_cross_edges(protein_atoms, ligand_atoms)
     receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=4)
-    ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=2)
+    if maintain_lig is True:
+        #Keep all ligand edges as opposed to the proximal and add depth handling
+        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand.atom_dict[ligand.atom_dict['atomicnum'] != 1], depth=2)
+    else:
+        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=2)
 
     ligand_dict, protein_dict = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 
@@ -144,6 +154,7 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
     cross_edges = gu._renumber_cross_edges(ligand_dict, protein_dict, cross_edges)
 
     G = nx.Graph()
+    G.name = name
 
     for node in ligand_nodes:
         G.add_node(node, atom_class='ligand', features=atom_features[node], pos3d=pos3d[node])
@@ -168,15 +179,15 @@ def yield_full_interaction_graph(ligand, protein, distance_cutoff=4.5, ignore_ho
                                nodelist=list(ligand_nodes),
                                node_color='r',
                                alpha=0.6)
-        nx.draw_networkx_nodes(G, pos2d,
-                               nodelist=list(receptor_nodes),
-                               node_color='b',
-                               alpha=0.6)
+        if len(receptor_nodes) > 0:
+            nx.draw_networkx_nodes(G, pos2d,
+                                   nodelist=list(receptor_nodes),
+                                   node_color='b',
+                                   alpha=0.6)
         plt.axis('off')
-        if visualize is True:
+        if visualize:
+            plt.title(G.name)
             plt.show()
-        else:
-            plt.savefig(visualize)
         plt.clf()
 
     return G

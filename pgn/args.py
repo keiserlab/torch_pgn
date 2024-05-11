@@ -102,6 +102,10 @@ class DataArgs(Tap):
     ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
     a decent amount of time depending upon the dataset size and complexity of the proximity graph."""
 
+    save_plots: bool = False
+    """Boolean toggle of whether to save a 2D projection of the proximity graph to disk during graph generation.
+    Not recommended for larger datasets"""
+
     directed: bool = False
     """Boolean toggle for whether to make the proximity graph undirected."""
     #TODO: Figure out how to make certain arguments required conditional upon other requirements.
@@ -209,6 +213,16 @@ class DataArgs(Tap):
     enable_interacting_mask: bool = True
     """Include molgraph attribute in dataset to enable use with dmpnn"""
 
+    mode: Literal['experiment', 'evaluate'] = 'experiment'
+    """Whether the model is being used to experimentally tune model performace (evaluated with the validation set)
+    or evaluate model performance (test set)."""
+
+    cross_validate: bool = False
+    """Boolean toggle of whether to run cross-validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
+    will be set to True."""
+
+    cv_folds: int = None
+    """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
 
 
     def process_args(self):
@@ -257,16 +271,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     include: rmse, mse, pcc, r2."""
     plot_correlations: bool = True
     """Boolean toggle of whether to plot the correlations for train, validation and test (if loaded)."""
-    cross_validate: bool = False
-    """Boolean toggle of whether to run cross-validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
-    will be set to True."""
-    cv_folds: int = None
-    """Number of folds to use in cross-validation. If this is set cross-validations will be automatically used."""
     tensorboard_logging: bool = True
     """Whether or not to track model training with tensorboard."""
-    mode: Literal['experiment', 'evaluate'] = 'experiment'
-    """Whether the model is being used to experimentally tune model performace (evaluated with the validation set)
-    or evaluate model performance (test set)."""
     multi_gpu: bool = False
     """Whether to train the model across multiple gpus or not."""
     fine_tuning_dir: str = None

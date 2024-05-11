@@ -41,7 +41,6 @@ class ManyVsManyDataset(PGDataset):
                              comment='#')
         energy = energy.set_index('name')
         inputs = []
-        print(energy)
         for name in tqdm(directories):
             if name not in ['index', 'readme', '.DS_Store']:
                 pdb_path = os.path.join(raw_path, name, name + "_pocket.pdb")
@@ -53,7 +52,6 @@ class ManyVsManyDataset(PGDataset):
                         inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
                 except:
                     continue
-        
-        self.graphs = [_return_graph(tup) for tup in tqdm(inputs)]    
-        #with multiprocessing.Pool(processes=self.num_workers) as p:
-        #    self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
+
+        with multiprocessing.Pool(processes=self.num_workers) as p:
+            self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

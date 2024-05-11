@@ -28,9 +28,18 @@ def get_all_features(ligand, protein, ligand_nodes, protein_nodes, ligand_edges,
     """
     ligand_atom_feature = featurize_atoms_ECFP_like(ligand, ligand_nodes, True, ligand_translate)
     protein_atom_feature = featurize_atoms_ECFP_like(protein, protein_nodes, False, protein_translate)
-    ligand_edge_feature = featurize_edges_simple(set(zip(ligand_edges[0], ligand_edges[1])), ligand, ligand_translate, positions)
-    protein_edge_feature = featurize_edges_simple(set(zip(protein_edges[0], protein_edges[1])), protein, protein_translate, positions)
-    cross_edge_feature = featurize_edges_simple(set(zip(cross_edges[0], cross_edges[1])), None, [ligand_translate, protein_translate], positions)
+    if len(ligand_edges) > 0:
+        ligand_edge_feature = featurize_edges_simple(set(zip(ligand_edges[0], ligand_edges[1])), ligand, ligand_translate, positions)
+    else:
+        ligand_edge_feature = {}
+    if len(protein_edges) > 0:
+        protein_edge_feature = featurize_edges_simple(set(zip(protein_edges[0], protein_edges[1])), protein, protein_translate, positions)
+    else:
+        protein_edge_feature = {}
+    if len(cross_edges) > 0:
+        cross_edge_feature = featurize_edges_simple(set(zip(cross_edges[0], cross_edges[1])), None, [ligand_translate, protein_translate], positions)
+    else:
+        cross_edge_feature = {}
     atom_features = {**ligand_atom_feature, **protein_atom_feature}
     edge_features = {**ligand_edge_feature, **protein_edge_feature, **cross_edge_feature}
     return atom_features, edge_features

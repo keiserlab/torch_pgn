@@ -51,9 +51,10 @@ def _convert_nodes_and_edges(translate, nodes, edges):
     translated_nodes = set()
     for node in nodes:
         translated_nodes.add(translate[node])
-    for i in range(len(edges[0])):
-        edges[0, i] = translate[edges[0, i]]
-        edges[1, i] = translate[edges[1, i]]
+    if edges.size != 0:
+        for i in range(edges.shape[1]):
+            edges[0, i] = translate[edges[0, i]]
+            edges[1, i] = translate[edges[1, i]]
     return translated_nodes, edges
 
 
@@ -125,9 +126,9 @@ def _return_graph(input_tuple):
     protein, ligand, energy, name = input_tuple
     mode = 'full'
     if mode == 'full':
-        graph = yield_full_interaction_graph(ligand, protein)
+        graph = yield_full_interaction_graph(ligand, protein, name)
     elif mode == 'tree':
-        graph = yield_tree_reduction(ligand, protein)
+        graph = yield_tree_reduction(ligand, protein, name)
     else:
         raise ValueError("Illegal graph_type argument. Please choose from <full, tree>")
     return name, graph, energy

@@ -4,7 +4,7 @@ import sys
 import os
 import os.path as osp
 
-def generate_datasets(raw_path, data_path, dataset_type,
+def generate_datasets(raw_path, raw_label_file, data_path, dataset_type,
                       radii=(2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6),
                       lig_depth=-1, receptor_depth=4):
 
@@ -14,14 +14,15 @@ def generate_datasets(raw_path, data_path, dataset_type,
         os.mkdir(current_dir)
         args = DataArgs()
         args.from_dict({'raw_data_path': raw_path,
-                'data_path': current_dir,
-                'dataset_type': dataset_type,
-                'split_type': 'random',
-                'save_plots': True,
-                'proximity_radius': radius,
-                'ligand_depth': lig_depth,
-                'receptor_depth': receptor_depth
-                })
+                        'raw_label_file': raw_label_file,
+                        'data_path': current_dir,
+                        'dataset_type': dataset_type,
+                        'split_type': 'random',
+                        'save_plots': True,
+                        'proximity_radius': radius,
+                        'ligand_depth': lig_depth,
+                        'receptor_depth': receptor_depth
+                        })
 
         args.process_args()
 
@@ -29,8 +30,9 @@ def generate_datasets(raw_path, data_path, dataset_type,
 
 if __name__ == '__main__':
     raw_data_path = sys.argv[1]
-    data_path = sys.argv[2]
+    raw_label_file = sys.argv[2]
+    data_path = sys.argv[3]
     dataset_type = 'many_v_many'
-    if len(sys.argv) > 3:
-        dataset_type = sys.argv[3]
+    if len(sys.argv) > 4:
+        dataset_type = sys.argv[4]
     generate_datasets(raw_data_path, data_path, dataset_type)

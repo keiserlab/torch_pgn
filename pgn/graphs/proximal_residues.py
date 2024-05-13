@@ -10,7 +10,7 @@ The code in this module is mostly modified versions of the ODDT implementations 
 """
 
 
-def get_interacting_atoms(ligand, protein, distance_cutoff=3.5, ignore_hoh=True):
+def get_interacting_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
     """
     Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions
     to output the interacting residue.
@@ -42,7 +42,7 @@ def get_interacting_atoms(ligand, protein, distance_cutoff=3.5, ignore_hoh=True)
     return protein_atoms, ligand_atoms
 
 
-def get_proximal_atoms(ligand, protein, distance_cutoff=3.5, ignore_hoh=True):
+def get_proximal_atoms(ligand, protein, distance_cutoff=4.5, ignore_hoh=True):
     """
     Protein ligand interacting atom extractor. Takes a ligand and protein pair and uses the built in ODDT functions
     to output the interacting residue.

@@ -123,12 +123,14 @@ def _return_graph(input_tuple):
     :return: Returns the name, the graph (networkx), and energy of the proximity graph
     """
     #TODO: make interaction graph yielding functions compatible with args object
-    protein, ligand, energy, name = input_tuple
+    protein, ligand, energy, name, proximity_radius, ligand_depth, receptor_depth = input_tuple
     mode = 'full'
     if mode == 'full':
-        graph = yield_full_interaction_graph(ligand, protein, name)
+        graph = yield_full_interaction_graph(ligand, protein, name, distance_cutoff=proximity_radius, lig_depth=ligand_depth,
+                                     receptor_depth=receptor_depth)
     elif mode == 'tree':
-        graph = yield_tree_reduction(ligand, protein, name)
+        graph = yield_tree_reduction(ligand, protein, name, distance_cutoff=proximity_radius, lig_depth=ligand_depth,
+                                     receptor_depth=receptor_depth)
     else:
         raise ValueError("Illegal graph_type argument. Please choose from <full, tree>")
     return name, graph, energy

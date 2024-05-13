@@ -10,7 +10,8 @@ import os.path as osp
 
 #TODO: Add argument object for passing parameters other than ligand and protein
 
-def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=True, visualize=None, local_connect=True):
+def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, lig_depth=2, receptor_depth=4,
+                                 ignore_hoh=True, visualize=False, local_connect=True):
     """
     Takes in the receptor and the docked ligand and produces a tree version of this working_data. Calculated using Kruskal's and
     networkx.
@@ -29,10 +30,14 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=
     reduction.
     :return: A networkx graph of featurized nodes and edges representing the interaction of the protein and ligand.
     """
-    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein)
+    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein, distance_cutoff=distance_cutoff)
     cross_edges = extract_cross_edges(protein_atoms, ligand_atoms)
-    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=2)
-    ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=1)
+    if lig_depth == -1:
+        #Keep all ligand edges as opposed to the proximal and add depth handling
+        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand.atom_dict[ligand.atom_dict['atomicnum'] != 1], depth=2)
+    else:
+        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=lig_depth)
+    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=receptor_depth)
 
     ligand_dict, protein_dict = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 
@@ -107,7 +112,8 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=
     return T
 
 
-def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, ignore_hoh=True, visualize=False, maintain_lig=True):
+def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, lig_depth=2, receptor_depth=4,
+                                 ignore_hoh=True, visualize=False):
     """
     Takes in the receptor and the docked ligand and produces a graph working_data.
     :param ligand: oddt.toolkit.Molecule object
@@ -123,14 +129,14 @@ def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, ign
     will be allowed to fragment based on the proximity graph.
     :return: A networkx graph of featurized nodes and edges representing the interaction of the protein and ligand.
     """
-    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein)
+    protein_atoms, ligand_atoms = get_interacting_atoms(ligand, protein, distance_cutoff=distance_cutoff)
     cross_edges = extract_cross_edges(protein_atoms, ligand_atoms)
-    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=4)
-    if maintain_lig is True:
+    receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=receptor_depth)
+    if lig_depth == -1:
         #Keep all ligand edges as opposed to the proximal and add depth handling
         ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand.atom_dict[ligand.atom_dict['atomicnum'] != 1], depth=2)
     else:
-        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=2)
+        ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=lig_depth)
 
     ligand_dict, protein_dict = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 

@@ -14,7 +14,7 @@ def generate_datasets(raw_path, raw_label_file, data_path, dataset_type,
         os.mkdir(current_dir)
         args = DataArgs()
         args.from_dict({'raw_data_path': raw_path,
-                        'raw_label_file': raw_label_file,
+                        'label_file': raw_label_file,
                         'data_path': current_dir,
                         'dataset_type': dataset_type,
                         'split_type': 'random',

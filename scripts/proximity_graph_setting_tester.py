@@ -1,8 +1,9 @@
+import sys
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
 from pgn.args import TrainArgs, HyperoptArgs, DataArgs
 from pgn.load_data import process_raw
-import sys
+
 import os
 import os.path as osp
 

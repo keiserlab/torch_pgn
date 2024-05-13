@@ -38,4 +38,4 @@ if __name__ == '__main__':
     dataset_type = 'many_v_many'
     if len(sys.argv) > 4:
         dataset_type = sys.argv[4]
-    generate_datasets(raw_data_path, data_path, dataset_type)
+    generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)

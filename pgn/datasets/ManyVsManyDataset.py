@@ -49,7 +49,8 @@ class ManyVsManyDataset(PGDataset):
                     receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
                     ligand = opd.read_sdf(ligand_path, skip_bad_mols=True)['mol'][0]
                     if ligand is not None:
-                        inputs.append((receptor, ligand, energy.loc[name, 'label'], name))
+                        inputs.append((receptor, ligand, energy.loc[name, 'label'], name,
+                                       self.proximity_radius, self.ligand_depth, self.receptor_depth))
                 except:
                     continue
 

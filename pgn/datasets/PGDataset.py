@@ -21,6 +21,9 @@ class PGDataset(ABC):
         self.graphs = []
         self.directed = args.directed
         self.save_plots = args.save_plots
+        self.proximity_radius = args.proximity_radius
+        self.ligand_depth = args.ligand_depth
+        self.receptor_depth = args.receptor_depth
 
     @abstractmethod
     def process_raw_data(self):

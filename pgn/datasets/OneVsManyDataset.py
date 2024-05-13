@@ -33,7 +33,8 @@ class OneVsManyDataset(PGDataset):
         mol = data['mol']
         inputs = []
         for i, molecule in tqdm(enumerate(name)):
-            inputs.append((receptor, mol[i], energy[i], molecule))
+            inputs.append((receptor, mol[i], energy[i], molecule,
+                           self.proximity_radius, self.ligand_depth, self.receptor_depth))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
             self.graphs = list(tqdm(p.imap(_return_graph, inputs)))

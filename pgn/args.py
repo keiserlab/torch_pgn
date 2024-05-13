@@ -138,6 +138,17 @@ class DataArgs(Tap):
     transforms: List[str] = ['one_hot']
     """Transforms to apply to the dataset."""
 
+    ### Proximity graph construction settings
+    proximity_radius: float = 4.5
+    """Size of the proximity radius in angstroms for the calculation of the proximity graph"""
+
+    ligand_depth: int = 2
+    """Number of bonds from proximal ligand atoms to be added to the proximity graph. If set to -1 the entire ligand
+    will be added to the proximity graph without respect to proximal atoms."""
+
+    receptor_depth: int = 4
+    """Number of bonds from proximal receptor atoms to be added to the proximity graph"""
+
     ligand_only: bool = False
     """Whether to make a ligand only dataset (i.e. proximity edges and protein atoms are excluded. The raw data
     processing remains the same, but a ligand only pre-transform is applied during ProximityGraphDataset loading."""
@@ -173,10 +184,10 @@ class DataArgs(Tap):
     construct_graphs: bool = True
     """Whether to process raw working_data or just look in the data_path for formated proximity graphs"""
 
-    validation_percent: int = 0.10
+    validation_percent: float = 0.10
     """The percentage of the training working_data to put into the validation set in the case of a random split."""
 
-    test_percent: int = 0.10
+    test_percent: float = 0.10
     """The percentage of the training working_data to hold out into the test set in the case of a random split."""
 
     label_mean: float = 0.

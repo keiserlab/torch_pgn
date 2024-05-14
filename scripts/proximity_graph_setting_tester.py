@@ -8,8 +8,8 @@ from scripts.generate_final_correlations import generate_final_correlations
 import os
 import os.path as osp
 
-def generate_datasets(raw_path, raw_label_file, data_path, dataset_type,
-                      radii=(2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6),
+def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
+                      radii=(1, 2.5, 3.5, 4.5, 5.5),
                       lig_depth=-1, receptor_depth=4):
 
     for radius in radii:
@@ -17,16 +17,29 @@ def generate_datasets(raw_path, raw_label_file, data_path, dataset_type,
                                format(str(radius), str(lig_depth), str(receptor_depth)))
         os.mkdir(current_dir)
         args = DataArgs()
-        args.from_dict({'raw_data_path': raw_path,
-                        'label_file': raw_label_file,
-                        'data_path': current_dir,
-                        'dataset_type': dataset_type,
-                        'split_type': 'random',
-                        'save_plots': True,
-                        'proximity_radius': radius,
-                        'ligand_depth': lig_depth,
-                        'receptor_depth': receptor_depth
-                        })
+        if dataset_type == 'many_v_many':
+            args.from_dict({'raw_data_path': raw_path_1,
+                            'label_file': raw_path_2,
+                            'data_path': current_dir,
+                            'dataset_type': dataset_type,
+                            'split_type': 'random',
+                            'save_plots': True,
+                            'proximity_radius': radius,
+                            'ligand_depth': lig_depth,
+                            'receptor_depth': receptor_depth
+                            })
+        else:
+            args.from_dict({'raw_mol_path': raw_path_1,
+                            'raw_pdb_path': raw_path_2,
+                            'data_path': current_dir,
+                            'dataset_type': dataset_type,
+                            'split_type': 'random',
+                            'save_plots': False,
+                            'proximity_radius': radius,
+                            'ligand_depth': lig_depth,
+                            'receptor_depth': receptor_depth,
+                            'enable_mol_graph':
+                            })
 
         args.process_args()
 

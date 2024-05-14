@@ -3,7 +3,7 @@ import os
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 
 from pgn.train.Trainer import Trainer
-from pgn.train.train_utils import load_checkpoint
+from pgn.train.train_utils import load_args
 from pgn.train.run_training import run_training
 
 import numpy as np
@@ -25,7 +25,7 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     """
     val_evals = []
     label_stats = []
-    args = load_checkpoint(checkpoint_path, device=device, return_args=True)[1]
+    args = load_args(checkpoint_path, device=device)
     args.construct_graphs = False
     args.split_type = 'defined_test'
     args.split_dir = split_path

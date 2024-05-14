@@ -257,7 +257,7 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """The edge feature size. Set during dataloading procedure."""
     loss_function: str = 'mse'
     """The function used to evaluate the model. The default is mse. Valid options are: mse, rmse"""
-    encoder_type: str = 'pfp'
+    encoder_type: Literal['pfp', 'd-mpnn', 'ggnet', 'fp', 'dimenet++'] = 'pfp'
     """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
     torch_seed: int = 42
     """Pytorch dataloader seed."""

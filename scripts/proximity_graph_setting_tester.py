@@ -58,7 +58,7 @@ if __name__ == '__main__':
     raw_label_file = sys.argv[2]
     data_path = sys.argv[3]
     dataset_type = 'many_v_many'
-    if len(sys.argv) == 5:
+    if len(sys.argv) > 4:
         dataset_type = sys.argv[4]
     generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
     if len(sys.argv) > 5:

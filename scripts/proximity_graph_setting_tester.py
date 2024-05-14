@@ -37,8 +37,7 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
                             'save_plots': False,
                             'proximity_radius': radius,
                             'ligand_depth': lig_depth,
-                            'receptor_depth': receptor_depth,
-                            'enable_mol_graph':
+                            'receptor_depth': receptor_depth
                             })
 
         args.process_args()

@@ -1,5 +1,6 @@
 from typing import Callable, Union
 from pgn.models.dimenet_utils import *
+from pgn.args import TrainArgs
 
 import torch
 
@@ -50,39 +51,49 @@ class DimeNet(torch.nn.Module):
     url = ('https://github.com/klicperajo/dimenet/raw/master/pretrained/'
            'dimenet')
 
-    def __init__(self, atom_dim: int, hidden_channels: int, out_channels: int,
-                 num_blocks: int, num_bilinear: int, num_spherical: int,
-                 num_radial, cutoff: float = 5.0, max_num_neighbors: int = 32,
-                 envelope_exponent: int = 5, num_before_skip: int = 1,
-                 num_after_skip: int = 2, num_output_layers: int = 3,
-                 act: Union[str, Callable] = 'swish', device='cpu'):
+    def __init__(self, args: TrainArgs, atom_dim: int):
+
         super().__init__()
 
-        if num_spherical < 2:
+        if args.num_spherical < 2:
             raise ValueError("num_spherical should be greater than 1")
 
-        act = activation_resolver(act)
+        act = activation_resolver(args.act)
 
-        self.cutoff = cutoff
+        self.device = args.device
+        self.cutoff = args.cutoff
         self.atom_dim = atom_dim
-        self.max_num_neighbors = max_num_neighbors
-        self.num_blocks = num_blocks
+        self.max_num_neighbors = args.max_num_neighbors
+        self.num_blocks = args.num_blocks
+        self.num_radial = args.num_radial
+        self.envelope_exponent = args.envelope_exponent
+        self.num_spherical = args.num_spherical
+        self.hidden_channels = args.nn_conv_internal_dim
+        self.num_bilinear = args.num_bilinear
+        self.num_before_skip = args.num_before_skip
+        self.num_after_skip = args.num_after_skip
+        #Maybe remove
+        self.out_channels = args.out_channels
+        self.num_output_layers = args.num_output_layers
 
-        self.rbf = BesselBasisLayer(num_radial, cutoff, envelope_exponent).to(self.device)
-        self.sbf = SphericalBasisLayer(num_spherical, num_radial, cutoff,
-                                       envelope_exponent).to(self.device)
 
-        self.emb = EmbeddingBlock(atom_dim, num_radial, hidden_channels, act).to(self.device)
+
+
+        self.rbf = BesselBasisLayer(self.num_radial, self.cutoff, self.envelope_exponent).to(self.device)
+        self.sbf = SphericalBasisLayer(self.num_spherical, self.num_radial, self.cutoff,
+                                       self.envelope_exponent).to(self.device)
+
+        self.emb = EmbeddingBlock(atom_dim, self.num_radial, self.hidden_channels, act).to(self.device)
 
         self.output_blocks = torch.nn.ModuleList([
-            OutputBlock(num_radial, hidden_channels, out_channels,
-                        num_output_layers, act).to(self.device) for _ in range(num_blocks + 1)
+            OutputBlock(self.num_radial, self.hidden_channels, self.out_channels,
+                        self.num_output_layers, act).to(self.device) for _ in range(self.num_blocks + 1)
         ])
 
         self.interaction_blocks = torch.nn.ModuleList([
-            InteractionBlock(hidden_channels, num_bilinear, num_spherical,
-                             num_radial, num_before_skip, num_after_skip, act).to(self.device)
-            for _ in range(num_blocks)
+            InteractionBlock(self.hidden_channels, self.num_bilinear, self.num_spherical,
+                             self.num_radial, self.num_before_skip, self.num_after_skip, act).to(self.device)
+            for _ in range(self.num_blocks)
         ])
 
         # self.reset_parameters()
@@ -190,32 +201,14 @@ class DimeNetPlusPlus(DimeNet):
     url = ('https://raw.githubusercontent.com/gasteigerjo/dimenet/'
            'master/pretrained/dimenet_pp')
 
-    def __init__(self, atom_dim: int, hidden_channels: int, out_channels: int,
-                 num_blocks: int, int_emb_size: int, basis_emb_size: int,
-                 out_emb_channels: int, num_spherical: int, num_radial: int,
-                 cutoff: float = 5.0, max_num_neighbors: int = 32,
-                 envelope_exponent: int = 5, num_before_skip: int = 1,
-                 num_after_skip: int = 2, num_output_layers: int = 3,
-                 act: Union[str, Callable] = 'swish', device='cpu'):
-        act = activation_resolver(act)
+    def __init__(self, args: TrainArgs, atom_dim: int):
 
         super().__init__(
-            atom_dim=atom_dim,
-            hidden_channels=hidden_channels,
-            out_channels=out_channels,
-            num_blocks=num_blocks,
-            num_bilinear=1,
-            num_spherical=num_spherical,
-            num_radial=num_radial,
-            cutoff=cutoff,
-            max_num_neighbors=max_num_neighbors,
-            envelope_exponent=envelope_exponent,
-            num_before_skip=num_before_skip,
-            num_after_skip=num_after_skip,
-            num_output_layers=num_output_layers,
-            act=act,
-            device=device,
+            args=args,
+            atom_dim=atom_dim
         )
+
+        act = activation_resolver(args.act)
 
         # We are re-using the RBF, SBF and embedding layers of `DimeNet` and
         # redefine output_block and interaction_block in DimeNet++.
@@ -223,13 +216,13 @@ class DimeNetPlusPlus(DimeNet):
         # variable `num_bilinear` does not have any purpose as it is used
         # solely in the `OutputBlock` of DimeNet:
         self.output_blocks = torch.nn.ModuleList([
-            OutputPPBlock(num_radial, hidden_channels, out_emb_channels,
-                          out_channels, num_output_layers, act).to(device)
-            for _ in range(num_blocks + 1)
+            OutputPPBlock(self.num_radial, self.hidden_channels, self.out_emb_channels,
+                          self.out_channels, self.num_output_layers, act).to(self.device)
+            for _ in range(self.num_blocks + 1)
         ])
 
         self.interaction_blocks = torch.nn.ModuleList([
-            InteractionPPBlock(hidden_channels, int_emb_size, basis_emb_size,
-                               num_spherical, num_radial, num_before_skip,
-                               num_after_skip, act).to(device) for _ in range(num_blocks)
+            InteractionPPBlock(self.hidden_channels, self.int_emb_size, self.basis_emb_size,
+                               self.num_spherical, self.num_radial, self.num_before_skip,
+                               self.num_after_skip, act).to(self.device) for _ in range(self.num_blocks)
         ])

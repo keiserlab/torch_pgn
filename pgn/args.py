@@ -37,7 +37,7 @@ class EncoderArgs(Tap):
     """The dimension of the output feature vector"""
 
     depth: int = 3
-    """The number of message passing steps"""
+    """The number of message passing steps or the number of blocks in dimenet."""
 
     skip_connections: bool = True
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
@@ -62,6 +62,38 @@ class EncoderArgs(Tap):
     split_conv: bool = False
     """Boolean toggle of whether to have seperate message functions for covalent and non-covalent interactions.
     By default the same message function is applied regardless of edge type."""
+
+    ###################################################################################################################
+    ###########################   DimeNet paramters for encoder instantiation      ####################################
+    ###################################################################################################################
+    #TODO: Integrate with FF classes
+    out_channels: int = 1
+    """Output dimension of dimenet output blocks."""
+    num_blocks: int = 3
+    """Number of output blocks"""
+    num_output_layers: int = 3
+    """Number of linear layers for the output blocks."""
+    #End TODO
+    cutoff: float = 5.0
+    """Cutoff distance for interatomic interactions."""
+    num_spherical: int = 6
+    """Number of spherical harmonics."""
+    num_radial: int = 6
+    """Number of radial basis functions."""
+    num_bilinear: int = 1
+    """Size of the bilinear layer tensor."""
+    act: str = 'swish'
+    """The activation function. Default and only current option is swish"""
+    max_num_neighbors: int = 32
+    """The max number of neighbors to collect for each node within the 'cutoff' distance."""
+    envelope_exponent: int = 5
+    """Shape of the smooth cutoff."""
+    num_before_skip: int = 1
+    """Number of residual layers in the interaction blocks before the skip connection."""
+    num_after_skip: int = 2
+    """Number of residual layers in the interaction blocks after the skip connection."""
+
+
 
 
 class FFArgs(Tap):

@@ -1,7 +1,7 @@
 from pgn.train.train import train
 from pgn.train.evaluate_model import evaluate
 from pgn.train.train_utils import parse_loss, make_save_directories, save_checkpoint, load_checkpoint
-from pgn.models.model import PFPNetwork
+from pgn.models.model import PGNNetwork
 from pgn.evaluate.plot_utils import plot_correlation
 
 from torch.utils.tensorboard import SummaryWriter
@@ -34,7 +34,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     num_workers = args.num_workers
 
     if args.fine_tuning_dir is None:
-        model = PFPNetwork(args, args.node_dim, args.edge_dim)
+        model = PGNNetwork(args, args.node_dim, args.edge_dim)
     else:
         model = load_checkpoint(args.fine_tuning_dir, args.device)
 

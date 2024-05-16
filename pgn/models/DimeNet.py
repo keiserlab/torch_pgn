@@ -207,6 +207,9 @@ class DimeNetPlusPlus(DimeNet):
             args=args,
             atom_dim=atom_dim
         )
+        self.out_emb_channels = args.out_emb_channels
+        self.int_emb_size = args.int_emb_size
+        self.basis_emb_size = args.basis_emb_size
 
         act = activation_resolver(args.act)
 

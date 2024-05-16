@@ -71,6 +71,9 @@ class PGNNetwork(nn.Module):
         :param input: batch of Proximity Graphs
         :return: Output of the PFPNetwork
         """
-        out = self.feed_forward(self.encoder(data))
+        if self.args.encoder_type == 'dimenet++':
+            out = self.encoder(node_feats=data.x, edge_index=data.edge_index, pos=data.pos, batch=data.batch)
+        else:
+            out = self.feed_forward(self.encoder(data))
 
         return out.view(-1)

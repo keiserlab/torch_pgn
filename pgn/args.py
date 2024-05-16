@@ -92,6 +92,12 @@ class EncoderArgs(Tap):
     """Number of residual layers in the interaction blocks before the skip connection."""
     num_after_skip: int = 2
     """Number of residual layers in the interaction blocks after the skip connection."""
+    int_emb_size: int = 64
+    "Size of embedding in the interaction block."
+    basis_emb_size: int = 64
+    "Size of basis embedding in the interaction block."
+    out_emb_channels: int = 64
+    "Size of embedding in the output block."
 
 
 

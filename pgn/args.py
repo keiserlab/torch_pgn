@@ -66,14 +66,14 @@ class EncoderArgs(Tap):
     ###################################################################################################################
     ###########################   DimeNet paramters for encoder instantiation      ####################################
     ###################################################################################################################
-    #TODO: Integrate with FF classes
+    #FF args not split due to skip connections making it less efficient to break into seperate class
     out_channels: int = 1
     """Output dimension of dimenet output blocks."""
     num_blocks: int = 3
     """Number of output blocks"""
     num_output_layers: int = 3
     """Number of linear layers for the output blocks."""
-    #End TODO
+    #End FF args in dimenet
     cutoff: float = 5.0
     """Cutoff distance for interatomic interactions."""
     num_spherical: int = 6
@@ -313,6 +313,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """Boolean toggle to indicate whether weight decay should be used during training"""
     decay_delay: int = 20
     """Number of epoch to delay before starting weight decay."""
+    patience: int = 10
+    """Patience used in scedular if weight decay enabled"""
     epochs: int = 50
     """The number of training epochs to run."""
     metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']

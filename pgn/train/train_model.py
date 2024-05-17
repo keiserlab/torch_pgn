@@ -81,7 +81,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     #TODO: Allow for more sophisticated scheduler choices
     if args.weight_decay:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
-                                                               factor=0.7, patience=10,
+                                                               factor=0.7, patience=args.patience,
                                                                min_lr=1e-6)
     else:
         scheduler = None

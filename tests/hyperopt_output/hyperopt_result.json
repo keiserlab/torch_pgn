@@ -1,7 +1,0 @@
-{
-    "depth": 4,
-    "dropout": 0.1,
-    "ffn_hidden_size": 2400,
-    "ffn_num_layers": 4,
-    "nn_conv_dropout_prob": 0.2
-}

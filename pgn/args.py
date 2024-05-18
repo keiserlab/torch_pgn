@@ -357,7 +357,19 @@ class HyperoptArgs(TrainArgs):
     """The number of iterations of model optimization to be run"""
     minimize_score: bool = True
     """Whether the score is minimized or maximized during hyperparameter optimization."""
-    search_keys: List = ['fp_dim', 'ffn_num_layers', 'dropout', 'ffn_hidden_size']
+    search_keys: List = ['fp_dim', 'ffn_num_layers', 'dropout_prob', 'ffn_hidden_size']
+    """Keys to be used during the hyperparameter seach"""
+
+    def process_args(self):
+        super(HyperoptArgs, self).process_args()
+        valid_params = ['ffn_hidden_size', 'depth', 'dropout_prob', 'ffn_num_layers',
+        'fp_dim', 'lr', 'num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
+        'basis_emb_size', 'out_emb_channels', 'num_spherical', 'num_radial',
+        'cutoff', 'envelope_exponent']
+        for key in self.search_keys:
+            if key not in valid_params:
+                raise(ValueError('The key {0} is not a valid optimization parameter. Please chose from {1}'.
+                      format(key, str(valid_params))))
 
 
 

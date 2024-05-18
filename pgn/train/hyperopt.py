@@ -60,7 +60,7 @@ def hyperopt(args):
         hyper_args = deepcopy(args)
 
         current_time = datetime.datetime.now()
-        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items()).replace('.', 'p') + str(current_time.microsecond)
+        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items()).replace('.', 'p') + '_'+ str(current_time.microsecond)
         hyper_args.save_dir = osp.join(hyper_args.save_dir, folder_name)
         os.mkdir(hyper_args.save_dir)
 

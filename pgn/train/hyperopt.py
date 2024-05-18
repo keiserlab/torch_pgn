@@ -9,6 +9,7 @@ from copy import deepcopy
 import os.path as osp
 import os
 import json
+import datetime
 
 from pgn.train.Trainer import Trainer
 
@@ -58,7 +59,8 @@ def hyperopt(args):
 
         hyper_args = deepcopy(args)
 
-        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items()).replace('.', 'p')
+        current_time = datetime.datetime.now()
+        folder_name = '_'.join(f'{key}_{value}' for key, value in hyperparams.items()).replace('.', 'p') + str(current_time.microsecond)
         hyper_args.save_dir = osp.join(hyper_args.save_dir, folder_name)
         os.mkdir(hyper_args.save_dir)
 

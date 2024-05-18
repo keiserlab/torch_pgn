@@ -4,7 +4,9 @@ sys.path.insert(0, "/srv/home/zgaleday/pgn")
 from pgn.train.run_training import run_training
 from pgn.train.hyperopt import hyperopt
 from pgn.args import TrainArgs, HyperoptArgs
+import warnings
 
+warnings.filterwarnings('ignore')
 args = HyperoptArgs()
 
 search_keys = ['num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
@@ -18,17 +20,18 @@ args.from_dict({'raw_data_path': '/srv/home/zgaleday/pdbbind_general_raw',
                 #'split_type': 'random',
                 'construct_graphs': False,
                 'save_dir': '/srv/home/zgaleday/models/pgn/review_experiments/final_dimenet_hyperopt',
-                'device': 'cuda:0',
-                'epochs': 250,
+                'device': 'cuda:4',
+                'epochs': 1,
                 'cv_folds': 3,
                 'save_splits': True,
-                'num_iters': 25,
+                'num_iters': 15,
 		        'num_workers': 0,
 		        'batch_size': 128,
-		        'weight_decay': True,
+		        'weight_decay': False,
                 'split_type': 'defined_test',
-                'split_dir': '/srv/home/zgaleday/models/pgn/figure2/refined_final_pgn/splits',
-                'search_keys': search_keys
+                'split_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_pgn/splits',
+                'search_keys': search_keys,
+		'seed': 25
                 })
 args.process_args()
 

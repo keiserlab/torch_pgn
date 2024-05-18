@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 args = HyperoptArgs()
 
 search_keys = ['num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
-        'basis_emb_size', 'out_emb_channels']
+        'basis_emb_size', 'out_emb_channels', 'num_radial', 'num_spherical', 'lr']
 
 args.from_dict({'raw_data_path': '/srv/home/zgaleday/pdbbind_general_raw',
                 'label_file': '/srv/home/zgaleday/pdbbind_general_raw/index/INDEX_general_PL_data.2019',
@@ -31,7 +31,7 @@ args.from_dict({'raw_data_path': '/srv/home/zgaleday/pdbbind_general_raw',
                 'split_type': 'defined_test',
                 'split_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_pgn/splits',
                 'search_keys': search_keys,
-		'seed': 25
+		        'seed': 25
                 })
 args.process_args()
 

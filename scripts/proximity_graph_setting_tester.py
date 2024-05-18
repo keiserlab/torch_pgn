@@ -50,7 +50,7 @@ def generate_repeats(data_path, checkpoint_path, save_dir, split_dir, device, ep
         current_dir = osp.join(save_dir, dir)
         os.mkdir(current_dir)
         data_dir = osp.join(data_path, dir)
-        generate_final_correlations(checkpoint_path, current_dir, split_dir, device, data_path=data_dir, repeats=3)
+        generate_final_correlations(checkpoint_path, current_dir, split_dir, device, data_path=data_dir, repeats=3, epochs=125)
 
 
 if __name__ == '__main__':
@@ -60,7 +60,10 @@ if __name__ == '__main__':
     dataset_type = 'many_v_many'
     if len(sys.argv) > 4:
         dataset_type = sys.argv[4]
-    generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
+    try:
+        generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
+    except:
+        pass
     if len(sys.argv) > 5:
         checkpoint_dir = sys.argv[5]
         model_path = sys.argv[6]

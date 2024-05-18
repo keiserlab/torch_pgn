@@ -111,8 +111,8 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    std=args.label_std,
                                    remove_norm=False)
 
-        print(f'Train loss_{args.loss_function} = {train_loss:.4e}')
-        print(f"{validation_name} evaluation: ", validation_eval)
+        #print(f'Train loss_{args.loss_function} = {train_loss:.4e}')
+        #print(f"{validation_name} evaluation: ", validation_eval)
 
         if args.weight_decay:
             writer.add_scalar(f'learning_rate', lr, epoch + 1)

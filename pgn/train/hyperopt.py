@@ -64,7 +64,6 @@ def hyperopt(args):
 
 
         for key, value in hyperparams.items():
-            print (key, value)
             setattr(hyper_args, key, value)
 
         # Set hyperparameter optimization args without reloading working_data
@@ -73,7 +72,6 @@ def hyperopt(args):
         trainer.run_training()
         # Retrieve the validation score from this round of training
         score = trainer.get_score()
-        print(trainer.valid_eval)
 
         results.append({
             'score': score,

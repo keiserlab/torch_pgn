@@ -47,10 +47,10 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
 
 def generate_repeats(data_path, checkpoint_path, save_dir, split_dir, device, epoch=250):
     for dir in os.listdir(data_path):
-        current_dir = osp.join(save_dir, dir)
-        os.mkdir(current_dir)
-        data_dir = osp.join(data_path, dir)
         try:
+            current_dir = osp.join(save_dir, dir)
+            os.mkdir(current_dir)
+            data_dir = osp.join(data_path, dir)
             generate_final_correlations(checkpoint_path, current_dir, split_dir, device, data_path=data_dir, repeats=3, epochs=125)
         except:
             pass

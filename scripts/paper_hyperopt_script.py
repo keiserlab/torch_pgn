@@ -44,6 +44,7 @@ def hyperopt_wrapper(save_dir, dataset, architecture, epochs, device, batch_size
                     'search_keys': search_keys,
                     'encoder_type': encoder_type,
                     'dataset_type': dataset_type,
+                    'construct_graphs': False,
                     'fp_dim': 1024 * 16,
                     'split_type': 'random',
                     'save_dir': save_dir,

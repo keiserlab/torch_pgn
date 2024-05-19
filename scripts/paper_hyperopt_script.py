@@ -59,7 +59,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='Hyperopt script',
         description='Script used to perform hyper parameter optimization for PGN Paper')
-    parser.add_argument('savedir', help='path to save output of hyperparameter optimization. Must be empty.')
+    parser.add_argument('save_dir', help='path to save output of hyperparameter optimization. Must be empty.')
     parser.add_argument('dataset', help='Dataset type to be used in optimization', choices=DATASETS)
     parser.add_argument('encoder', help='Type of encoder to be used in optimization', choices=ARCHITECTURES)
     parser.add_argument('epochs')

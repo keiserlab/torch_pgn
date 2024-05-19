@@ -31,12 +31,19 @@ def hyperopt_wrapper(save_dir, dataset, architecture, epochs, device, batch_size
     data_path = DATASET_PATHS[dataset]
     search_keys = SEARCH_KEYS[architecture]
     encoder_type = architecture
+    if architecture == 'fp':
+        dataset_type = 'fp'
+    elif dataset == 'd4':
+        dataset_type = 'one_v_many'
+    else:
+        dataset_type = 'many_v_many'
 
     args = HyperoptArgs()
 
     args.from_dict({'data_path': data_path,
                     'search_keys': search_keys,
                     'encoder_type': encoder_type,
+                    'dataset_type': dataset_type,
                     'fp_dim': 1024 * 16,
                     'split_type': 'random',
                     'save_dir': save_dir,

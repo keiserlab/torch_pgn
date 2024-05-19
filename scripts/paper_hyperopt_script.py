@@ -61,7 +61,7 @@ if __name__ == '__main__':
         description='Script used to perform hyper parameter optimization for PGN Paper')
     parser.add_argument('save_dir', help='path to save output of hyperparameter optimization. Must be empty.')
     parser.add_argument('dataset', help='Dataset type to be used in optimization', choices=DATASETS)
-    parser.add_argument('encoder', help='Type of encoder to be used in optimization', choices=ARCHITECTURES)
+    parser.add_argument('architecture', help='Type of encoder to be used in optimization', choices=ARCHITECTURES)
     parser.add_argument('epochs')
     parser.add_argument('device')
     parser.add_argument('--batch_size', default=128)

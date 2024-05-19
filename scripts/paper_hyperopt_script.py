@@ -29,7 +29,7 @@ SEARCH_KEYS = {
 def hyperopt_wrapper(save_dir, dataset, architecture, epochs, device, batch_size=128, multi_gpu=False, cv_folds=3, num_iters=25):
 
     data_path = DATASET_PATHS[dataset]
-    search_keys = SEARCH_KEYS[dataset]
+    search_keys = SEARCH_KEYS[architecture]
     encoder_type = architecture
 
     args = HyperoptArgs()

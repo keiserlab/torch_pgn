@@ -28,7 +28,7 @@ def objective(trial):
     args = HyperoptArgs()
 
     args.from_dict({'data_path': DATA_PATH,
-                    'search_keys': list(space.keys),
+                    'search_keys': list(space.keys()),
                     'encoder_type': ENCODER,
                     'dataset_type': 'one_v_many',
                     'construct_graphs': False,

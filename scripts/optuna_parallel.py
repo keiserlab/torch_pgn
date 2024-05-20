@@ -23,7 +23,7 @@ def objective(trial):
         space['basis_emb_size'] = trial.suggest_categorical("basis_emb_size", [32, 64, 128])  # 64
         space['out_emb_channels'] = trial.suggest_categorical("out_emb_channels", [32, 64, 128])  # size of embedding in output block, default 64
         space['num_spherical'] = trial.suggest_int("num_spherical", 4, 10)  # 6
-        space['n_radial'] = trial.suggest_int("num_radial", 8, 16)  # 6
+        space['num_radial'] = trial.suggest_int("num_radial", 8, 16)  # 6
 
     args = HyperoptArgs()
 

@@ -70,7 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('save_dir', help='path to save output of hyperparameter optimization. Must be empty.')
     parser.add_argument('dataset', help='Dataset type to be used in optimization', choices=DATASETS)
     parser.add_argument('architecture', help='Type of encoder to be used in optimization', choices=ARCHITECTURES)
-    parser.add_argument('epochs')
+    parser.add_argument('epochs', type=int)
     parser.add_argument('device')
     parser.add_argument('--batch_size', default=128)
     parser.add_argument('--cv_folds', default=3)

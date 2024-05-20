@@ -6,7 +6,7 @@ import os.path as osp
 
 sys.path.insert(0, "/srv/home/zgaleday/pgn")
 from pgn.args import HyperoptArgs
-from pgn.train.Trainer import Trainer
+from pgn.train.run_training import run_training
 
 DEVICE = 'cuda:' + sys.argv[1]
 ENCODER = 'dimenet++'
@@ -54,10 +54,9 @@ def objective(trial):
     for key, value in space.items():
         setattr(args, key, value)
 
-    trainer = Trainer(args)
+    trainer = run_training(args)
     # Set hyperparameter optimization args without reloading working_data
     # Run training using hyper_args
-    trainer.run_training()
     # Retrieve the validation score from this round of training
     score = trainer.get_score()
     return score

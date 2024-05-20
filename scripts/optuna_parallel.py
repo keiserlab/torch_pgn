@@ -64,5 +64,5 @@ def objective(trial):
 
 
 if __name__ == '__main__':
-    study = optuna.load_study(study_name='distributed-example', storage='sqlite:///example.db')
+    study = optuna.load_study(study_name='distributed-example', storage=f'sqlite:///{SAVE_DIR}/example.db')
     study.optimize(objective, n_trials=4)

@@ -11,7 +11,7 @@ from pgn.train.run_training import run_training
 DEVICE = 'cuda:' + sys.argv[1]
 ENCODER = 'dimenet++'
 DATA_PATH = '/srv/home/zgaleday/IG_data/d4_graphs_pgn'
-SAVE_DIR = '/srv/home/zgaleday/models/pgn/review_experiments/dimenet_d4_optuna'
+SAVE_DIR = '/srv/home/zgaleday/models/pgn/review_experiments/dimenet_d4_optuna_final'
 
 def objective(trial):
     space = {}
@@ -63,5 +63,5 @@ def objective(trial):
 
 
 if __name__ == '__main__':
-    study = optuna.load_study(study_name='distributed-example', storage=f'sqlite:///{SAVE_DIR}/example.db')
-    study.optimize(objective, n_trials=4)
+    study = optuna.load_study(study_name='d4_dimenet_final', storage=f'sqlite:///{SAVE_DIR}/d4_dimenet.db')
+    study.optimize(objective, n_trials=25)

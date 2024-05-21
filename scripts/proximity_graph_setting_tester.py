@@ -22,7 +22,7 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
         for ld in lig_depth:
             for rd in receptor_depth:
                 current_dir = osp.join(data_path, 'radius{0}_lig_depth_{1}_receptor_depth_{2}'.
-                                       format(str(radius), str(lig_depth), str(receptor_depth)))
+                                       format(str(radius), str(ld), str(rd)))
                 os.mkdir(current_dir)
                 args = DataArgs()
                 if dataset_type == 'many_v_many':
@@ -43,8 +43,8 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
                                     'dataset_type': dataset_type,
                                     'split_type': 'random',
                                     'save_plots': False,
-                                    'proximity_radius': radius,
-                                    'ligand_depth': lig_depth,
+                                    'proximity_radius': rd,
+                                    'ligand_depth': ld,
                                     'receptor_depth': receptor_depth
                                     })
 

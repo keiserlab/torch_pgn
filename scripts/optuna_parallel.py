@@ -13,6 +13,7 @@ ENCODER = 'dimenet++'
 DATA_PATH = sys.argv[2]
 SAVE_DIR = sys.argv[3]
 STUDY_NAME = sys.argv[4]
+NUM_TRIALS = sys.argv[5]
 
 def objective(trial):
     space = {}
@@ -70,4 +71,4 @@ def objective(trial):
 
 if __name__ == '__main__':
     study = optuna.load_study(study_name=STUDY_NAME, storage=f'sqlite:///{SAVE_DIR}/{STUDY_NAME}.db')
-    study.optimize(objective, n_trials=5)
+    study.optimize(objective, n_trials=NUM_TRIALS)

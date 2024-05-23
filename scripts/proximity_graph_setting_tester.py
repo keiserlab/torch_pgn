@@ -34,7 +34,8 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
                                     'save_plots': True,
                                     'proximity_radius': radius,
                                     'ligand_depth': ld,
-                                    'receptor_depth': rd
+                                    'receptor_depth': rd,
+                                    'num_workers': 64
                                     })
                 else:
                     args.from_dict({'raw_mol_path': raw_path_1,
@@ -45,7 +46,8 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
                                     'save_plots': False,
                                     'proximity_radius': rd,
                                     'ligand_depth': ld,
-                                    'receptor_depth': receptor_depth
+                                    'receptor_depth': receptor_depth,
+                                    'num_workers': 64
                                     })
 
                 args.process_args()

@@ -13,7 +13,7 @@ ENCODER = 'dimenet++'
 DATA_PATH = sys.argv[2]
 SAVE_DIR = sys.argv[3]
 STUDY_NAME = sys.argv[4]
-NUM_TRIALS = sys.argv[5]
+NUM_TRIALS = int(sys.argv[5])
 
 def objective(trial):
     space = {}

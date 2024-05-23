@@ -38,7 +38,14 @@ def train_model(args, train_data, validation_data, test_data=None):
     else:
         model = load_checkpoint(args.fine_tuning_dir, args.device)
 
-    if args.straw_model and args.encoder_type != 'fp':
+    if args.straw_model and args.encoder_type == 'dimenet++':
+        # Turn of grad for all
+        for param in model.encoder.parameters():
+            param.requires_grad = False
+        # Reactivates params for the output blocks
+        for param in model.encoder.output_blocks.parameter():
+            param.requires_grad = True
+    elif args.straw_model and args.encoder_type != 'fp':
         for param in model.encoder.parameters():
             param.requires_grad = False
 

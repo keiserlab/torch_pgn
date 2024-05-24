@@ -5,48 +5,64 @@ from pgn.args import TrainArgs, HyperoptArgs, DataArgs
 from pgn.load_data import process_raw
 from scripts.generate_plec import generate_plec_pdbbind
 from scripts.generate_final_correlations import generate_final_correlations
+from pgn.data.ProximityGraphDataset import ProximityGraphDataset
 
 import os
 import os.path as osp
 import numpy as np
 import networkx as nx
 
-def test_many_v_many_dataloading():
+def test_many_v_many_dataloading(proximity_radius=4.5, ligand_depth=2, receptor_depth=4):
 
     args = DataArgs()
 
     args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
                     'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
-                    'split_type': 'random'
+                    'split_type': 'random',
+                    'save_plots': True,
+                    'proximity_radius': proximity_radius,
+                    'ligand_depth': ligand_depth,
+                    'receptor_depth': receptor_depth
                     })
 
     args.process_args()
 
     process_raw(args)
 
+    ProximityGraphDataset(args)
 
-def test_one_v_many_dataloading():
+
+
+def test_one_v_many_dataloading(proximity_radius=4.5, ligand_depth=2, receptor_depth=4):
 
     args = DataArgs()
 
     args.from_dict({'raw_mol_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/medium_diverse_toy.mol2',
                     'raw_pdb_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/d4_receptor.pdb',
                     'data_path': '/Users/student/git/pgn/tests/output_data/ovm_toy_dataset',
-                    'dataset_type': 'one_v_many'
+                    'dataset_type': 'one_v_many',
+                    'save_plots': True,
+                    'proximity_radius': proximity_radius,
+                    'ligand_depth': ligand_depth,
+                    'receptor_depth': receptor_depth
                     })
 
     args.process_args()
 
     process_raw(args)
 
+    ProximityGraphDataset(args)
+
+
 def test_pfp_train():
     args = TrainArgs()
 
     args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
+                    'encoder_type': 'pfp',
                     'construct_graphs': False,
                     'save_dir': '/Users/student/git/pgn/tests/output/pfp',
                     'epochs': 5,
@@ -59,16 +75,18 @@ def test_pfp_train():
     run_training(args)
 
 
-def test_hyperopt():
+def test_hyperopt(search_keys=('fp_dim', 'ffn_num_layers', 'dropout_prob', 'ffn_hidden_size'), encoder_type='pfp'):
     args = HyperoptArgs()
 
     args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+                    'search_keys': list(search_keys),
                     'dataset_type': 'many_v_many',
+                    'encoder_type': encoder_type,
                     'split_type': 'random',
                     'construct_graphs': False,
                     'save_dir': '/Users/student/git/pgn/tests/hyperopt_output',
-                    'epochs': 2,
+                    'epochs': 1,
                     'save_splits': True,
                     'cv_folds': 2,
                     'num_iters': 2
@@ -105,17 +123,37 @@ def test_ggnet_train():
     args = TrainArgs()
 
     args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output',
+                    'save_dir': '/Users/student/git/pgn/tests/output/ggnet_train_test',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
                     'save_splits': True,
                     'split_dir': '/Users/student/git/pgn/tests/splits',
                     'encoder_type': 'ggnet'
+                    })
+    args.process_args()
+
+    run_training(args)
+
+
+def test_dimenet_train():
+    args = TrainArgs()
+
+    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+                    'dataset_type': 'many_v_many',
+                    'split_type': 'random',
+                    'construct_graphs': False,
+                    'save_dir': '/Users/student/git/pgn/tests/output/dimenet',
+                    'epochs': 5,
+                    'validation_percent': 0.2,
+                    'test_percent': 0.2,
+                    'save_splits': True,
+                    'encoder_type': 'dimenet++'
                     })
     args.process_args()
 
@@ -287,6 +325,7 @@ def _load_graph(path, name):
     G.graph['label'] = label
     return G
 
+
 def _reorder_graph(G):
     """
     Function that takes a proximity graph and relabels the nodes such that it is numbered from smallest pos3d attribute
@@ -342,8 +381,6 @@ def _compare_graphs(graph1, graph2, epsilon=0.001):
     assert (np.array_equal(g1_cat_feats, g2_cat_feats))
 
 
-
-
 def _compare_graph_dataset(truth_dataset, test_dataset):
     """
     Compare two raw datasets loaded using either the OneVsManyDataset or ManyVsManyDataset classes. Requires a
@@ -366,4 +403,15 @@ def _compare_graph_dataset(truth_dataset, test_dataset):
         break
 
 
-_compare_graph_dataset('ground_truth_dataset/mvm_toy_out', 'output_data/mvm_toy_dataset')
+full_arg_list = ['ffn_hidden_size', 'depth', 'dropout_prob', 'ffn_num_layers',
+        'fp_dim', 'lr', 'num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
+        'basis_emb_size', 'out_emb_channels', 'num_spherical', 'num_radial',
+        'cutoff', 'envelope_exponent']
+test_hyperopt(full_arg_list, 'dimenet++')
+
+
+
+
+
+
+

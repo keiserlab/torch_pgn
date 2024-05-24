@@ -75,10 +75,7 @@ if __name__ == '__main__':
     dataset_type = 'many_v_many'
     if len(sys.argv) > 4:
         dataset_type = sys.argv[4]
-    try:
-        generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
-    except:
-        pass
+    generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
     if len(sys.argv) > 5:
         checkpoint_dir = sys.argv[5]
         model_path = sys.argv[6]

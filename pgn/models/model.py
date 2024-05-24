@@ -2,12 +2,13 @@ from pgn.models.pfp_encoder import PFPEncoder
 from pgn.models.dmpnn_encoder import MPNEncoder
 from pgn.models.GGNet import GGNet
 from pgn.models.FPEncoder import FPEncoder
+from pgn.models.DimeNet import DimeNetPlusPlus
 from pgn.args import TrainArgs
 
 import torch.nn as nn
 from torch.nn import ReLU, Sequential, Linear, Dropout
 
-class PFPNetwork(nn.Module):
+class PGNNetwork(nn.Module):
     """A netork that includes the message passing PFPEncoder and a feed-forward network for learning tasks."""
     def __init__(self, args: TrainArgs, node_dim: int, bond_dim: int):
         """
@@ -16,7 +17,7 @@ class PFPNetwork(nn.Module):
         :param node_dim: Number of node features
         :param bond_dim: number of bond features
         """
-        super(PFPNetwork, self).__init__()
+        super(PGNNetwork, self).__init__()
 
         self.args = args
         self.node_dim = node_dim
@@ -35,6 +36,8 @@ class PFPNetwork(nn.Module):
             self.encoder = MPNEncoder(self.args, self.node_dim, self.bond_dim)
         elif self.args.encoder_type == 'ggnet':
             self.encoder = GGNet(self.args, self.node_dim, self.bond_dim)
+        elif self.args.encoder_type == 'dimenet++':
+            self.encoder = DimeNetPlusPlus(self.args, self.node_dim)
         elif self.args.encoder_type == 'fp':
             self.encoder = FPEncoder(self.args)
 
@@ -68,6 +71,9 @@ class PFPNetwork(nn.Module):
         :param input: batch of Proximity Graphs
         :return: Output of the PFPNetwork
         """
-        out = self.feed_forward(self.encoder(data))
+        if self.args.encoder_type == 'dimenet++':
+            out = self.encoder(node_feats=data.x, edge_index=data.edge_index, pos=data.pos, batch=data.batch)
+        else:
+            out = self.feed_forward(self.encoder(data))
 
         return out.view(-1)

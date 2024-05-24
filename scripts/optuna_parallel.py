@@ -14,6 +14,7 @@ DATA_PATH = sys.argv[2]
 SAVE_DIR = sys.argv[3]
 STUDY_NAME = sys.argv[4]
 NUM_TRIALS = int(sys.argv[5])
+SPLIT_DIR = sys.argv[6]
 
 def objective(trial):
     space = {}
@@ -40,7 +41,8 @@ def objective(trial):
                     'dataset_type': dataset_type,
                     'construct_graphs': False,
                     'fp_dim': 1024 * 16,
-                    'split_type': 'random',
+                    'split_type': 'defined_test',
+                    'split_dir': SPLIT_DIR,
                     'device': DEVICE,
                     'epochs': 300,
                     'cv_folds': 3,

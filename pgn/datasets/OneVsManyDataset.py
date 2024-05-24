@@ -40,7 +40,7 @@ class OneVsManyDataset(PGDataset):
         #   self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
 
         self.graphs = []
-        for input in inputs:
+        for input in tqdm(inputs):
             self.graphs.append(_return_graph(input))
 
 

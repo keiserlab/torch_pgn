@@ -9,6 +9,7 @@ import numpy as np
 from pgn.data.dmpnn_utils import BatchProxGraph
 from pgn.models.nn_utils import index_select_ND
 
+#TODO: Add references to code source
 class MPNEncoder(torch.nn.Module):
     """An :class:`MPNEncoder` is a message passing neural network for encoding a molecule."""
 

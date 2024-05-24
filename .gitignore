@@ -208,3 +208,4 @@ fabric.properties
 
 /tests/ground_truth_dataset/
 /tests/output_data/
+/tests/hyperopt_output

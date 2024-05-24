@@ -29,7 +29,9 @@ setup(
         "tensorboard>2.0",
         "scipy<1.7",
         "scikit-learn>=0.23.2",
-        "hyperopt>=0.2.5"
+        "hyperopt>=0.2.5",
+        "sympy>=1.10.1",
+        "optuna>=3.6.1"
     ],
     python_requires=">3.6,<3.8",
     classifiers=[

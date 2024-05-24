@@ -1,5 +1,5 @@
 from pgn.data.dmpnn_utils import BatchProxGraph
-from pgn.models.model import PFPNetwork
+from pgn.models.model import PGNNetwork
 from pgn.args import TrainArgs
 
 from argparse import Namespace
@@ -183,7 +183,7 @@ def load_checkpoint(path, device, return_args=False):
     if device is not None:
         args.device = device
 
-    model = PFPNetwork(args, args.node_dim, args.edge_dim)
+    model = PGNNetwork(args, args.node_dim, args.edge_dim)
     model.load_state_dict(model_state_dict)
     model.to(device)
 

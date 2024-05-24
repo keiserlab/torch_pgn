@@ -37,9 +37,11 @@ class OneVsManyDataset(PGDataset):
                            self.proximity_radius, self.ligand_depth, self.receptor_depth))
 
         with multiprocessing.Pool(processes=self.num_workers) as p:
-            self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
+           self.graphs = list(tqdm(p.imap(_return_graph, inputs)))
 
-
+        #self.graphs = []
+        #for input in tqdm(inputs):
+        #    self.graphs.append(_return_graph(input))
 
 
 

@@ -37,7 +37,7 @@ class EncoderArgs(Tap):
     """The dimension of the output feature vector"""
 
     depth: int = 3
-    """The number of message passing steps"""
+    """The number of message passing steps or the number of blocks in dimenet."""
 
     skip_connections: bool = True
     """Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
@@ -62,6 +62,44 @@ class EncoderArgs(Tap):
     split_conv: bool = False
     """Boolean toggle of whether to have seperate message functions for covalent and non-covalent interactions.
     By default the same message function is applied regardless of edge type."""
+
+    ###################################################################################################################
+    ###########################   DimeNet paramters for encoder instantiation      ####################################
+    ###################################################################################################################
+    #FF args not split due to skip connections making it less efficient to break into seperate class
+    out_channels: int = 1
+    """Output dimension of dimenet output blocks."""
+    num_blocks: int = 3
+    """Number of output blocks"""
+    num_output_layers: int = 3
+    """Number of linear layers for the output blocks."""
+    #End FF args in dimenet
+    cutoff: float = 5.0
+    """Cutoff distance for interatomic interactions."""
+    num_spherical: int = 6
+    """Number of spherical harmonics."""
+    num_radial: int = 6
+    """Number of radial basis functions."""
+    num_bilinear: int = 1
+    """Size of the bilinear layer tensor."""
+    act: str = 'swish'
+    """The activation function. Default and only current option is swish"""
+    max_num_neighbors: int = 32
+    """The max number of neighbors to collect for each node within the 'cutoff' distance."""
+    envelope_exponent: int = 5
+    """Shape of the smooth cutoff."""
+    num_before_skip: int = 1
+    """Number of residual layers in the interaction blocks before the skip connection."""
+    num_after_skip: int = 2
+    """Number of residual layers in the interaction blocks after the skip connection."""
+    int_emb_size: int = 64
+    "Size of embedding in the interaction block."
+    basis_emb_size: int = 64
+    "Size of basis embedding in the interaction block."
+    out_emb_channels: int = 64
+    "Size of embedding in the output block."
+
+
 
 
 class FFArgs(Tap):
@@ -257,7 +295,7 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """The edge feature size. Set during dataloading procedure."""
     loss_function: str = 'mse'
     """The function used to evaluate the model. The default is mse. Valid options are: mse, rmse"""
-    encoder_type: str = 'pfp'
+    encoder_type: Literal['pfp', 'd-mpnn', 'ggnet', 'fp', 'dimenet++'] = 'pfp'
     """Selects the encoder to be used, defaults to pfp network. Valid options are: pfp, d-mpnn"""
     torch_seed: int = 42
     """Pytorch dataloader seed."""
@@ -275,6 +313,8 @@ class TrainArgs(DataArgs, FFArgs, EncoderArgs):
     """Boolean toggle to indicate whether weight decay should be used during training"""
     decay_delay: int = 20
     """Number of epoch to delay before starting weight decay."""
+    patience: int = 10
+    """Patience used in scedular if weight decay enabled"""
     epochs: int = 50
     """The number of training epochs to run."""
     metrics: List[str] = ['rmse', 'mse', 'pcc', 'r2']
@@ -317,7 +357,19 @@ class HyperoptArgs(TrainArgs):
     """The number of iterations of model optimization to be run"""
     minimize_score: bool = True
     """Whether the score is minimized or maximized during hyperparameter optimization."""
-    search_keys: List = ['fp_dim', 'ffn_num_layers', 'dropout', 'ffn_hidden_size']
+    search_keys: List = ['fp_dim', 'ffn_num_layers', 'dropout_prob', 'ffn_hidden_size']
+    """Keys to be used during the hyperparameter seach"""
+
+    def process_args(self):
+        super(HyperoptArgs, self).process_args()
+        valid_params = ['ffn_hidden_size', 'depth', 'dropout_prob', 'ffn_num_layers',
+        'fp_dim', 'lr', 'num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
+        'basis_emb_size', 'out_emb_channels', 'num_spherical', 'num_radial',
+        'cutoff', 'envelope_exponent']
+        for key in self.search_keys:
+            if key not in valid_params:
+                raise(ValueError('The key {0} is not a valid optimization parameter. Please chose from {1}'.
+                      format(key, str(valid_params))))
 
 
 

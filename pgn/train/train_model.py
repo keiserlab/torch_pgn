@@ -1,7 +1,7 @@
 from pgn.train.train import train
 from pgn.train.evaluate_model import evaluate
 from pgn.train.train_utils import parse_loss, make_save_directories, save_checkpoint, load_checkpoint
-from pgn.models.model import PFPNetwork
+from pgn.models.model import PGNNetwork
 from pgn.evaluate.plot_utils import plot_correlation
 
 from torch.utils.tensorboard import SummaryWriter
@@ -34,11 +34,18 @@ def train_model(args, train_data, validation_data, test_data=None):
     num_workers = args.num_workers
 
     if args.fine_tuning_dir is None:
-        model = PFPNetwork(args, args.node_dim, args.edge_dim)
+        model = PGNNetwork(args, args.node_dim, args.edge_dim)
     else:
         model = load_checkpoint(args.fine_tuning_dir, args.device)
 
-    if args.straw_model and args.encoder_type != 'fp':
+    if args.straw_model and args.encoder_type == 'dimenet++':
+        # Turn of grad for all
+        for param in model.encoder.parameters():
+            param.requires_grad = False
+        # Reactivates params for the output blocks
+        for param in model.encoder.output_blocks.parameters():
+            param.requires_grad = True
+    elif args.straw_model and args.encoder_type != 'fp':
         for param in model.encoder.parameters():
             param.requires_grad = False
 
@@ -81,7 +88,7 @@ def train_model(args, train_data, validation_data, test_data=None):
     #TODO: Allow for more sophisticated scheduler choices
     if args.weight_decay:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
-                                                               factor=0.7, patience=10,
+                                                               factor=0.7, patience=args.patience,
                                                                min_lr=1e-6)
     else:
         scheduler = None
@@ -111,8 +118,8 @@ def train_model(args, train_data, validation_data, test_data=None):
                                    std=args.label_std,
                                    remove_norm=False)
 
-        print(f'Train loss_{args.loss_function} = {train_loss:.4e}')
-        print(f"{validation_name} evaluation: ", validation_eval)
+        #print(f'Train loss_{args.loss_function} = {train_loss:.4e}')
+        #print(f"{validation_name} evaluation: ", validation_eval)
 
         if args.weight_decay:
             writer.add_scalar(f'learning_rate', lr, epoch + 1)

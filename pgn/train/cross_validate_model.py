@@ -84,7 +84,6 @@ def _split_dataset(index, fold, num_folds):
     num_examples = len(index)
     valid_percent = 1 / num_folds
     valid_size = int(valid_percent * num_examples)
-    print(num_examples, valid_percent, valid_size)
     valid_begin, valid_end = valid_size * fold, valid_size * fold + valid_size
     valid_index = index[valid_begin:valid_end]
     train_index = deepcopy(index)

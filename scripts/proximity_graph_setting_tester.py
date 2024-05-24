@@ -23,36 +23,39 @@ def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
             for rd in receptor_depth:
                 current_dir = osp.join(data_path, 'radius{0}_lig_depth_{1}_receptor_depth_{2}'.
                                        format(str(radius), str(ld), str(rd)))
-                os.mkdir(current_dir)
-                args = DataArgs()
-                if dataset_type == 'many_v_many':
-                    args.from_dict({'raw_data_path': raw_path_1,
-                                    'label_file': raw_path_2,
-                                    'data_path': current_dir,
-                                    'dataset_type': dataset_type,
-                                    'split_type': 'random',
-                                    'save_plots': True,
-                                    'proximity_radius': radius,
-                                    'ligand_depth': ld,
-                                    'receptor_depth': rd,
-                                    'num_workers': 64
-                                    })
+                if osp.isdir(current_dir):
+                    continue
                 else:
-                    args.from_dict({'raw_mol_path': raw_path_1,
-                                    'raw_pdb_path': raw_path_2,
-                                    'data_path': current_dir,
-                                    'dataset_type': dataset_type,
-                                    'split_type': 'random',
-                                    'save_plots': False,
-                                    'proximity_radius': rd,
-                                    'ligand_depth': ld,
-                                    'receptor_depth': receptor_depth,
-                                    'num_workers': 64
-                                    })
+                    os.mkdir(current_dir)
+                    args = DataArgs()
+                    if dataset_type == 'many_v_many':
+                        args.from_dict({'raw_data_path': raw_path_1,
+                                        'label_file': raw_path_2,
+                                        'data_path': current_dir,
+                                        'dataset_type': dataset_type,
+                                        'split_type': 'random',
+                                        'save_plots': True,
+                                        'proximity_radius': radius,
+                                        'ligand_depth': ld,
+                                        'receptor_depth': rd,
+                                        'num_workers': 64
+                                        })
+                    else:
+                        args.from_dict({'raw_mol_path': raw_path_1,
+                                        'raw_pdb_path': raw_path_2,
+                                        'data_path': current_dir,
+                                        'dataset_type': dataset_type,
+                                        'split_type': 'random',
+                                        'save_plots': False,
+                                        'proximity_radius': rd,
+                                        'ligand_depth': ld,
+                                        'receptor_depth': receptor_depth,
+                                        'num_workers': 64
+                                        })
 
-                args.process_args()
+                    args.process_args()
 
-                process_raw(args)
+                    process_raw(args)
 
 
 def generate_repeats(data_path, checkpoint_path, save_dir, split_dir, device, epoch=250):

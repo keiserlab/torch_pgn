@@ -3,6 +3,7 @@ import sys
 import os
 import datetime
 import os.path as osp
+from math import isfinite
 
 
 
@@ -70,6 +71,8 @@ def objective(trial):
     # Run training using hyper_args
     # Retrieve the validation score from this round of training
     score = trainer.get_score()
+    if score is None or not isfinite(score):
+        score = 10 * trainer.args.label_std
     return score
 
 

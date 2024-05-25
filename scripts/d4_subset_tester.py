@@ -27,7 +27,7 @@ def test_subsets(source_path, split_path, output_dir, device, data_path=None, su
     val_evals = []
     label_stat_list = []
 
-    checkpoint_path = osp.join(source_path, 'repeat_0', 'best_checkpoint.pt')
+    checkpoint_path = osp.join(source_path)
     args = load_checkpoint(checkpoint_path, device=device, return_args=True)[1]
     args.construct_graphs = False
     args.split_type = 'defined_test'

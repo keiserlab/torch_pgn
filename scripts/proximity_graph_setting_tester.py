@@ -8,9 +8,13 @@ from scripts.generate_final_correlations import generate_final_correlations
 import os
 import os.path as osp
 
-def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type,
+def generate_datasets(raw_path_1, raw_path_2, data_path, dataset_type, mode,
                       radii=None,
-                      lig_depth=None, receptor_depth=(1, 2, 3, 4, 5, 6)):
+                      lig_depth=None, receptor_depth=None):
+    if mode == 'radius':
+        radii = [1, 2.5, 3.5, 4.5, 5.5]
+    if mode == 'depth':
+        receptor_depth = [1, 2, 3, 4, 5, 6]
     if radii is None:
         radii = [4.5]
     if lig_depth is None:
@@ -72,13 +76,14 @@ if __name__ == '__main__':
     raw_data_path = sys.argv[1]
     raw_label_file = sys.argv[2]
     data_path = sys.argv[3]
+    mode = sys.argv[4]
     dataset_type = 'many_v_many'
-    if len(sys.argv) > 4:
-        dataset_type = sys.argv[4]
-    generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
     if len(sys.argv) > 5:
-        checkpoint_dir = sys.argv[5]
-        model_path = sys.argv[6]
-        split_dir = sys.argv[7]
-        device = sys.argv[8]
+        dataset_type = sys.argv[5]
+    generate_datasets(raw_data_path, raw_label_file, data_path, dataset_type)
+    if len(sys.argv) > 6:
+        checkpoint_dir = sys.argv[6]
+        model_path = sys.argv[7]
+        split_dir = sys.argv[8]
+        device = sys.argv[9]
         generate_repeats(data_path, checkpoint_dir, model_path, split_dir, device)

@@ -104,4 +104,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 6:
         data_path = sys.argv[6]
         control = sys.argv[7]
-    generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs, data_path=data_path, control=control)
+    generate_final_correlations(checkpoint_path, final_path, split_path, device, epochs=epochs, data_path=data_path, control=control, repeats=3)

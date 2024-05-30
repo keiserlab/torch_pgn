@@ -86,4 +86,5 @@ if __name__ == '__main__':
         model_path = sys.argv[7]
         split_dir = sys.argv[8]
         device = sys.argv[9]
-        generate_repeats(data_path, checkpoint_dir, model_path, split_dir, device)
+        epochs = int(sys.argv[10])
+        generate_repeats(data_path, checkpoint_dir, model_path, split_dir, device, epoch=epochs)

@@ -34,7 +34,6 @@ def generate_final_correlations(checkpoint_path, final_path, split_path, device,
     args.num_workers = 0
     args.epochs = epochs
     args.cross_validate = False
-    args.batch_size = 512
     print(args)
     if control is not None:
         if control == 'ligand':

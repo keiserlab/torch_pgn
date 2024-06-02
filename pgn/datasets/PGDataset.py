@@ -85,6 +85,7 @@ class PGDataset(ABC):
         np.save(osp.join(current_dir, prefix + 'pos3d'), node_pos)
         if self.save_plots:
             self._visualize_graph(G, node_pos, node_features, current_dir)
+        self._output_interacting_set(G, current_dir)
         return nodes, edges, node_features, edge_features, node_pos
 
     def _visualize_graph(self, G, node_pos, node_feats, save_dir):
@@ -106,3 +107,6 @@ class PGDataset(ABC):
         plt.savefig(osp.join(save_dir, G.name + '_prox_graph_proj.png'))
         plt.clf()
 
+    def _output_interacting_set(self, G, save_dir):
+        pdb_idx = np.array(list(nx.get_node_attributes(G, 'pdb_idx').values()))
+        np.save(osp.join(save_dir, G.name + "_interacting_idx"), pdb_idx)

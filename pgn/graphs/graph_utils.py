@@ -15,12 +15,13 @@ def _renumber_nodes(ligand_nodes, protein_nodes):
     input working_data. The ligand nodes will start at zero and the receptor nodes begin numbering thereafter.
     :param ligand_nodes: A set of nodes in the ligand.
     :param protein_nodes: A set of node in the receptor.
-    :return: A ligand dictionary and a receptor dictionary that takes in the old number and outputs the safe node numbering.
+    :return: A ligand dictionary and a receptor dictionary that takes in the old number and outputs the safe node numbering
+    as well as the offset for converting protein nodes back to pdb numbering.
     """
     ligand_dict = {idx: i for i, idx in enumerate(ligand_nodes)}
     offset = len(ligand_dict.keys())
     protein_dict = {idx: i + offset for i, idx in enumerate(protein_nodes)}
-    return ligand_dict, protein_dict
+    return ligand_dict, protein_dict, offset
 
 
 def _distance(pos, idx1, idx2, norm_type='l1'):

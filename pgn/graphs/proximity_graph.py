@@ -39,7 +39,7 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, lig_depth=2
         ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=lig_depth)
     receptor_nodes, receptor_edges = get_molecule_graph(protein, protein_atoms, depth=receptor_depth)
 
-    ligand_dict, protein_dict = gu._renumber_nodes(ligand_nodes, receptor_nodes)
+    ligand_dict, protein_dict, offset = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 
     if visualize is not None:
         ligand_positions_2d = gu._extract_position(ligand.atom_dict, ligand_nodes, ligand_dict, include_z=False)
@@ -79,6 +79,7 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, lig_depth=2
 
     G.name = name
     T = nx.minimum_spanning_tree(G)
+    T.protein_offset = offset
 
     if local_connect:
         for idx, receptor_node in enumerate(receptor_edges[0]):
@@ -138,7 +139,9 @@ def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, lig
     else:
         ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=lig_depth)
 
-    ligand_dict, protein_dict = gu._renumber_nodes(ligand_nodes, receptor_nodes)
+    print(protein_atoms)
+
+    ligand_dict, protein_dict, offset = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 
 
     if visualize is not None:
@@ -161,6 +164,7 @@ def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, lig
 
     G = nx.Graph()
     G.name = name
+    G.protein_offset = offset
 
     for node in ligand_nodes:
         G.add_node(node, atom_class='ligand', features=atom_features[node], pos3d=pos3d[node])

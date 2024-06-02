@@ -60,11 +60,12 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, lig_depth=2
     cross_edges = gu._renumber_cross_edges(ligand_dict, protein_dict, cross_edges)
 
     G = nx.Graph()
+    pdb_idx = {v: k for k, v in protein_dict.items()}
 
     for node in ligand_nodes:
         G.add_node(node, atom_class='ligand', features=atom_features[node], pos3d=pos3d[node])
     for node in receptor_nodes:
-        G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node])
+        G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node], pdb_idx=pdb_idx[node])
     for idx, ligand_node in enumerate(cross_edges[0]):
         G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._distance(pos3d, ligand_node, cross_edges[1, idx]),
                    features=edges_features[(ligand_node, cross_edges[1, idx])])
@@ -79,7 +80,6 @@ def yield_tree_reduction(ligand, protein, name, distance_cutoff=4.5, lig_depth=2
 
     G.name = name
     T = nx.minimum_spanning_tree(G)
-    T.protein_offset = offset
 
     if local_connect:
         for idx, receptor_node in enumerate(receptor_edges[0]):
@@ -139,8 +139,6 @@ def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, lig
     else:
         ligand_nodes, ligand_edges = get_molecule_graph(ligand, ligand_atoms, depth=lig_depth)
 
-    print(protein_atoms)
-
     ligand_dict, protein_dict, offset = gu._renumber_nodes(ligand_nodes, receptor_nodes)
 
 
@@ -164,12 +162,13 @@ def yield_full_interaction_graph(ligand, protein, name, distance_cutoff=4.5, lig
 
     G = nx.Graph()
     G.name = name
-    G.protein_offset = offset
+
+    pdb_idx = {v: k for k, v in protein_dict.items()}
 
     for node in ligand_nodes:
         G.add_node(node, atom_class='ligand', features=atom_features[node], pos3d=pos3d[node])
     for node in receptor_nodes:
-        G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node])
+        G.add_node(node, atom_class='receptor', features=atom_features[node], pos3d=pos3d[node], pdb_idx=pdb_idx[node])
     for idx, ligand_node in enumerate(cross_edges[0]):
         G.add_edge(ligand_node, cross_edges[1, idx], weight=gu._distance(pos3d, ligand_node, cross_edges[1, idx]),
                    features=edges_features[(ligand_node, cross_edges[1, idx])])

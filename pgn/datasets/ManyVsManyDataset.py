@@ -47,6 +47,7 @@ class ManyVsManyDataset(PGDataset):
                 ligand_path = os.path.join(raw_path, name, name + "_ligand.sdf")
                 try:
                     receptor = next(oddt.toolkit.readfile('pdb', pdb_path))
+                    receptor.protein = True
                     ligand = opd.read_sdf(ligand_path, skip_bad_mols=True)['mol'][0]
                     if ligand is not None:
                         inputs.append((receptor, ligand, energy.loc[name, 'label'], name,

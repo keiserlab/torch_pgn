@@ -27,6 +27,7 @@ class OneVsManyDataset(PGDataset):
 
     def process_raw_data(self):
         receptor = next(oddt.toolkit.readfile('pdb', self.raw_pdb_path))
+        receptor.protein = True
         data = opd.read_mol2(self.raw_mol_path)
         energy = data['Total Energy']
         name = data['Name']

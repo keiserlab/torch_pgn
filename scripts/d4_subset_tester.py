@@ -12,7 +12,7 @@ import pandas as pd
 import os
 import os.path as osp
 
-DATASET_SIZES = [1000, 5000, 10000, 25000]
+DATASET_SIZES = [1000, 2000, 3000, 4000]
 
 
 def test_subsets(source_path, split_path, output_dir, device, data_path=None, subset_size=DATASET_SIZES, repeats=5):

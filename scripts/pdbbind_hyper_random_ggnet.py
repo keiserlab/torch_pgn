@@ -1,9 +1,9 @@
 import sys
 import os
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
-from pgn.train.run_training import run_training
-from pgn.train.hyperopt import hyperopt
-from pgn.args import TrainArgs, HyperoptArgs
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
+from torch_pgn.train.run_training import run_training
+from torch_pgn.train.hyperopt import hyperopt
+from torch_pgn.args import TrainArgs, HyperoptArgs
 
 args = HyperoptArgs()
 
@@ -15,7 +15,7 @@ args.from_dict({'raw_pdb_path': '/srv/home/zgaleday/IG_data/D4_pdbs/d4_receptor_
                 'split_type': 'defined_test',
                 'split_dir': '/srv/home/zgaleday/IG_data/general_protein_splits',
                 'construct_graphs': False,
-                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_ggnet_protein_splits',
+                'save_dir': '/srv/home/zgaleday/models/torch_pgn/figure_2/refined_final_ggnet_protein_splits',
                 'device': 'cuda:5',
                 'epochs': 350,
                 'cv_folds': 5,

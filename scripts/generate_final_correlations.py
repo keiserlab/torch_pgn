@@ -1,10 +1,10 @@
 import sys
 import os
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
-from pgn.train.Trainer import Trainer
-from pgn.train.train_utils import load_args
-from pgn.train.run_training import run_training
+from torch_pgn.train.Trainer import Trainer
+from torch_pgn.train.train_utils import load_args
+from torch_pgn.train.run_training import run_training
 
 import numpy as np
 import pandas as pd

@@ -2,14 +2,14 @@ import os
 import sys
 import argparse
 
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
-from pgn.train.run_training import run_training
-from pgn.train.hyperopt import hyperopt
-from pgn.args import TrainArgs, HyperoptArgs
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
+from torch_pgn.train.run_training import run_training
+from torch_pgn.train.hyperopt import hyperopt
+from torch_pgn.args import TrainArgs, HyperoptArgs
 
 DATASETS = ['pdbbind_general', 'pdbbind_refined', 'd4']
 # SPLIT_TYPES = ['random', 'scaffold', 'protein']
-ARCHITECTURES = ['pgn', 'ggnet', 'dmpnn', 'fp', 'dimenet++']
+ARCHITECTURES = ['torch_pgn', 'ggnet', 'dmpnn', 'fp', 'dimenet++']
 DATASET_PATHS = {'pdbbind_general': '/srv/home/zgaleday/IG_data/pdbbind_general_pgn',
                  'pdbbind_refined': '/srv/home/zgaleday/IG_data/pdb_bind_random',
                  'PLEC_pdbbind_general': '/srv/home/zgaleday/IG_data/pgn_pdbbind_general_plec_16384',
@@ -17,7 +17,7 @@ DATASET_PATHS = {'pdbbind_general': '/srv/home/zgaleday/IG_data/pdbbind_general_
                  'd4': '/srv/home/zgaleday/IG_data/d4_graphs_pgn',
                  'PLEC_d4': '/srv/home/zgaleday/IG_data/pgn_d4_plec_16384'}
 SEARCH_KEYS = {
-    'pgn': ['ffn_hidden_size', 'ffn_num_layers', 'dropout', 'fp_dim'],
+    'torch_pgn': ['ffn_hidden_size', 'ffn_num_layers', 'dropout', 'fp_dim'],
     'ggnet': ['ffn_hidden_size', 'ffn_num_layers', 'dropout', 'depth'],
     'dmpnn': ['ffn_hidden_size', 'ffn_num_layers', 'dropout', 'depth'],
     'fp': ['ffn_hidden_size', 'ffn_num_layers', 'dropout'],

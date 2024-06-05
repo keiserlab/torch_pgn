@@ -1,11 +1,11 @@
 import sys
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
-from pgn.train.Trainer import Trainer
-from pgn.data.ProximityGraphDataset import ProximityGraphDataset
-from pgn.train.train_utils import load_checkpoint
-from pgn.data.load_data import _load_splits, _split_data, _save_splits
-from pgn.data.data_utils import normalize_targets, normalize_distance, parse_transforms
+from torch_pgn.train.Trainer import Trainer
+from torch_pgn.data.ProximityGraphDataset import ProximityGraphDataset
+from torch_pgn.train.train_utils import load_checkpoint
+from torch_pgn.data.load_data import _load_splits, _split_data, _save_splits
+from torch_pgn.data.data_utils import normalize_targets, normalize_distance, parse_transforms
 
 import numpy as np
 import pandas as pd

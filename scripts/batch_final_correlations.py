@@ -1,11 +1,11 @@
 import sys
 import os
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
 import os.path as osp
 from scripts.generate_final_correlations import generate_final_correlations
 
-base_dir = '/srv/home/zgaleday/models/pgn/figure_2'
+base_dir = '/srv/home/zgaleday/models/torch_pgn/figure_2'
 model_dirs = ['pdbbind_general_rand_fp_hyper/',
                'refined_final_pgn/',
                'pdbbind_general_rand_hyper_fixcv/']

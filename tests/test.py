@@ -1,11 +1,11 @@
-from pgn.train.run_training import run_training
-from pgn.train.Trainer import Trainer
-from pgn.train.hyperopt import hyperopt
-from pgn.args import TrainArgs, HyperoptArgs, DataArgs
-from pgn.load_data import process_raw
+from torch_pgn.train.run_training import run_training
+from torch_pgn.train.Trainer import Trainer
+from torch_pgn.train.hyperopt import hyperopt
+from torch_pgn.args import TrainArgs, HyperoptArgs, DataArgs
+from torch_pgn.load_data import process_raw
 from scripts.generate_plec import generate_plec_pdbbind
 from scripts.generate_final_correlations import generate_final_correlations
-from pgn.data.ProximityGraphDataset import ProximityGraphDataset
+from torch_pgn.data.ProximityGraphDataset import ProximityGraphDataset
 
 import os
 import os.path as osp
@@ -16,8 +16,8 @@ def test_many_v_many_dataloading(proximity_radius=4.5, ligand_depth=2, receptor_
 
     args = DataArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'save_plots': True,
@@ -38,9 +38,9 @@ def test_one_v_many_dataloading(proximity_radius=4.5, ligand_depth=2, receptor_d
 
     args = DataArgs()
 
-    args.from_dict({'raw_mol_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/medium_diverse_toy.mol2',
-                    'raw_pdb_path': '/Users/student/git/pgn/tests/working_data/OneVsManyToy/d4_receptor.pdb',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/ovm_toy_dataset',
+    args.from_dict({'raw_mol_path': '/Users/student/git/torch_pgn/tests/working_data/OneVsManyToy/medium_diverse_toy.mol2',
+                    'raw_pdb_path': '/Users/student/git/torch_pgn/tests/working_data/OneVsManyToy/d4_receptor.pdb',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/ovm_toy_dataset',
                     'dataset_type': 'one_v_many',
                     'save_plots': True,
                     'proximity_radius': proximity_radius,
@@ -58,13 +58,13 @@ def test_one_v_many_dataloading(proximity_radius=4.5, ligand_depth=2, receptor_d
 def test_pfp_train():
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'encoder_type': 'pfp',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -78,14 +78,14 @@ def test_pfp_train():
 def test_hyperopt(search_keys=('fp_dim', 'ffn_num_layers', 'dropout_prob', 'ffn_hidden_size'), encoder_type='pfp'):
     args = HyperoptArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/mvm_toy_dataset',
                     'search_keys': list(search_keys),
                     'dataset_type': 'many_v_many',
                     'encoder_type': encoder_type,
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/hyperopt_output',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/hyperopt_output',
                     'epochs': 1,
                     'save_splits': True,
                     'cv_folds': 2,
@@ -100,17 +100,17 @@ def test_dmpnn_train():
 
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/toy_out',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.25,
                     'test_percent': 0.25,
                     'save_splits': True,
-                    'split_dir': '/Users/student/git/pgn/tests/splits',
+                    'split_dir': '/Users/student/git/torch_pgn/tests/splits',
                     'encoder_type': 'dmpnn'
                     })
     args.process_args()
@@ -122,17 +122,17 @@ def test_ggnet_train():
 
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/ggnet_train_test',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/ggnet_train_test',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
                     'save_splits': True,
-                    'split_dir': '/Users/student/git/pgn/tests/splits',
+                    'split_dir': '/Users/student/git/torch_pgn/tests/splits',
                     'encoder_type': 'ggnet'
                     })
     args.process_args()
@@ -143,12 +143,12 @@ def test_ggnet_train():
 def test_dimenet_train():
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/output_data/mvm_toy_dataset',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/output_data/mvm_toy_dataset',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/dimenet',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/dimenet',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -164,8 +164,8 @@ def test_fp_dataloading():
 
     args = DataArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/FPToy/formated_plec_toy.csv',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/fp_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/FPToy/formated_plec_toy.csv',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/fp_out',
                     'split_type': 'random',
                     'dataset_type': 'fp',
                     'fp_format': 'sparse',
@@ -182,8 +182,8 @@ def test_fp_train():
 
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/FPToy/formated_plec_toy.csv',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/fp_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/FPToy/formated_plec_toy.csv',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/fp_out',
                     'construct_graphs': False,
                     'split_type': 'random',
                     'dataset_type': 'fp',
@@ -191,7 +191,7 @@ def test_fp_train():
                     'fp_format': 'sparse',
                     'fp_dim': 1024 * 16,
                     'label_col': 2,
-                    'save_dir': '/Users/student/git/pgn/tests/output',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -218,13 +218,13 @@ def test_generate_final_correlations():
 def test_ligand_only_dataset():
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/toy_out',
                     'dataset_type': 'many_v_many',
                     'ligand_only': True,
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -240,13 +240,13 @@ def test_ligand_only_dataset():
 def test_no_interactions_dataset():
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/toy_out',
                     'dataset_type': 'many_v_many',
                     'interaction_edges_removed': True,
                     'split_type': 'random',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -262,13 +262,13 @@ def test_ligand_only_readout():
 
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/toy_out',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'encoder_type': 'ggnet',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -284,13 +284,13 @@ def test_split_conv():
 
     args = TrainArgs()
 
-    args.from_dict({'raw_data_path': '/Users/student/git/pgn/tests/working_data/ManyVsManyToy',
-                    'data_path': '/Users/student/git/pgn/tests/working_data/toy_out',
+    args.from_dict({'raw_data_path': '/Users/student/git/torch_pgn/tests/working_data/ManyVsManyToy',
+                    'data_path': '/Users/student/git/torch_pgn/tests/working_data/toy_out',
                     'dataset_type': 'many_v_many',
                     'split_type': 'random',
                     'encoder_type': 'pfp',
                     'construct_graphs': False,
-                    'save_dir': '/Users/student/git/pgn/tests/output/pfp',
+                    'save_dir': '/Users/student/git/torch_pgn/tests/output/pfp',
                     'epochs': 5,
                     'validation_percent': 0.2,
                     'test_percent': 0.2,
@@ -404,16 +404,12 @@ def _compare_graph_dataset(truth_dataset, test_dataset):
 
 
 
-full_arg_list = ['ffn_hidden_size', 'depth', 'dropout_prob', 'ffn_num_layers',
-        'fp_dim', 'lr', 'num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
-        'basis_emb_size', 'out_emb_channels', 'num_spherical', 'num_radial',
-        'cutoff', 'envelope_exponent']
-test_hyperopt(full_arg_list, 'dimenet++')
+# full_arg_list = ['ffn_hidden_size', 'depth', 'dropout_prob', 'ffn_num_layers',
+#         'fp_dim', 'lr', 'num_blocks', 'int_emb_size', 'nn_conv_internal_dim',
+#         'basis_emb_size', 'out_emb_channels', 'num_spherical', 'num_radial',
+#         'cutoff', 'envelope_exponent']
+# test_hyperopt(full_arg_list, 'dimenet++')
 
-
-
-
-
-
+test_pfp_train()
 
 

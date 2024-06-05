@@ -1,9 +1,9 @@
 import sys
 import os
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
-from pgn.train.run_training import run_training
-from pgn.train.hyperopt import hyperopt
-from pgn.args import TrainArgs, HyperoptArgs
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
+from torch_pgn.train.run_training import run_training
+from torch_pgn.train.hyperopt import hyperopt
+from torch_pgn.args import TrainArgs, HyperoptArgs
 
 args = HyperoptArgs()
 
@@ -15,7 +15,7 @@ args.from_dict({'raw_data_path': '/srv/home/zgaleday/IG_data/pdbbind_refined_163
                 'fp_dim': 1024*16,
                 'split_type': 'random',
                 'construct_graphs': False,
-                'save_dir': '/srv/home/zgaleday/models/pgn/figure_2/refined_final_PLEC',
+                'save_dir': '/srv/home/zgaleday/models/torch_pgn/figure_2/refined_final_PLEC',
                 'device': 'cuda:3',
                 'epochs': 100,
                 'cv_folds': 5,

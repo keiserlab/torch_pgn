@@ -24,16 +24,16 @@ import matplotlib.patches as mpatches
 from matplotlib.lines import Line2D
 import matplotlib
 
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
-from pgn.train.train_utils import format_batch
-from pgn.train.train_utils import load_checkpoint, make_save_directories, save_checkpoint
-from pgn.data.ProximityGraphDataset import ProximityGraphDataset
-from pgn.data.FingerprintDataset import FingerprintDataset
-from pgn.data.data_utils import parse_transforms
-from pgn.models.pfp_encoder import PFPEncoder
-from pgn.models.FPEncoder import FPEncoder
-from pgn.models.dmpnn_encoder import MPNEncoder
+from torch_pgn.train.train_utils import format_batch
+from torch_pgn.train.train_utils import load_checkpoint, make_save_directories, save_checkpoint
+from torch_pgn.data.ProximityGraphDataset import ProximityGraphDataset
+from torch_pgn.data.FingerprintDataset import FingerprintDataset
+from torch_pgn.data.data_utils import parse_transforms
+from torch_pgn.models.pfp_encoder import PFPEncoder
+from torch_pgn.models.FPEncoder import FPEncoder
+from torch_pgn.models.dmpnn_encoder import MPNEncoder
 from torch.utils.tensorboard import SummaryWriter
 
 LABEL_FILE = '/srv/home/zgaleday/IG_data/raw_data/d4_test_compounds/merged_chunk_map.csv'

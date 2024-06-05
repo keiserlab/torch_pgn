@@ -7,9 +7,9 @@ from math import isfinite
 
 
 
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
-from pgn.args import HyperoptArgs
-from pgn.train.run_training import run_training
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
+from torch_pgn.args import HyperoptArgs
+from torch_pgn.train.run_training import run_training
 
 DEVICE = 'cuda:' + sys.argv[1]
 ENCODER = 'dimenet++'

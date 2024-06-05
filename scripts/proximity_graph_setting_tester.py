@@ -1,8 +1,8 @@
 import sys
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
-from pgn.args import TrainArgs, HyperoptArgs, DataArgs
-from pgn.load_data import process_raw
+from torch_pgn.args import TrainArgs, HyperoptArgs, DataArgs
+from torch_pgn.load_data import process_raw
 from scripts.generate_final_correlations import generate_final_correlations
 
 import os

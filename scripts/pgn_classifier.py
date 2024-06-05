@@ -25,16 +25,16 @@ import matplotlib
 
 from sklearn import metrics
 
-sys.path.insert(0, "/srv/home/zgaleday/pgn")
+sys.path.insert(0, "/srv/home/zgaleday/torch_pgn")
 
-from pgn.train.train_utils import format_batch
-from pgn.train.train_utils import make_save_directories, save_checkpoint
-from pgn.data.ProximityGraphDataset import ProximityGraphDataset
-from pgn.data.FingerprintDataset import FingerprintDataset
-from pgn.data.data_utils import parse_transforms
-from pgn.models.pfp_encoder import PFPEncoder
-from pgn.models.dmpnn_encoder import MPNEncoder
-from pgn.models.FPEncoder import FPEncoder
+from torch_pgn.train.train_utils import format_batch
+from torch_pgn.train.train_utils import make_save_directories, save_checkpoint
+from torch_pgn.data.ProximityGraphDataset import ProximityGraphDataset
+from torch_pgn.data.FingerprintDataset import FingerprintDataset
+from torch_pgn.data.data_utils import parse_transforms
+from torch_pgn.models.pfp_encoder import PFPEncoder
+from torch_pgn.models.dmpnn_encoder import MPNEncoder
+from torch_pgn.models.FPEncoder import FPEncoder
 from scripts.pair_networks import load_args
 
 from torch.utils.tensorboard import SummaryWriter

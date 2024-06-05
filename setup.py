@@ -7,7 +7,7 @@ with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name='pgn',
+    name='torch_pgn',
     version='1.0.0',
     description='Proximity Graph Networks: Predicting ligand affinity with Message Passing Neural Networks',
     long_description=long_description,

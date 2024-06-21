@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # Load README
 with open("README.md", encoding="utf-8") as f:
@@ -8,15 +8,16 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name='torch_pgn',
-    version='1.0.0',
+    version=__version__,
     description='Proximity Graph Networks: Predicting ligand affinity with Message Passing Neural Networks',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/keiserlab/pgn",
+    url="https://github.com/keiserlab/torch_pgn",
     author='Keiser Lab',
     author_email='keiser@keiserlab.org',
     license="MIT",
     packages=find_packages(),
+    package_data={'torch_pgn': ["py.typed"]},
     install_requires=[
         "torch>=1.7.0",
         "torch_geometric>=1.6.3",
@@ -31,7 +32,9 @@ setup(
         "scikit-learn>=0.23.2",
         "hyperopt>=0.2.5",
         "sympy>=1.10.1",
-        "optuna>=3.6.1"
+        "optuna>=3.6.1",
+        "matplotlib>=3.0.0",
+        "oddt==0.7"
     ],
     python_requires=">3.6,<3.8",
     classifiers=[

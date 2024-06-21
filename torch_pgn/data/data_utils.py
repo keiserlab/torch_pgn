@@ -92,19 +92,19 @@ def normalize_targets(dataset, index=None, mean=None, std=None, yield_stats=True
     :return: A dataset with normalized targets
     """
     if index is None:
-        index = np.arange(len(dataset.data.name))
+        index = np.arange(len(dataset._data.name))
     if mean is None:
-        mean = dataset.data.y[list(index)].mean()
+        mean = dataset._data.y[list(index)].mean()
     if std is None:
-        std = std = dataset.data.y[list(index)].std()
+        std = dataset._data.y[list(index)].std()
 
 
-    dataset.data.y = (dataset.data.y - mean) / std
+    dataset._data.y = (dataset._data.y - mean) / std
 
     if not yield_stats:
-        return [dataset.data.y]
+        return [dataset._data.y]
     else:
-        return [dataset.data.y, (mean, std)]
+        return [dataset._data.y, (mean, std)]
 
 
 def normalize_distance(dataset, args=None, index=None, mean=None, std=None, yield_stats=True):
@@ -118,23 +118,23 @@ def normalize_distance(dataset, args=None, index=None, mean=None, std=None, yiel
     :return: A dataset with normalized targets
     """
     if index is None:
-        index = np.arange(len(dataset.data.name))
+        index = np.arange(len(dataset._data.name))
     if mean is None:
-        mean = dataset.data.edge_attr[list(index), 0].mean()
+        mean = dataset._data.edge_attr[list(index), 0].mean()
 
     if std is None:
-        std = dataset.data.edge_attr[list(index), 0].std()
+        std = dataset._data.edge_attr[list(index), 0].std()
 
     if args is not None and args.encoder_type == 'dmpnn':
-        for molgraph in dataset.data.molgraph:
+        for molgraph in dataset._data.molgraph:
             molgraph.apply_dist_norm(args.node_dim + DISTANCE_INDEX, float(mean), float(std))
 
-    dataset.data.edge_attr[:, 0] = (dataset.data.edge_attr[:, 0] - mean) / std
+    dataset._data.edge_attr[:, 0] = (dataset._data.edge_attr[:, 0] - mean) / std
 
     if not yield_stats:
-        return [dataset.data.edge_attr]
+        return [dataset._data.edge_attr]
     else:
-        return [dataset.data.edge_attr, (mean, std)]
+        return [dataset._data.edge_attr, (mean, std)]
 
 
 

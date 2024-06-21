@@ -41,9 +41,9 @@ def load_proximity_graphs(args):
             train_dataset = FingerprintDataset(args)
         else:
             train_dataset = ProximityGraphDataset(args)
-            train_dataset.data = transforms(train_dataset.data)
+            train_dataset._data = transforms(train_dataset._data)
 
-        num_examples = len(train_dataset.data.name)
+        num_examples = len(train_dataset._data.name)
 
         rand = np.random.RandomState(args.seed)
         permutations = rand.permutation(num_examples)
@@ -138,16 +138,16 @@ def load_proximity_graphs(args):
         raise ValueError('Invalid dataset type. Please choose from <random> or <defined>')
 
     if dataset_type != 'fp':
-        args.node_dim = train_dataset.data.x.numpy().shape[1]
-        args.edge_dim = train_dataset.data.edge_attr.numpy().shape[1]
+        args.node_dim = train_dataset._data.x.numpy().shape[1]
+        args.edge_dim = train_dataset._data.edge_attr.numpy().shape[1]
 
     if norm_targets:
-        train_dataset.data.y, label_stats = normalize_targets(train_dataset, index=train_index)
+        train_dataset._data.y, label_stats = normalize_targets(train_dataset, index=train_index)
         args.label_mean, args.label_std = label_stats
 
 
     if norm_dist:
-        train_dataset.data.edge_attr, dist_stats = normalize_distance(train_dataset, args=args, index=train_index)
+        train_dataset._data.edge_attr, dist_stats = normalize_distance(train_dataset, args=args, index=train_index)
         args.distance_mean, args.distance_std = dist_stats
 
 
@@ -264,13 +264,13 @@ def _save_splits(base_dir, train, test, validation=None):
     split_dir = osp.join(base_dir, 'splits')
     os.mkdir(split_dir)
     train_data, train_index = train
-    np.save(osp.join(split_dir, 'train.npy'), np.array(train_data.data.name)[train_index])
+    np.save(osp.join(split_dir, 'train.npy'), np.array(train_data._data.name)[train_index])
     if validation is not None:
         val_data, val_index = validation
-        np.save(osp.join(split_dir, 'validation.npy'), np.array(val_data.data.name)[val_index])
+        np.save(osp.join(split_dir, 'validation.npy'), np.array(val_data._data.name)[val_index])
     if test is not None:
         test_data, test_index = test
-        np.save(osp.join(split_dir, 'test.npy'), np.array(test_data.data.name)[test_index])
+        np.save(osp.join(split_dir, 'test.npy'), np.array(test_data._data.name)[test_index])
 
 
 def _load_splits(split_dir):

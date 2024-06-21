@@ -12,7 +12,7 @@ import os.path as osp
 
 from tqdm import trange
 
-from torch_geometric.data import DataLoader, DataListLoader
+from torch_geometric.loader import DataLoader, DataListLoader
 from torch_geometric.nn import DataParallel
 import torch
 

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 # Load README
 with open("README.md", encoding="utf-8") as f:
@@ -34,7 +34,9 @@ setup(
         "sympy>=1.10.1",
         "optuna>=3.6.1",
         "matplotlib>=3.0.0",
+        "six>=1.0.0",
         "oddt==0.7"
+
     ],
     python_requires=">3.6,<3.8",
     classifiers=[

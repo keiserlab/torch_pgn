@@ -5,10 +5,12 @@ Proximity Graph Networks (torch_pgn) is a pytorch toolkit allowing for the modul
 torch-pgn either be installed from PyPi using the pip command or from source. We assume that all users are using conda, if you do not have conda, please install Miniconda from <url>https://conda.io/miniconda.html<url>.
 
 ### Installation using pip
-1. <code> conda create --name torch_pgn python=3.7 </code>
-2. <code> conda activate torch_pgn </code>
-3. <code> pip install torch_pgn </code>
-4. <code> conda install pytorch-sparse -c pyg </code>
+1. <code>conda create --name torch_pgn python=3.7</code>
+2. <code>conda activate torch_pgn</code>
+3. <code>pip install torch_pgn</code>
+4. <code>conda install pytorch-sparse -c pyg</code>
+5. <code>conda install -c conda-forge openbabel</code>
+
 > [!NOTE]
 > If you are using a gpu machine and run into issues with this installation method we suggest you remove pytorch and pyg and reinstall using conda as follows:
 > 1. `conda remove pytorch`

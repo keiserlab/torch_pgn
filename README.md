@@ -4,20 +4,21 @@ Proximity Graph Networks (torch_pgn) is a pytorch toolkit allowing for the modul
 ## Installation
 torch-pgn either be installed from PyPi using the pip command or from source. We assume that all users are using conda, if you do not have conda, please install Miniconda from <url>https://conda.io/miniconda.html<url>.
 
-### Installation using pip
-1. <code>conda create --name torch_pgn python=3.7</code>
-2. <code>conda activate torch_pgn</code>
-3. <code>pip install torch_pgn</code>
-4. <code>conda install pytorch-sparse -c pyg</code>
-5. <code>conda install -c conda-forge openbabel</code>
+### Installation using pip (cpu only)
+1. `conda create --name torch_pgn python=3.7`
+2. `conda activate torch_pgn`
+3. `pip install torch_pgn`
+4. `conda install pytorch-sparse -c pyg`
+5. `conda install -c conda-forge openbabel`
 
-> [!NOTE]
-> If you are using a gpu machine and run into issues with this installation method we suggest you remove pytorch and pyg and reinstall using conda as follows:
-> 1. `conda remove pytorch`
-> 2. `conda remove pyg`
-> 3. `conda install pytorch`
-> 4. `conda install pyg -c pyg`
-> 5. `conda install pytorch-sparse -c pyg`
+### Installation using pip (cuda)
+1. `conda create --name torch_pgn python=3.7`
+2. `conda activate torch_pgn`
+3. `conda install pytorch==1.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia`
+4. `conda install pyg -c pyg`
+5. `conda install pytorch-sparse -c pyg`
+6. `conda install -c conda-forge openbabel`
+7. `pip install torch_pgn`
 
 ### Installation from source
 1. `git clone https://github.com/keiserlab/torch_pgn/torch_pgn.git`

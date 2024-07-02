@@ -10,6 +10,9 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.7"
+  commands:
+    - mkdir --parents _readthedocs/html/
+    - cp --recursive pre_built_html/* _readthedocs/html/
 
 python:
   install:

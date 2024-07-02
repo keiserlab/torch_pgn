@@ -1,5 +1,5 @@
 # torch_pgn
-Proximity Graph Networks (torch_pgn) is a pytorch toolkit allowing for the modular application of multiple different encoder architectures to cheminformatic tasks centered around protein-ligand complexes.
+Proximity Graph Networks (torch_pgn) is a pytorch toolkit allowing for the modular application of multiple different encoder architectures to cheminformatic tasks centered around protein-ligand complexes. Alpha version of documentation is available at: <url>https://torch-pgn.readthedocs.io/en/latest/index.html<url>.
 
 ## Installation
 torch-pgn either be installed from PyPi using the pip command or from source. We assume that all users are using conda, if you do not have conda, please install Miniconda from <url>https://conda.io/miniconda.html<url>.

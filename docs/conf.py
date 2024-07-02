@@ -1,5 +1,6 @@
 # Configuration file for the Sphinx documentation builder.
-
+import sys
+import os
 # -- Project information
 
 project = 'torch_pgn'
@@ -9,6 +10,8 @@ release = '0.1'
 version = '0.1.2'
 
 # -- General configuration
+
+sys.path.insert(0, os.path.abspath('./torch_pgn/'))
 
 extensions = [
     'sphinx.ext.duration',

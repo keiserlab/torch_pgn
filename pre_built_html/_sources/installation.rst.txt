@@ -1,0 +1,49 @@
+.. _installation:
+
+Installation
+============
+
+torch-pgn either be installed from PyPi using the pip command or from source. We assume that all users are using conda,
+if you do not have conda, please install Miniconda (see the link below). Currently torch_pgn required python 3.7 due to
+some dependencies not being upaded ; however, we are working to provide a release compatible with python 3.x.
+
+.. _pip: https://pypi.org/project/torch-pgn/
+.. _git repo: https://github.com/keiserlab/torch_pgn
+.. _conda: https://docs.conda.io/en/latest/conda.html
+.. _miniconda: https://docs.conda.io/en/latest/miniconda.html
+
+Option 1: Installation using pip (cpu only)
+-------------------------------------------
+
+.. code-block::
+
+    conda create --name torch_pgn python=3.7
+    conda activate torch_pgn
+    pip install torch_pgn
+    conda install pytorch-sparse -c pyg
+    conda install -c conda-forge openbabel
+
+Option 2: Installation using pip (cuda)
+---------------------------------------
+
+.. code-block::
+
+    conda create --name torch_pgn python=3.7
+    conda activate torch_pgn
+    conda install pytorch==1.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+    conda install pyg -c pyg
+    conda install pytorch-sparse -c pyg
+    conda install -c conda-forge openbabel
+    pip install torch_pgn
+
+
+Option 3: Installing from source using environment.yml
+-------------------------------------------------------
+
+.. code-block::
+
+    git clone https://github.com/keiserlab/torch_pgn/torch_pgn.git
+    cd torch_pgn
+    conda env create -f environment.yml
+    conda activate torch_pgn
+    pip install -e

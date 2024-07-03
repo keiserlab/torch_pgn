@@ -48,12 +48,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#key-links">Key Links</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#option-1-installation-using-pip-cpu-only">Option 1: Installation using pip (cpu only)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#option-2-installation-using-pip-cuda">Option 2: Installation using pip (cuda)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#option-3-installing-from-source-using-environment-yml">Option 3: Installing from source using environment.yml</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#option-1-installation-using-pip-cpu-only">Option 1: Installation using pip (cpu only)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#option-2-installation-using-pip-cuda">Option 2: Installation using pip (cuda)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#option-3-installing-from-source-using-environment-yml">Option 3: Installing from source using environment.yml</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -88,13 +85,8 @@
 <p>torch-pgn either be installed from PyPi using the pip command or from source. We assume that all users are using conda,
 if you do not have conda, please install Miniconda (see the link below). Currently torch_pgn required python 3.7 due to
 some dependencies not being upaded ; however, we are working to provide a release compatible with python 3.x.</p>
-<section id="key-links">
-<h2>Key Links<a class="headerlink" href="#key-links" title="Permalink to this heading"></a></h2>
-<p>pip: <a class="reference external" href="https://pypi.org/project/torch-pgn/">https://pypi.org/project/torch-pgn/</a>
-git repo: <a class="reference external" href="https://github.com/keiserlab/torch_pgn">https://github.com/keiserlab/torch_pgn</a>
-miniconda: <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
 <section id="option-1-installation-using-pip-cpu-only">
-<h3>Option 1: Installation using pip (cpu only)<a class="headerlink" href="#option-1-installation-using-pip-cpu-only" title="Permalink to this heading"></a></h3>
+<h2>Option 1: Installation using pip (cpu only)<a class="headerlink" href="#option-1-installation-using-pip-cpu-only" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">torch_pgn</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">torch_pgn</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">torch_pgn</span>
@@ -104,7 +96,7 @@ miniconda: <a class="reference external" href="https://docs.conda.io/en/latest/m
 </div>
 </section>
 <section id="option-2-installation-using-pip-cuda">
-<h3>Option 2: Installation using pip (cuda)<a class="headerlink" href="#option-2-installation-using-pip-cuda" title="Permalink to this heading"></a></h3>
+<h2>Option 2: Installation using pip (cuda)<a class="headerlink" href="#option-2-installation-using-pip-cuda" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">torch_pgn</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">torch_pgn</span>
 <span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span><span class="o">==</span><span class="mf">1.13.1</span> <span class="n">pytorch</span><span class="o">-</span><span class="n">cuda</span><span class="o">=</span><span class="mf">11.7</span> <span class="o">-</span><span class="n">c</span> <span class="n">pytorch</span> <span class="o">-</span><span class="n">c</span> <span class="n">nvidia</span>
@@ -116,7 +108,7 @@ miniconda: <a class="reference external" href="https://docs.conda.io/en/latest/m
 </div>
 </section>
 <section id="option-3-installing-from-source-using-environment-yml">
-<h3>Option 3: Installing from source using environment.yml<a class="headerlink" href="#option-3-installing-from-source-using-environment-yml" title="Permalink to this heading"></a></h3>
+<h2>Option 3: Installing from source using environment.yml<a class="headerlink" href="#option-3-installing-from-source-using-environment-yml" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keiserlab</span><span class="o">/</span><span class="n">torch_pgn</span><span class="o">/</span><span class="n">torch_pgn</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">torch_pgn</span>
 <span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment</span><span class="o">.</span><span class="n">yml</span>
@@ -124,7 +116,6 @@ miniconda: <a class="reference external" href="https://docs.conda.io/en/latest/m
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span>
 </pre></div>
 </div>
-</section>
 </section>
 </section>
 

@@ -7,10 +7,11 @@ torch-pgn either be installed from PyPi using the pip command or from source. We
 if you do not have conda, please install Miniconda (see the link below). Currently torch_pgn required python 3.7 due to
 some dependencies not being upaded ; however, we are working to provide a release compatible with python 3.x.
 
-.. _pip: https://pypi.org/project/torch-pgn/
-.. _git repo: https://github.com/keiserlab/torch_pgn
-.. _conda: https://docs.conda.io/en/latest/conda.html
-.. _miniconda: https://docs.conda.io/en/latest/miniconda.html
+Key Links
+_________
+pip: https://pypi.org/project/torch-pgn/
+git repo: https://github.com/keiserlab/torch_pgn
+miniconda: https://docs.conda.io/en/latest/miniconda.html
 
 Option 1: Installation using pip (cpu only)
 -------------------------------------------

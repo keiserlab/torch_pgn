@@ -297,8 +297,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.data.html#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_a2a">get_a2a() (torch_pgn.data.dmpnn_utils.BatchProxGraph method)</a>
 </li>
-      <li><a href="torch_pgn.featurization.html#torch_pgn.featurization.featurize.get_all_features">get_all_features() (in module torch_pgn.featurization.featurize)</a>
-</li>
       <li><a href="torch_pgn.data.html#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_b2b">get_b2b() (torch_pgn.data.dmpnn_utils.BatchProxGraph method)</a>
 </li>
       <li><a href="torch_pgn.data.html#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_components">get_components() (torch_pgn.data.dmpnn_utils.BatchProxGraph method)</a>
@@ -307,10 +305,10 @@
 </li>
       <li><a href="torch_pgn.train.html#torch_pgn.train.train_utils.get_labels">get_labels() (in module torch_pgn.train.train_utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.train.html#torch_pgn.train.train_utils.get_metric_functions">get_metric_functions() (in module torch_pgn.train.train_utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.graphs.html#torch_pgn.graphs.proximal_residues.get_molecule_graph">get_molecule_graph() (in module torch_pgn.graphs.proximal_residues)</a>
 </li>
       <li><a href="torch_pgn.models.html#torch_pgn.models.nn_utils.get_pool_function">get_pool_function() (in module torch_pgn.models.nn_utils)</a>
@@ -331,11 +329,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.html#torch_pgn.args.FFArgs.hidden_dim">hidden_dim (torch_pgn.args.FFArgs attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.train.html#torch_pgn.train.hyperopt.hyperopt">hyperopt() (in module torch_pgn.train.hyperopt)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.html#torch_pgn.args.HyperoptArgs">HyperoptArgs (class in torch_pgn.args)</a>
+</li>
+      <li><a href="torch_pgn.train.html#torch_pgn.train.hyperopt.hyperparameter_optimization">hyperparameter_optimization() (in module torch_pgn.train.hyperopt)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -456,8 +456,6 @@
         <li><a href="torch_pgn.evaluate.html#module-torch_pgn.evaluate.plot_utils">torch_pgn.evaluate.plot_utils</a>
 </li>
         <li><a href="torch_pgn.featurization.html#module-torch_pgn.featurization">torch_pgn.featurization</a>
-</li>
-        <li><a href="torch_pgn.featurization.html#module-torch_pgn.featurization.featurize">torch_pgn.featurization.featurize</a>
 </li>
         <li><a href="torch_pgn.featurization.html#module-torch_pgn.featurization.simple_featurization">torch_pgn.featurization.simple_featurization</a>
 </li>
@@ -644,9 +642,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torch_pgn.html#torch_pgn.load_data.process_raw">process_raw() (in module torch_pgn.load_data)</a>
 </li>
-      <li><a href="torch_pgn.datasets.html#torch_pgn.datasets.FPDataset.FPDataset.process_raw_data">process_raw_data() (torch_pgn.datasets.FPDataset.FPDataset method)</a>
+      <li><a href="torch_pgn.html#torch_pgn.load_data.process_raw_data">process_raw_data() (in module torch_pgn.load_data)</a>
 
       <ul>
+        <li><a href="torch_pgn.datasets.html#torch_pgn.datasets.FPDataset.FPDataset.process_raw_data">(torch_pgn.datasets.FPDataset.FPDataset method)</a>
+</li>
         <li><a href="torch_pgn.datasets.html#torch_pgn.datasets.ManyVsManyDataset.ManyVsManyDataset.process_raw_data">(torch_pgn.datasets.ManyVsManyDataset.ManyVsManyDataset method)</a>
 </li>
         <li><a href="torch_pgn.datasets.html#torch_pgn.datasets.OneVsManyDataset.OneVsManyDataset.process_raw_data">(torch_pgn.datasets.OneVsManyDataset.OneVsManyDataset method)</a>
@@ -887,13 +887,6 @@
 </li>
       </ul></li>
       <li>
-    torch_pgn.featurization.featurize
-
-      <ul>
-        <li><a href="torch_pgn.featurization.html#module-torch_pgn.featurization.featurize">module</a>
-</li>
-      </ul></li>
-      <li>
     torch_pgn.featurization.simple_featurization
 
       <ul>
@@ -956,8 +949,6 @@
         <li><a href="torch_pgn.models.html#module-torch_pgn.models.dimenet_utils">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torch_pgn.models.dmpnn_encoder
 
@@ -965,6 +956,8 @@
         <li><a href="torch_pgn.models.html#module-torch_pgn.models.dmpnn_encoder">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torch_pgn.models.FPEncoder
 
@@ -1065,8 +1058,12 @@
       </ul></li>
       <li><a href="torch_pgn.html#torch_pgn.args.TrainArgs.torch_seed">torch_seed (torch_pgn.args.TrainArgs attribute)</a>
 </li>
-      <li><a href="torch_pgn.train.html#torch_pgn.train.train.train">train() (in module torch_pgn.train.train)</a>
+      <li><a href="torch_pgn.train.html#torch_pgn.train.run_training.train">train() (in module torch_pgn.train.run_training)</a>
+
+      <ul>
+        <li><a href="torch_pgn.train.html#torch_pgn.train.train.train">(in module torch_pgn.train.train)</a>
 </li>
+      </ul></li>
       <li><a href="torch_pgn.html#torch_pgn.args.DataArgs.train_index">train_index (torch_pgn.args.DataArgs attribute)</a>
 </li>
       <li><a href="torch_pgn.train.html#torch_pgn.train.train_model.train_model">train_model() (in module torch_pgn.train.train_model)</a>

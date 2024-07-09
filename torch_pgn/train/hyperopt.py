@@ -12,6 +12,7 @@ import json
 import datetime
 
 from torch_pgn.train.Trainer import Trainer
+from torch_pgn.args import HyperoptArgs
 
 
 INT_KEYS = ['ffn_hidden_size', 'fp_dim', 'ffn_num_layers', 'depth', 'num_blocks', 'int_emb_size', 'hidden_channels',
@@ -93,4 +94,12 @@ def hyperopt(args):
         json.dump(best_result['hyperparams'], f, indent=4, sort_keys=True)
 
 
+def hyperparameter_optimization():
+    """Processes hyperparameter optimization arguements and initiates an optimization run using the specified parameters.
 
+    This function serves as an entry point for the command torch_pgn_hyperparameter_optimization in the command line
+    """
+    args = HyperoptArgs()
+    args.parse_args()
+    args.process_args()
+    hyperopt(args)

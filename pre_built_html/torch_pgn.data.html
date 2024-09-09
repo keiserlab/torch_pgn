@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>torch_pgn.data package &mdash; torch_pgn 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+    <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            torch_pgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">torch_pgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">torch_pgn.data package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/torch_pgn.data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="torch-pgn-data-package">
+<h1>torch_pgn.data package<a class="headerlink" href="#torch-pgn-data-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-torch_pgn.data.FingerprintDataset">
+<span id="torch-pgn-data-fingerprintdataset-module"></span><h2>torch_pgn.data.FingerprintDataset module<a class="headerlink" href="#module-torch_pgn.data.FingerprintDataset" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.FingerprintDataset.FingerprintDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.FingerprintDataset.</span></span><span class="sig-name descname"><span class="pre">FingerprintDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.FingerprintDataset.FingerprintDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">InMemoryDataset</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.FingerprintDataset.FingerprintDataset.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.FingerprintDataset.FingerprintDataset.download" title="Permalink to this definition"></a></dt>
+<dd><p>Downloads the dataset to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.raw_dir</span></code> folder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.FingerprintDataset.FingerprintDataset.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.FingerprintDataset.FingerprintDataset.process" title="Permalink to this definition"></a></dt>
+<dd><p>Processes the dataset to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.processed_dir</span></code> folder.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="torch_pgn.data.FingerprintDataset.FingerprintDataset.processed_file_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">processed_file_names</span></span><a class="headerlink" href="#torch_pgn.data.FingerprintDataset.FingerprintDataset.processed_file_names" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the files in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.processed_dir</span></code> folder that
+must be present in order to skip processing.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="torch_pgn.data.FingerprintDataset.FingerprintDataset.raw_file_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">raw_file_names</span></span><a class="headerlink" href="#torch_pgn.data.FingerprintDataset.FingerprintDataset.raw_file_names" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the files in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.raw_dir</span></code> folder that must
+be present in order to skip downloading.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.data.ProximityGraphDataset">
+<span id="torch-pgn-data-proximitygraphdataset-module"></span><h2>torch_pgn.data.ProximityGraphDataset module<a class="headerlink" href="#module-torch_pgn.data.ProximityGraphDataset" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.ProximityGraphDataset.</span></span><span class="sig-name descname"><span class="pre">ProximityGraphDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">InMemoryDataset</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.download" title="Permalink to this definition"></a></dt>
+<dd><p>Downloads the dataset to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.raw_dir</span></code> folder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.parse_pre_transforms">
+<span class="sig-name descname"><span class="pre">parse_pre_transforms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.parse_pre_transforms" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.process" title="Permalink to this definition"></a></dt>
+<dd><p>Processes the dataset to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.processed_dir</span></code> folder.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.processed_file_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">processed_file_names</span></span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.processed_file_names" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the files in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.processed_dir</span></code> folder that
+must be present in order to skip processing.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.raw_file_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">raw_file_names</span></span><a class="headerlink" href="#torch_pgn.data.ProximityGraphDataset.ProximityGraphDataset.raw_file_names" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the files in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.raw_dir</span></code> folder that must
+be present in order to skip downloading.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.data.data_utils">
+<span id="torch-pgn-data-data-utils-module"></span><h2>torch_pgn.data.data_utils module<a class="headerlink" href="#module-torch_pgn.data.data_utils" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.LigandOnlyPretransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">LigandOnlyPretransform</span></span><a class="headerlink" href="#torch_pgn.data.data_utils.LigandOnlyPretransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and removes
+any interaction edges/protein atoms from the graph.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.OneHotTransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">OneHotTransform</span></span><a class="headerlink" href="#torch_pgn.data.data_utils.OneHotTransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Transform object for ProximityGraphDataset with atomic number feature. Transforms the int feature into a 1-hot
+encoding that used atomic number (up to 100) as an index.
+#TODO: make it compatible with other atomic number index positions.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.RandomLigandTranslationTransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">RandomLigandTranslationTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.RandomLigandTranslationTransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TODO: Not applied. Will go back latter to implement. Need to figure out DMPNN complications.
+Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and updates
+any interaction edges/protein atoms from the graph.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.RemoveProximityEdgesPretransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">RemoveProximityEdgesPretransform</span></span><a class="headerlink" href="#torch_pgn.data.data_utils.RemoveProximityEdgesPretransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Transform object for ProximityGraphDataset to applied in the pre-transform step. Takes a proximity graph and removes
+any interaction edges/protein atoms from the graph.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.format_data_directory">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">format_data_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.format_data_directory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.normalize_distance">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">normalize_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.normalize_distance" title="Permalink to this definition"></a></dt>
+<dd><p>Normalizes the training target to have mean 0 and stddev 1
+:param dataset: dataset to normalize the targets for
+:param index: Index into dataset for the subset of dataset to calculate statistics on for normalization
+:param mean: external mean to use for normalization (i.e. test set normalization)
+:param std: external stddev to use for normalization (i.e. test set normalization)
+:param yield_stats: toggle to yield [dataset, (mean, std)] if True or just [dataset] if False
+:return: A dataset with normalized targets</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.normalize_targets">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">normalize_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.normalize_targets" title="Permalink to this definition"></a></dt>
+<dd><p>Normalizes the training target to have mean 0 and stddev 1
+:param dataset: dataset to normalize the targets for
+:param index: Index into dataset for the subset of dataset to calculate statistics on for normalization
+:param mean: external mean to use for normalization (i.e. test set normalization)
+:param std: external stddev to use for normalization (i.e. test set normalization)
+:param yield_stats: toggle to yield [dataset, (mean, std)] if True or just [dataset] if False
+:return: A dataset with normalized targets</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.parse_transforms">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">parse_transforms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.parse_transforms" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.data_utils.split_test_graphs">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.data_utils.</span></span><span class="sig-name descname"><span class="pre">split_test_graphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.data_utils.split_test_graphs" title="Permalink to this definition"></a></dt>
+<dd><p>Splits out the core set paths and the train set from the graphs output from generate_all_graphs.
+:param graph_path: The path where the graph generation placed all graphs
+:param test_list: The path to the csv containing the graphs
+:return: None</p>
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.data.dmpnn_utils">
+<span id="torch-pgn-data-dmpnn-utils-module"></span><h2>torch_pgn.data.dmpnn_utils module<a class="headerlink" href="#module-torch_pgn.data.dmpnn_utils" title="Permalink to this heading"></a></h2>
+<p>A lot of this code is repurposed from <a class="reference external" href="https://github.com/chemprop">https://github.com/chemprop</a>. This code is used in order to make the proximity
+graph dataset compatible with using the D-MPNN with edge messages.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.BatchProxGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.dmpnn_utils.</span></span><span class="sig-name descname"><span class="pre">BatchProxGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol_graphs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_fdim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_fdim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.BatchProxGraph" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMolGraph</span></code> represents the graph structure and featurization of a batch of molecules.
+A BatchMolGraph contains the attributes of a <code class="xref py py-class docutils literal notranslate"><span class="pre">MolGraph</span></code> plus:
+* <code class="code docutils literal notranslate"><span class="pre">atom_fdim</span></code>: The dimensionality of the atom feature vector.
+* <code class="code docutils literal notranslate"><span class="pre">bond_fdim</span></code>: The dimensionality of the bond feature vector (technically the combined atom/bond features).
+* <code class="code docutils literal notranslate"><span class="pre">a_scope</span></code>: A list of tuples indicating the start and end atom indices for each molecule.
+* <code class="code docutils literal notranslate"><span class="pre">b_scope</span></code>: A list of tuples indicating the start and end bond indices for each molecule.
+* <code class="code docutils literal notranslate"><span class="pre">max_num_bonds</span></code>: The maximum number of bonds neighboring an atom in this batch.
+* <code class="code docutils literal notranslate"><span class="pre">b2b</span></code>: (Optional) A mapping from a bond index to incoming bond indices.
+* <code class="code docutils literal notranslate"><span class="pre">a2a</span></code>: (Optional): A mapping from an atom index to neighboring atom indices.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.BatchProxGraph.get_a2a">
+<span class="sig-name descname"><span class="pre">get_a2a</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_a2a" title="Permalink to this definition"></a></dt>
+<dd><p>Computes (if necessary) and returns a mapping from each atom index to all neighboring atom indices.
+:return: A PyTorch tensor containing the mapping from each bond index to all the incoming bond indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.BatchProxGraph.get_b2b">
+<span class="sig-name descname"><span class="pre">get_b2b</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_b2b" title="Permalink to this definition"></a></dt>
+<dd><p>Computes (if necessary) and returns a mapping from each bond index to all the incoming bond indices.
+:return: A PyTorch tensor containing the mapping from each bond index to all the incoming bond indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.BatchProxGraph.get_components">
+<span class="sig-name descname"><span class="pre">get_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.BatchProxGraph.get_components" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the components of the <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMolGraph</span></code>.
+The returned components are, in order:
+* <code class="code docutils literal notranslate"><span class="pre">f_atoms</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">f_bonds</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">a2b</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">b2a</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">b2revb</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">a_scope</span></code>
+* <code class="code docutils literal notranslate"><span class="pre">b_scope</span></code>
+:param atom_messages: Whether to use atom messages instead of bond messages. This changes the bond feature</p>
+<blockquote>
+<div><p>vector to contain only bond features rather than both atom and bond features.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing PyTorch tensors with the atom features, bond features, graph structure,
+and scope of the atoms and bonds (i.e., the indices of the molecules they belong to).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.MolGraphTransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.dmpnn_utils.</span></span><span class="sig-name descname"><span class="pre">MolGraphTransform</span></span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.MolGraphTransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.ProxGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.data.dmpnn_utils.</span></span><span class="sig-name descname"><span class="pre">ProxGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_descriptors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.ProxGraph" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A <a class="reference internal" href="#torch_pgn.data.dmpnn_utils.ProxGraph" title="torch_pgn.data.dmpnn_utils.ProxGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProxGraph</span></code></a> represents the graph structure and featurization of a single molecule.
+A ProxGraph computes the following attributes:
+* <code class="code docutils literal notranslate"><span class="pre">n_atoms</span></code>: The number of atoms in the molecule.
+* <code class="code docutils literal notranslate"><span class="pre">n_bonds</span></code>: The number of bonds in the molecule.
+* <code class="code docutils literal notranslate"><span class="pre">f_atoms</span></code>: A mapping from an atom index to a list of atom features.
+* <code class="code docutils literal notranslate"><span class="pre">f_bonds</span></code>: A mapping from a bond index to a list of bond features.
+* <code class="code docutils literal notranslate"><span class="pre">a2b</span></code>: A mapping from an atom index to a list of incoming bond indices.
+* <code class="code docutils literal notranslate"><span class="pre">b2a</span></code>: A mapping from a bond index to the index of the atom the bond originates from.
+* <code class="code docutils literal notranslate"><span class="pre">b2revb</span></code>: A mapping from a bond index to the index of the reverse bond.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.ProxGraph.apply_dist_norm">
+<span class="sig-name descname"><span class="pre">apply_dist_norm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.ProxGraph.apply_dist_norm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.ProxGraph.remove_dist_norm">
+<span class="sig-name descname"><span class="pre">remove_dist_norm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.ProxGraph.remove_dist_norm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.dmpnn_utils.prox2graph">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.dmpnn_utils.</span></span><span class="sig-name descname"><span class="pre">prox2graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mols</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torch_pgn.data.dmpnn_utils.BatchProxGraph" title="torch_pgn.data.dmpnn_utils.BatchProxGraph"><span class="pre">BatchProxGraph</span></a></span></span><a class="headerlink" href="#torch_pgn.data.dmpnn_utils.prox2graph" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a directory of raw proximity graphs into BatchMolGraph.
+:param directory: directory containing a PG raw inputs
+:return: A <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMolGraph</span></code> containing the combined molecular graph for the molecules.</p>
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.data.load_data">
+<span id="torch-pgn-data-load-data-module"></span><h2>torch_pgn.data.load_data module<a class="headerlink" href="#module-torch_pgn.data.load_data" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.data.load_data.load_proximity_graphs">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.data.load_data.</span></span><span class="sig-name descname"><span class="pre">load_proximity_graphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.data.load_data.load_proximity_graphs" title="Permalink to this definition"></a></dt>
+<dd><p>#TODO
+:param args:
+:return:</p>
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-torch_pgn.data" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, keiserlab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

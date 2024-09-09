@@ -12,10 +12,9 @@ Functions to output basic atom representations.
 """
 
 def featurize_atoms_ECFP_like(molecule, index_list, is_ligand, translate=None):
-    """
-    Outputs a list of reps for each atom in the molecule that is contained in the index list.
-    :param molecule: oddt.toolkit.Molecule object
-            Molecules, which is analysed in order to calculate representations
+    """Outputs a list of reps for each atom in the molecule that is contained in the index list.
+
+    :param molecule: (oddt.toolkit.Molecule object) Molecules, which is analysed in order to calculate representations
     :param index_list: List of atom numbers to extract features
     :param is_ligand: (bool) is in ligand
     :param translate: (dict) If the nodes have already been translated then this will allow for going back to previous
@@ -37,8 +36,8 @@ def featurize_atoms_ECFP_like(molecule, index_list, is_ligand, translate=None):
 
 
 def featurize_edges_simple(bond_list, molecule, translate, position_dict):
-    """
-    A typesafe way of retrieving bond information from ODDT molecule objects or interaction_edges
+    """A typesafe way of retrieving bond information from ODDT molecule objects or interaction_edges.
+
     :param bond_list: a list of bonds in (u, v) format
     :param molecule: molecule of type oddt.toolkit.Molecule to retrive bonds from
     :param translate: Translation dictionary to store the nodes in

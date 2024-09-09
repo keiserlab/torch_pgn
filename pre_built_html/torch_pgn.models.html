@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>torch_pgn.models package &mdash; torch_pgn 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+    <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            torch_pgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">torch_pgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">torch_pgn.models package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/torch_pgn.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="torch-pgn-models-package">
+<h1>torch_pgn.models package<a class="headerlink" href="#torch-pgn-models-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-torch_pgn.models.DimeNet">
+<span id="torch-pgn-models-dimenet-module"></span><h2>torch_pgn.models.DimeNet module<a class="headerlink" href="#module-torch_pgn.models.DimeNet" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.DimeNet.</span></span><span class="sig-name descname"><span class="pre">DimeNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>The directional message passing neural network (DimeNet) from the
+<a class="reference external" href="https://arxiv.org/abs/2003.03123">&quot;Directional Message Passing for Molecular Graphs&quot;</a> paper.
+DimeNet transforms messages based on the angle between them in a
+rotation-equivariant fashion.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For an example of using a pretrained DimeNet variant, see
+<a class="reference external" href="https://github.com/pyg-team/pytorch_geometric/blob/master/examples/qm9_pretrained_dimenet.py">examples/qm9_pretrained_dimenet.py</a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hidden_channels</strong> (<em>int</em>) -- Hidden embedding size.</p></li>
+<li><p><strong>out_channels</strong> (<em>int</em>) -- Size of each output sample.</p></li>
+<li><p><strong>num_blocks</strong> (<em>int</em>) -- Number of building blocks.</p></li>
+<li><p><strong>num_bilinear</strong> (<em>int</em>) -- Size of the bilinear layer tensor.</p></li>
+<li><p><strong>num_spherical</strong> (<em>int</em>) -- Number of spherical harmonics.</p></li>
+<li><p><strong>num_radial</strong> (<em>int</em>) -- Number of radial basis functions.</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em><em>, </em><em>optional</em>) -- Cutoff distance for interatomic
+interactions. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">5.0</span></code>)</p></li>
+<li><p><strong>max_num_neighbors</strong> (<em>int</em><em>, </em><em>optional</em>) -- The maximum number of neighbors to
+collect for each node within the <code class="xref py py-attr docutils literal notranslate"><span class="pre">cutoff</span></code> distance.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">32</span></code>)</p></li>
+<li><p><strong>envelope_exponent</strong> (<em>int</em><em>, </em><em>optional</em>) -- Shape of the smooth cutoff.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">5</span></code>)</p></li>
+<li><p><strong>num_before_skip</strong> (<em>int</em><em>, </em><em>optional</em>) -- Number of residual layers in the
+interaction blocks before the skip connection. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>num_after_skip</strong> (<em>int</em><em>, </em><em>optional</em>) -- Number of residual layers in the
+interaction blocks after the skip connection. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
+<li><p><strong>num_output_layers</strong> (<em>int</em><em>, </em><em>optional</em>) -- Number of linear layers for the
+output blocks. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">3</span></code>)</p></li>
+<li><p><strong>act</strong> (<em>str</em><em> or </em><em>Callable</em><em>, </em><em>optional</em>) -- The activation function.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">&quot;swish&quot;</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_feats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet.forward" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet.triplets">
+<span class="sig-name descname"><span class="pre">triplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet.triplets" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNet.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://github.com/klicperajo/dimenet/raw/master/pretrained/dimenet'</span></em><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNet.url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNetPlusPlus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.DimeNet.</span></span><span class="sig-name descname"><span class="pre">DimeNetPlusPlus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNetPlusPlus" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torch_pgn.models.DimeNet.DimeNet" title="torch_pgn.models.DimeNet.DimeNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DimeNet</span></code></a></p>
+<p>The DimeNet++ from the <a class="reference external" href="https://arxiv.org/abs/2011.14115">&quot;Fast and Uncertainty-Aware
+Directional Message Passing for Non-Equilibrium Molecules&quot;</a> paper.</p>
+<p><a class="reference internal" href="#torch_pgn.models.DimeNet.DimeNetPlusPlus" title="torch_pgn.models.DimeNet.DimeNetPlusPlus"><code class="xref py py-class docutils literal notranslate"><span class="pre">DimeNetPlusPlus</span></code></a> is an upgrade to the <a class="reference internal" href="#torch_pgn.models.DimeNet.DimeNet" title="torch_pgn.models.DimeNet.DimeNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DimeNet</span></code></a> model with
+8x faster and 10% more accurate than <a class="reference internal" href="#torch_pgn.models.DimeNet.DimeNet" title="torch_pgn.models.DimeNet.DimeNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">DimeNet</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hidden_channels</strong> (<em>int</em>) -- Hidden embedding size.</p></li>
+<li><p><strong>out_channels</strong> (<em>int</em>) -- Size of each output sample.</p></li>
+<li><p><strong>num_blocks</strong> (<em>int</em>) -- Number of building blocks.</p></li>
+<li><p><strong>int_emb_size</strong> (<em>int</em>) -- Size of embedding in the interaction block.</p></li>
+<li><p><strong>basis_emb_size</strong> (<em>int</em>) -- Size of basis embedding in the interaction block.</p></li>
+<li><p><strong>out_emb_channels</strong> (<em>int</em>) -- Size of embedding in the output block.</p></li>
+<li><p><strong>num_spherical</strong> (<em>int</em>) -- Number of spherical harmonics.</p></li>
+<li><p><strong>num_radial</strong> (<em>int</em>) -- Number of radial basis functions.</p></li>
+<li><p><strong>cutoff</strong> -- (float, optional): Cutoff distance for interatomic
+interactions. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">5.0</span></code>)</p></li>
+<li><p><strong>max_num_neighbors</strong> (<em>int</em><em>, </em><em>optional</em>) -- The maximum number of neighbors to
+collect for each node within the <code class="xref py py-attr docutils literal notranslate"><span class="pre">cutoff</span></code> distance.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">32</span></code>)</p></li>
+<li><p><strong>envelope_exponent</strong> (<em>int</em><em>, </em><em>optional</em>) -- Shape of the smooth cutoff.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">5</span></code>)</p></li>
+<li><p><strong>num_before_skip</strong> -- (int, optional): Number of residual layers in the
+interaction blocks before the skip connection. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>num_after_skip</strong> -- (int, optional): Number of residual layers in the
+interaction blocks after the skip connection. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
+<li><p><strong>num_output_layers</strong> -- (int, optional): Number of linear layers for the
+output blocks. (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">3</span></code>)</p></li>
+<li><p><strong>act</strong> -- (str or Callable, optional): The activation funtion.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">&quot;swish&quot;</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNetPlusPlus.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNetPlusPlus.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.DimeNet.DimeNetPlusPlus.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://raw.githubusercontent.com/gasteigerjo/dimenet/master/pretrained/dimenet_pp'</span></em><a class="headerlink" href="#torch_pgn.models.DimeNet.DimeNetPlusPlus.url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.FPEncoder">
+<span id="torch-pgn-models-fpencoder-module"></span><h2>torch_pgn.models.FPEncoder module<a class="headerlink" href="#module-torch_pgn.models.FPEncoder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.FPEncoder.FPEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.FPEncoder.</span></span><span class="sig-name descname"><span class="pre">FPEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.FPEncoder.FPEncoder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Pass-through encoder module for fp datasets.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.FPEncoder.FPEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.FPEncoder.FPEncoder.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.FPEncoder.FPEncoder.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.FPEncoder.FPEncoder.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.GGNet">
+<span id="torch-pgn-models-ggnet-module"></span><h2>torch_pgn.models.GGNet module<a class="headerlink" href="#module-torch_pgn.models.GGNet" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.GGNet.GGNet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.GGNet.</span></span><span class="sig-name descname"><span class="pre">GGNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.GGNet.GGNet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Stock network from QM9 prediction paper gilmer et. al</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.GGNet.GGNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.GGNet.GGNet.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.GGNet.GGNet.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.GGNet.GGNet.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.dimenet_utils">
+<span id="torch-pgn-models-dimenet-utils-module"></span><h2>torch_pgn.models.dimenet_utils module<a class="headerlink" href="#module-torch_pgn.models.dimenet_utils" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.BesselBasisLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">BesselBasisLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envelope_exponent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.BesselBasisLayer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.BesselBasisLayer.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.BesselBasisLayer.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.BesselBasisLayer.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.BesselBasisLayer.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.BesselBasisLayer.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.BesselBasisLayer.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.EmbeddingBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">EmbeddingBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.EmbeddingBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.EmbeddingBlock.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.EmbeddingBlock.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.EmbeddingBlock.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.EmbeddingBlock.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.EmbeddingBlock.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.EmbeddingBlock.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.Envelope">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">Envelope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exponent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.Envelope" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.Envelope.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.Envelope.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.Envelope.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.Envelope.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">InteractionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bilinear</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_spherical</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_before_skip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_after_skip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionBlock.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_kj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_ji</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionBlock.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionBlock.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionBlock.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionBlock.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionBlock.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionPPBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">InteractionPPBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int_emb_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis_emb_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_spherical</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_before_skip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_after_skip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionPPBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionPPBlock.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_kj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_ji</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionPPBlock.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionPPBlock.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionPPBlock.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.InteractionPPBlock.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.InteractionPPBlock.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">OutputBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputBlock.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputBlock.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputBlock.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputBlock.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputPPBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">OutputPPBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_emb_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputPPBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputPPBlock.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputPPBlock.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.OutputPPBlock.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.OutputPPBlock.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.ResidualLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">ResidualLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.ResidualLayer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.ResidualLayer.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.ResidualLayer.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.ResidualLayer.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.ResidualLayer.reset_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.ResidualLayer.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.ResidualLayer.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.SphericalBasisLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dimenet_utils.</span></span><span class="sig-name descname"><span class="pre">SphericalBasisLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_spherical</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envelope_exponent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.SphericalBasisLayer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.SphericalBasisLayer.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_kj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dimenet_utils.SphericalBasisLayer.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dimenet_utils.SphericalBasisLayer.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dimenet_utils.SphericalBasisLayer.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.dmpnn_encoder">
+<span id="torch-pgn-models-dmpnn-encoder-module"></span><h2>torch_pgn.models.dmpnn_encoder module<a class="headerlink" href="#module-torch_pgn.models.dmpnn_encoder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.dmpnn_encoder.MPNEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.dmpnn_encoder.</span></span><span class="sig-name descname"><span class="pre">MPNEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_fdim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_fdim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dmpnn_encoder.MPNEncoder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>An <a class="reference internal" href="#torch_pgn.models.dmpnn_encoder.MPNEncoder" title="torch_pgn.models.dmpnn_encoder.MPNEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPNEncoder</span></code></a> is a message passing neural network for encoding a molecule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.dmpnn_encoder.MPNEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molgraph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.dmpnn_encoder.MPNEncoder.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Encodes a batch of molecular graphs.
+:param mol_graph: A <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMolGraph</span></code> representing</p>
+<blockquote>
+<div><p>a batch of molecular graphs.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features_batch</strong> -- A list of numpy arrays containing additional features.</p></li>
+<li><p><strong>atom_descriptors_batch</strong> -- A list of numpy arrays containing additional atomic descriptors</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A PyTorch tensor of shape <code class="code docutils literal notranslate"><span class="pre">(num_molecules,</span> <span class="pre">hidden_size)</span></code> containing the encoding of each molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.dmpnn_encoder.MPNEncoder.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.dmpnn_encoder.MPNEncoder.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.model">
+<span id="torch-pgn-models-model-module"></span><h2>torch_pgn.models.model module<a class="headerlink" href="#module-torch_pgn.models.model" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.model.PGNNetwork">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.model.</span></span><span class="sig-name descname"><span class="pre">PGNNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.model.PGNNetwork" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>A netork that includes the message passing PFPEncoder and a feed-forward network for learning tasks.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.model.PGNNetwork.construct_encoder">
+<span class="sig-name descname"><span class="pre">construct_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.model.PGNNetwork.construct_encoder" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs the message passing network for encoding proximity graphs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.model.PGNNetwork.construct_feed_forward">
+<span class="sig-name descname"><span class="pre">construct_feed_forward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.model.PGNNetwork.construct_feed_forward" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs the feed-forward network used for regression tasks</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.model.PGNNetwork.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.model.PGNNetwork.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the PFPNetwork on the input
+:param input: batch of Proximity Graphs
+:return: Output of the PFPNetwork</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.model.PGNNetwork.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.model.PGNNetwork.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.nn_utils">
+<span id="torch-pgn-models-nn-utils-module"></span><h2>torch_pgn.models.nn_utils module<a class="headerlink" href="#module-torch_pgn.models.nn_utils" title="Permalink to this heading"></a></h2>
+<p>Helper functions for the model construction functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.models.nn_utils.get_pool_function">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.models.nn_utils.</span></span><span class="sig-name descname"><span class="pre">get_pool_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.nn_utils.get_pool_function" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a fuctional form of the proper pooling function given input</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.models.nn_utils.get_sparse_fnctn">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.models.nn_utils.</span></span><span class="sig-name descname"><span class="pre">get_sparse_fnctn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparse_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.nn_utils.get_sparse_fnctn" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.models.nn_utils.index_select_ND">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.models.nn_utils.</span></span><span class="sig-name descname"><span class="pre">index_select_ND</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.nn_utils.index_select_ND" title="Permalink to this definition"></a></dt>
+<dd><p>Selects the message features from source corresponding to the atom or bond indices in <code class="code docutils literal notranslate"><span class="pre">index</span></code>.
+:param source: A tensor of shape <code class="code docutils literal notranslate"><span class="pre">(num_bonds,</span> <span class="pre">hidden_size)</span></code> containing message features.
+:param index: A tensor of shape <code class="code docutils literal notranslate"><span class="pre">(num_atoms/num_bonds,</span> <span class="pre">max_num_bonds)</span></code> containing the atom or bond</p>
+<blockquote>
+<div><p>indices to select from <code class="code docutils literal notranslate"><span class="pre">source</span></code>.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tensor of shape <code class="code docutils literal notranslate"><span class="pre">(num_atoms/num_bonds,</span> <span class="pre">max_num_bonds,</span> <span class="pre">hidden_size)</span></code> containing the message
+features corresponding to the atoms/bonds specified in index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models.pfp_encoder">
+<span id="torch-pgn-models-pfp-encoder-module"></span><h2>torch_pgn.models.pfp_encoder module<a class="headerlink" href="#module-torch_pgn.models.pfp_encoder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.models.pfp_encoder.PFPEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.models.pfp_encoder.</span></span><span class="sig-name descname"><span class="pre">PFPEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="torch_pgn.html#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><span class="pre">TrainArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.pfp_encoder.PFPEncoder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Message passing network used to encode interaction graphs for use in either regression or classification
+tasks.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.pfp_encoder.PFPEncoder.construct_nn_conv">
+<span class="sig-name descname"><span class="pre">construct_nn_conv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.pfp_encoder.PFPEncoder.construct_nn_conv" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.models.pfp_encoder.PFPEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.models.pfp_encoder.PFPEncoder.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.models.pfp_encoder.PFPEncoder.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#torch_pgn.models.pfp_encoder.PFPEncoder.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-torch_pgn.models" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, keiserlab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

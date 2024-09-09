@@ -8,9 +8,9 @@ from torch_pgn.featurization.simple_featurization import (
 
 def get_all_features(ligand, protein, ligand_nodes, protein_nodes, ligand_edges, protein_edges, cross_edges,
                      ligand_translate, protein_translate, positions):
-    """
-    Takes in all the graph information and returns the features as defined in featurize_atoms_ECFP_like and
+    """Takes in all the graph information and returns the features as defined in featurize_atoms_ECFP_like and
     featurize_edges simple.
+
     :param ligand: molecule of type oddt.toolkit.Molecule corresponsiding to ligand
     :param protein: molecule of type oddt.toolkit.Molecule corresponding to protein
     :param ligand_nodes: set of nodes in the ligand molecule

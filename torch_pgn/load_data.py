@@ -22,11 +22,15 @@ def process_raw(args: DataArgs):
             raise ValueError("Please input a valid dataset type.")
 
 
-if __name__ == "__main__":
+def process_raw_data():
+    """
+    Parses raw data for dataset generation independent of training. Useful for testing data generation for new
+    datasets.
 
+    This is an entry point for the command line code torch_pgn_process_raw
+    """
     args = DataArgs()
     # For parsing from terminal
     args.parse_args()
     args.process_args()
-
     process_raw(args)

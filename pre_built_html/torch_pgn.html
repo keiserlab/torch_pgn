@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>torch_pgn package &mdash; torch_pgn 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+    <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            torch_pgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">torch_pgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">torch_pgn package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/torch_pgn.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="torch-pgn-package">
+<h1>torch_pgn package<a class="headerlink" href="#torch-pgn-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.data.html">torch_pgn.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data.FingerprintDataset">torch_pgn.data.FingerprintDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data.ProximityGraphDataset">torch_pgn.data.ProximityGraphDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data.data_utils">torch_pgn.data.data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data.dmpnn_utils">torch_pgn.data.dmpnn_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data.load_data">torch_pgn.data.load_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.data.html#module-torch_pgn.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.datasets.html">torch_pgn.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#module-torch_pgn.datasets.FPDataset">torch_pgn.datasets.FPDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#module-torch_pgn.datasets.ManyVsManyDataset">torch_pgn.datasets.ManyVsManyDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#module-torch_pgn.datasets.OneVsManyDataset">torch_pgn.datasets.OneVsManyDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#module-torch_pgn.datasets.PGDataset">torch_pgn.datasets.PGDataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.datasets.html#module-torch_pgn.datasets">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.evaluate.html">torch_pgn.evaluate package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.evaluate.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.evaluate.html#module-torch_pgn.evaluate.plot_utils">torch_pgn.evaluate.plot_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.evaluate.html#module-torch_pgn.evaluate">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.featurization.html">torch_pgn.featurization package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.featurization.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.featurization.html#torch-pgn-featurization-featurize-module">torch_pgn.featurization.featurize module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.featurization.html#module-torch_pgn.featurization.simple_featurization">torch_pgn.featurization.simple_featurization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.featurization.html#module-torch_pgn.featurization">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.graphs.html">torch_pgn.graphs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.graphs.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.graphs.html#module-torch_pgn.graphs.graph_utils">torch_pgn.graphs.graph_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.graphs.html#module-torch_pgn.graphs.proximal_residues">torch_pgn.graphs.proximal_residues module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.graphs.html#module-torch_pgn.graphs.proximity_graph">torch_pgn.graphs.proximity_graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.graphs.html#module-torch_pgn.graphs">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.models.html">torch_pgn.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.DimeNet">torch_pgn.models.DimeNet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.FPEncoder">torch_pgn.models.FPEncoder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.GGNet">torch_pgn.models.GGNet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.dimenet_utils">torch_pgn.models.dimenet_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.dmpnn_encoder">torch_pgn.models.dmpnn_encoder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.model">torch_pgn.models.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.nn_utils">torch_pgn.models.nn_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models.pfp_encoder">torch_pgn.models.pfp_encoder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.models.html#module-torch_pgn.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torch_pgn.train.html">torch_pgn.train package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.Trainer">torch_pgn.train.Trainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.cross_validate_model">torch_pgn.train.cross_validate_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.evaluate_model">torch_pgn.train.evaluate_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.hyperopt">torch_pgn.train.hyperopt module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.run_training">torch_pgn.train.run_training module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.train">torch_pgn.train.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.train_model">torch_pgn.train.train_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train.train_utils">torch_pgn.train.train_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torch_pgn.train.html#module-torch_pgn.train">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-torch_pgn.args">
+<span id="torch-pgn-args-module"></span><h2>torch_pgn.args module<a class="headerlink" href="#module-torch_pgn.args" title="Permalink to this heading"></a></h2>
+<p>Classes that pass arguements to networks for training and easy saving and retrieval</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.args.</span></span><span class="sig-name descname"><span class="pre">DataArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underscores_to_dashes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.DataArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tap</span></code></p>
+<p>Class used to store the arguments used to construct and format the dataset being used</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.construct_graphs">
+<span class="sig-name descname"><span class="pre">construct_graphs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.construct_graphs" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to process raw working_data or just look in the data_path for formated proximity graphs</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.cross_validate">
+<span class="sig-name descname"><span class="pre">cross_validate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.cross_validate" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to run cross-validation. Pairs cv_folds argument. If cv_folds is set then cross_validate
+will be set to True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.cv_folds">
+<span class="sig-name descname"><span class="pre">cv_folds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.cv_folds" title="Permalink to this definition"></a></dt>
+<dd><p>Number of folds to use in cross-validation. If this is set cross-validations will be automatically used.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.data_path">
+<span class="sig-name descname"><span class="pre">data_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.data_path" title="Permalink to this definition"></a></dt>
+<dd><p>The path to place the formatted proximity graphs for input into pytorch Dataset (ProximityGraphDataset).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.dataset_type">
+<span class="sig-name descname"><span class="pre">dataset_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">one_v_many</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">many_v_many</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">fp</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.dataset_type" title="Permalink to this definition"></a></dt>
+<dd><p>The type of dataset being loaded. The choice are one_v_many, which is when you have many ligands bound to a
+single receptor. The other type of supported dataset is for many receptor ligand pairs. See dataset object
+documentation for further details.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.directed">
+<span class="sig-name descname"><span class="pre">directed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.directed" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle for whether to make the proximity graph undirected.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.distance_mean">
+<span class="sig-name descname"><span class="pre">distance_mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.distance_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Mean correction used for distance normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.distance_std">
+<span class="sig-name descname"><span class="pre">distance_std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.distance_std" title="Permalink to this definition"></a></dt>
+<dd><p>Std deviation correction used for distance normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.enable_interacting_mask">
+<span class="sig-name descname"><span class="pre">enable_interacting_mask</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.enable_interacting_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Include molgraph attribute in dataset to enable use with dmpnn</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.enable_molgraph">
+<span class="sig-name descname"><span class="pre">enable_molgraph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.enable_molgraph" title="Permalink to this definition"></a></dt>
+<dd><p>Include molgraph attribute in dataset to enable use with dmpnn</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.fp_column">
+<span class="sig-name descname"><span class="pre">fp_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fp'</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.fp_column" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the column that contains the raw_fp data for loading with fp dataset type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.fp_dim">
+<span class="sig-name descname"><span class="pre">fp_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.fp_dim" title="Permalink to this definition"></a></dt>
+<dd><p>The dimension of the output feature vector from the encoder for either pfp or fp dataset types.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.fp_format">
+<span class="sig-name descname"><span class="pre">fp_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">sparse</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dense</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sparse'</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.fp_format" title="Permalink to this definition"></a></dt>
+<dd><p>The format of the fingerprints in the raw_data directory if the dataset type == fp.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.include_dist">
+<span class="sig-name descname"><span class="pre">include_dist</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.include_dist" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to include distance information in the bond features of the proximity graphs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.interaction_edges_removed">
+<span class="sig-name descname"><span class="pre">interaction_edges_removed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.interaction_edges_removed" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to make a ligand/protein only dataset (i.e. proximity edges excluded). The raw data processing remains
+the same, but a remove interaction edges pre-transform is applied during ProximityGraphDataset loading.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.label_col">
+<span class="sig-name descname"><span class="pre">label_col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.label_col" title="Permalink to this definition"></a></dt>
+<dd><p>The column number to use to fetch the labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.label_file">
+<span class="sig-name descname"><span class="pre">label_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.label_file" title="Permalink to this definition"></a></dt>
+<dd><p>&quot;The path to the file containing the labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.label_mean">
+<span class="sig-name descname"><span class="pre">label_mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.label_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Mean correction used for target normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.label_std">
+<span class="sig-name descname"><span class="pre">label_std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.label_std" title="Permalink to this definition"></a></dt>
+<dd><p>Std deviation correction used for target normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.ligand_depth">
+<span class="sig-name descname"><span class="pre">ligand_depth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.ligand_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Number of bonds from proximal ligand atoms to be added to the proximity graph. If set to -1 the entire ligand
+will be added to the proximity graph without respect to proximal atoms.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.ligand_only">
+<span class="sig-name descname"><span class="pre">ligand_only</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.ligand_only" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to make a ligand only dataset (i.e. proximity edges and protein atoms are excluded. The raw data
+processing remains the same, but a ligand only pre-transform is applied during ProximityGraphDataset loading.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.load_test">
+<span class="sig-name descname"><span class="pre">load_test</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.load_test" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether or not to load the test set for evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">experiment</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">evaluate</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'experiment'</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.mode" title="Permalink to this definition"></a></dt>
+<dd><p>Whether the model is being used to experimentally tune model performace (evaluated with the validation set)
+or evaluate model performance (test set).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.normalize_dist">
+<span class="sig-name descname"><span class="pre">normalize_dist</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.normalize_dist" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to normalize the distance to have mean 0 and stddev of 1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.normalize_targets">
+<span class="sig-name descname"><span class="pre">normalize_targets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.normalize_targets" title="Permalink to this definition"></a></dt>
+<dd><p>&quot;Boolean toggle of whether to normalize the targets to have mean of 0 and stddev of 1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.num_workers">
+<span class="sig-name descname"><span class="pre">num_workers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.num_workers" title="Permalink to this definition"></a></dt>
+<dd><p>Number of processing units to use in working_data processing and loading.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.process_args">
+<span class="sig-name descname"><span class="pre">process_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.DataArgs.process_args" title="Permalink to this definition"></a></dt>
+<dd><p>Perform additional argument processing and/or validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.proximity_radius">
+<span class="sig-name descname"><span class="pre">proximity_radius</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4.5</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.proximity_radius" title="Permalink to this definition"></a></dt>
+<dd><p>Size of the proximity radius in angstroms for the calculation of the proximity graph</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.raw_data_path">
+<span class="sig-name descname"><span class="pre">raw_data_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.raw_data_path" title="Permalink to this definition"></a></dt>
+<dd><p>The path to the raw working_data for Many vs. Many datasets. See description of formatting requirements in documentation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.raw_mol_path">
+<span class="sig-name descname"><span class="pre">raw_mol_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.raw_mol_path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the mol file used to construct all Proximity Graphs in OneVsMany datasets.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.raw_pdb_path">
+<span class="sig-name descname"><span class="pre">raw_pdb_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.raw_pdb_path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the receptor pdb file used to construct all Proximity Graphs in OneVsMany datasets.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.receptor_depth">
+<span class="sig-name descname"><span class="pre">receptor_depth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.receptor_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Number of bonds from proximal receptor atoms to be added to the proximity graph</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.save_graphs">
+<span class="sig-name descname"><span class="pre">save_graphs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.save_graphs" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to save the proximity graphs to harddisk. False will keep the entire processing in
+ram. Not saving the graphs is only advised if you are sure you will not be using the graphs again as this step takes
+a decent amount of time depending upon the dataset size and complexity of the proximity graph.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.save_plots">
+<span class="sig-name descname"><span class="pre">save_plots</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.save_plots" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to save a 2D projection of the proximity graph to disk during graph generation.
+Not recommended for larger datasets</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.save_splits">
+<span class="sig-name descname"><span class="pre">save_splits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.save_splits" title="Permalink to this definition"></a></dt>
+<dd><p>Write the training/validation/test splits to the</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.seed" title="Permalink to this definition"></a></dt>
+<dd><p>Random seed used for pytorch in order to ensure reproducibility</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.split_dir">
+<span class="sig-name descname"><span class="pre">split_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.split_dir" title="Permalink to this definition"></a></dt>
+<dd><p>If the split type is defined, this is the location of the directory with files train.txt, validation.txt and
+test.txt (see documentation for the format of these files).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.split_type">
+<span class="sig-name descname"><span class="pre">split_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">random</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">defined</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">defined_test</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'random'</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.split_type" title="Permalink to this definition"></a></dt>
+<dd><p>The mode used to split the working_data into train, validation and test. Random will randomly split the working_data. Defined
+will use a defined split based on the name of each graph. Defined_test will do the same, but only for loading
+defined train and test splits (validation will be randomly picked from train).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.straw_model">
+<span class="sig-name descname"><span class="pre">straw_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.straw_model" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to freeze the encoder params in order to ensure that results perform better than a so-called straw
+model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.test_percent">
+<span class="sig-name descname"><span class="pre">test_percent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.test_percent" title="Permalink to this definition"></a></dt>
+<dd><p>The percentage of the training working_data to hold out into the test set in the case of a random split.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.train_index">
+<span class="sig-name descname"><span class="pre">train_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.train_index" title="Permalink to this definition"></a></dt>
+<dd><p>Stores the index of the training set in order to ensure no dataset contamination.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.transforms">
+<span class="sig-name descname"><span class="pre">transforms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['one_hot']</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.transforms" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms to apply to the dataset.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.DataArgs.validation_percent">
+<span class="sig-name descname"><span class="pre">validation_percent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#torch_pgn.args.DataArgs.validation_percent" title="Permalink to this definition"></a></dt>
+<dd><p>The percentage of the training working_data to put into the validation set in the case of a random split.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.args.</span></span><span class="sig-name descname"><span class="pre">EncoderArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underscores_to_dashes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.EncoderArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tap</span></code></p>
+<p>Class used to store the arguments used for input to the message passing NN encoder.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.act">
+<span class="sig-name descname"><span class="pre">act</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'swish'</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.act" title="Permalink to this definition"></a></dt>
+<dd><p>The activation function. Default and only current option is swish</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.basis_emb_size">
+<span class="sig-name descname"><span class="pre">basis_emb_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.basis_emb_size" title="Permalink to this definition"></a></dt>
+<dd><p>Size of basis embedding in the interaction block.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.covalent_only_depth">
+<span class="sig-name descname"><span class="pre">covalent_only_depth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.covalent_only_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Integer number of covalent only message passing steps. One_step_convolutions must have been set to false
+for this argument to have any effect. If covalent only depth &gt;= depth then spacial edges are not taken into
+account during message passing.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.cutoff">
+<span class="sig-name descname"><span class="pre">cutoff</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5.0</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.cutoff" title="Permalink to this definition"></a></dt>
+<dd><p>Cutoff distance for interatomic interactions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.depth" title="Permalink to this definition"></a></dt>
+<dd><p>The number of message passing steps or the number of blocks in dimenet.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.envelope_exponent">
+<span class="sig-name descname"><span class="pre">envelope_exponent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.envelope_exponent" title="Permalink to this definition"></a></dt>
+<dd><p>Shape of the smooth cutoff.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.fp_dim">
+<span class="sig-name descname"><span class="pre">fp_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.fp_dim" title="Permalink to this definition"></a></dt>
+<dd><p>The dimension of the output feature vector</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.fp_norm">
+<span class="sig-name descname"><span class="pre">fp_norm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.fp_norm" title="Permalink to this definition"></a></dt>
+<dd><p>whether or not to apply batch norm to the fp_layer before readout</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.int_emb_size">
+<span class="sig-name descname"><span class="pre">int_emb_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.int_emb_size" title="Permalink to this definition"></a></dt>
+<dd><p>Size of embedding in the interaction block.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.ligand_only_readout">
+<span class="sig-name descname"><span class="pre">ligand_only_readout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.ligand_only_readout" title="Permalink to this definition"></a></dt>
+<dd><p>Toggle whether the output encoding should only use the ligand atoms or should readout on the entire proximity
+graph. (Currently only enabled in torch_pgn).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.max_num_neighbors">
+<span class="sig-name descname"><span class="pre">max_num_neighbors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.max_num_neighbors" title="Permalink to this definition"></a></dt>
+<dd><p>The max number of neighbors to collect for each node within the 'cutoff' distance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.mpnn_directed">
+<span class="sig-name descname"><span class="pre">mpnn_directed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.mpnn_directed" title="Permalink to this definition"></a></dt>
+<dd><p>Toggle whether to use directed message passing for the dmpnn encoder type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.nn_conv_aggr">
+<span class="sig-name descname"><span class="pre">nn_conv_aggr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">add</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">mean</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">max</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean'</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.nn_conv_aggr" title="Permalink to this definition"></a></dt>
+<dd><p>type of pool used in the nn_conv layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.nn_conv_dropout_prob">
+<span class="sig-name descname"><span class="pre">nn_conv_dropout_prob</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.5</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.nn_conv_dropout_prob" title="Permalink to this definition"></a></dt>
+<dd><p>dropout probability used in the nn_conv ff_network</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.nn_conv_in_dim">
+<span class="sig-name descname"><span class="pre">nn_conv_in_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.nn_conv_in_dim" title="Permalink to this definition"></a></dt>
+<dd><p>In dimension to the NN_conv layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.nn_conv_internal_dim">
+<span class="sig-name descname"><span class="pre">nn_conv_internal_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.nn_conv_internal_dim" title="Permalink to this definition"></a></dt>
+<dd><p>Dimension of the internal ff_network in the NN_conv layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.nn_conv_out_dim">
+<span class="sig-name descname"><span class="pre">nn_conv_out_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.nn_conv_out_dim" title="Permalink to this definition"></a></dt>
+<dd><p>output dimension of the nn_conv output matrix (nn_conv_out_dim x nn_conv_out_dim)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_after_skip">
+<span class="sig-name descname"><span class="pre">num_after_skip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_after_skip" title="Permalink to this definition"></a></dt>
+<dd><p>Number of residual layers in the interaction blocks after the skip connection.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_before_skip">
+<span class="sig-name descname"><span class="pre">num_before_skip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_before_skip" title="Permalink to this definition"></a></dt>
+<dd><p>Number of residual layers in the interaction blocks before the skip connection.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_bilinear">
+<span class="sig-name descname"><span class="pre">num_bilinear</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_bilinear" title="Permalink to this definition"></a></dt>
+<dd><p>Size of the bilinear layer tensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_blocks">
+<span class="sig-name descname"><span class="pre">num_blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_blocks" title="Permalink to this definition"></a></dt>
+<dd><p>Number of output blocks</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_output_layers">
+<span class="sig-name descname"><span class="pre">num_output_layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_output_layers" title="Permalink to this definition"></a></dt>
+<dd><p>Number of linear layers for the output blocks.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_radial">
+<span class="sig-name descname"><span class="pre">num_radial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_radial" title="Permalink to this definition"></a></dt>
+<dd><p>Number of radial basis functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.num_spherical">
+<span class="sig-name descname"><span class="pre">num_spherical</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.num_spherical" title="Permalink to this definition"></a></dt>
+<dd><p>Number of spherical harmonics.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.one_step_convolution">
+<span class="sig-name descname"><span class="pre">one_step_convolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.one_step_convolution" title="Permalink to this definition"></a></dt>
+<dd><p>Toggle of whether or not to break the message passing into discrete covalent only and covalent/spacial combined
+steps or whether to include all edges in messing passing. By default the convolution steps are done at the same
+time regardless of edge type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.out_channels">
+<span class="sig-name descname"><span class="pre">out_channels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.out_channels" title="Permalink to this definition"></a></dt>
+<dd><p>Output dimension of dimenet output blocks.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.out_emb_channels">
+<span class="sig-name descname"><span class="pre">out_emb_channels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.out_emb_channels" title="Permalink to this definition"></a></dt>
+<dd><p>Size of embedding in the output block.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.pool_type">
+<span class="sig-name descname"><span class="pre">pool_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">add</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">mean</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">max</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'add'</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.pool_type" title="Permalink to this definition"></a></dt>
+<dd><p>pooling applied as part of readout function</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.skip_connections">
+<span class="sig-name descname"><span class="pre">skip_connections</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.skip_connections" title="Permalink to this definition"></a></dt>
+<dd><p>Toggle for whether to readout the fp vector at only time=T (False) or to aggregate all the feature
+vectors by adding the readout after each message passing step to the final readout vector.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.sparse_type">
+<span class="sig-name descname"><span class="pre">sparse_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">log_softmax</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">softmax</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">none</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'log_softmax'</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.sparse_type" title="Permalink to this definition"></a></dt>
+<dd><p>sparsification function used before final readout</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.EncoderArgs.split_conv">
+<span class="sig-name descname"><span class="pre">split_conv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.EncoderArgs.split_conv" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to have seperate message functions for covalent and non-covalent interactions.
+By default the same message function is applied regardless of edge type.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.args.</span></span><span class="sig-name descname"><span class="pre">FFArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underscores_to_dashes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.FFArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tap</span></code></p>
+<p>Class used to store the arguments used for input to the readout network.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.dropout_prob">
+<span class="sig-name descname"><span class="pre">dropout_prob</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#torch_pgn.args.FFArgs.dropout_prob" title="Permalink to this definition"></a></dt>
+<dd><p>probability of dropout applied between hidden layers</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.ff_dim_1">
+<span class="sig-name descname"><span class="pre">ff_dim_1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.FFArgs.ff_dim_1" title="Permalink to this definition"></a></dt>
+<dd><p>dimension of the first ff layer after the fingerprint. If not manually set this will be set to hidden dimension.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.hidden_dim">
+<span class="sig-name descname"><span class="pre">hidden_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">400</span></em><a class="headerlink" href="#torch_pgn.args.FFArgs.hidden_dim" title="Permalink to this definition"></a></dt>
+<dd><p>size of the FC layers</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.num_classes">
+<span class="sig-name descname"><span class="pre">num_classes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torch_pgn.args.FFArgs.num_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Number of classes being predicted by the model</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.num_layers">
+<span class="sig-name descname"><span class="pre">num_layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torch_pgn.args.FFArgs.num_layers" title="Permalink to this definition"></a></dt>
+<dd><p>Number of FC layers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.args.FFArgs.process_args">
+<span class="sig-name descname"><span class="pre">process_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#torch_pgn.args.FFArgs.process_args" title="Permalink to this definition"></a></dt>
+<dd><p>Perform additional argument processing and/or validation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.args.HyperoptArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.args.</span></span><span class="sig-name descname"><span class="pre">HyperoptArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underscores_to_dashes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.HyperoptArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torch_pgn.args.TrainArgs" title="torch_pgn.args.TrainArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainArgs</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.HyperoptArgs.minimize_score">
+<span class="sig-name descname"><span class="pre">minimize_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.HyperoptArgs.minimize_score" title="Permalink to this definition"></a></dt>
+<dd><p>Whether the score is minimized or maximized during hyperparameter optimization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.HyperoptArgs.num_iters">
+<span class="sig-name descname"><span class="pre">num_iters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#torch_pgn.args.HyperoptArgs.num_iters" title="Permalink to this definition"></a></dt>
+<dd><p>The number of iterations of model optimization to be run</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.args.HyperoptArgs.process_args">
+<span class="sig-name descname"><span class="pre">process_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.HyperoptArgs.process_args" title="Permalink to this definition"></a></dt>
+<dd><p>Perform additional argument processing and/or validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.HyperoptArgs.search_keys">
+<span class="sig-name descname"><span class="pre">search_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['fp_dim',</span> <span class="pre">'ffn_num_layers',</span> <span class="pre">'dropout_prob',</span> <span class="pre">'ffn_hidden_size']</span></em><a class="headerlink" href="#torch_pgn.args.HyperoptArgs.search_keys" title="Permalink to this definition"></a></dt>
+<dd><p>Keys to be used during the hyperparameter seach</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torch_pgn.args.</span></span><span class="sig-name descname"><span class="pre">TrainArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underscores_to_dashes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.TrainArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torch_pgn.args.DataArgs" title="torch_pgn.args.DataArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArgs</span></code></a>, <a class="reference internal" href="#torch_pgn.args.FFArgs" title="torch_pgn.args.FFArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFArgs</span></code></a>, <a class="reference internal" href="#torch_pgn.args.EncoderArgs" title="torch_pgn.args.EncoderArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncoderArgs</span></code></a></p>
+<p>Class used to store the model independent arguments used for training the NNs</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.batch_size" title="Permalink to this definition"></a></dt>
+<dd><p>The batch size used in training.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.decay_delay">
+<span class="sig-name descname"><span class="pre">decay_delay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.decay_delay" title="Permalink to this definition"></a></dt>
+<dd><p>Number of epoch to delay before starting weight decay.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.device">
+<span class="sig-name descname"><span class="pre">device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cpu'</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.device" title="Permalink to this definition"></a></dt>
+<dd><p>The device to train then model on/location of working_data and pytorch model. e.g. 'cpu' or 'cuda'</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.edge_dim">
+<span class="sig-name descname"><span class="pre">edge_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.edge_dim" title="Permalink to this definition"></a></dt>
+<dd><p>The edge feature size. Set during dataloading procedure.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.encoder_type">
+<span class="sig-name descname"><span class="pre">encoder_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing_extensions.Literal[pfp,</span> <span class="pre">d-mpnn,</span> <span class="pre">ggnet,</span> <span class="pre">fp,</span> <span class="pre">dimenet++]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pfp'</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.encoder_type" title="Permalink to this definition"></a></dt>
+<dd><p>pfp, d-mpnn</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Selects the encoder to be used, defaults to pfp network. Valid options are</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.epochs" title="Permalink to this definition"></a></dt>
+<dd><p>The number of training epochs to run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.fine_tuning_dir">
+<span class="sig-name descname"><span class="pre">fine_tuning_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.fine_tuning_dir" title="Permalink to this definition"></a></dt>
+<dd><p>Directory to load args and checkpoint from as hot start to training</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.load_test">
+<span class="sig-name descname"><span class="pre">load_test</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.load_test" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle that indicates whether the test set should be loaded and evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.loss_function">
+<span class="sig-name descname"><span class="pre">loss_function</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mse'</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.loss_function" title="Permalink to this definition"></a></dt>
+<dd><p>mse, rmse</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The function used to evaluate the model. The default is mse. Valid options are</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.lr">
+<span class="sig-name descname"><span class="pre">lr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0003</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.lr" title="Permalink to this definition"></a></dt>
+<dd><p>The initial learning rate used to train the model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['rmse',</span> <span class="pre">'mse',</span> <span class="pre">'pcc',</span> <span class="pre">'r2']</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.metrics" title="Permalink to this definition"></a></dt>
+<dd><p>The metrics used to evaluate the validation and if desired test performance of the model. Valid choices currently
+include: rmse, mse, pcc, r2.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.multi_gpu">
+<span class="sig-name descname"><span class="pre">multi_gpu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.multi_gpu" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to train the model across multiple gpus or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.node_dim">
+<span class="sig-name descname"><span class="pre">node_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.node_dim" title="Permalink to this definition"></a></dt>
+<dd><p>The node feature size. Set during dataloading procedure.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.num_workers">
+<span class="sig-name descname"><span class="pre">num_workers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.num_workers" title="Permalink to this definition"></a></dt>
+<dd><p>The number of works used in dataloading and batch generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.patience">
+<span class="sig-name descname"><span class="pre">patience</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.patience" title="Permalink to this definition"></a></dt>
+<dd><p>Patience used in scedular if weight decay enabled</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.plot_correlations">
+<span class="sig-name descname"><span class="pre">plot_correlations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.plot_correlations" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle of whether to plot the correlations for train, validation and test (if loaded).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.process_args">
+<span class="sig-name descname"><span class="pre">process_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.args.TrainArgs.process_args" title="Permalink to this definition"></a></dt>
+<dd><p>Perform additional argument processing and/or validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.save_dir">
+<span class="sig-name descname"><span class="pre">save_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.save_dir" title="Permalink to this definition"></a></dt>
+<dd><p>The directory to save the checkpoint files and model outputs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.seed" title="Permalink to this definition"></a></dt>
+<dd><p>Pytorch seed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.tensorboard_logging">
+<span class="sig-name descname"><span class="pre">tensorboard_logging</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.tensorboard_logging" title="Permalink to this definition"></a></dt>
+<dd><p>Whether or not to track model training with tensorboard.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.torch_seed">
+<span class="sig-name descname"><span class="pre">torch_seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.torch_seed" title="Permalink to this definition"></a></dt>
+<dd><p>Pytorch dataloader seed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torch_pgn.args.TrainArgs.weight_decay">
+<span class="sig-name descname"><span class="pre">weight_decay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#torch_pgn.args.TrainArgs.weight_decay" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean toggle to indicate whether weight decay should be used during training</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn.load_data">
+<span id="torch-pgn-load-data-module"></span><h2>torch_pgn.load_data module<a class="headerlink" href="#module-torch_pgn.load_data" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.load_data.process_raw">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.load_data.</span></span><span class="sig-name descname"><span class="pre">process_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torch_pgn.args.DataArgs" title="torch_pgn.args.DataArgs"><span class="pre">DataArgs</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.load_data.process_raw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torch_pgn.load_data.process_raw_data">
+<span class="sig-prename descclassname"><span class="pre">torch_pgn.load_data.</span></span><span class="sig-name descname"><span class="pre">process_raw_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torch_pgn.load_data.process_raw_data" title="Permalink to this definition"></a></dt>
+<dd><p>Parses raw data for dataset generation independent of training. Useful for testing data generation for new
+datasets.</p>
+<p>This is an entry point for the command line code torch_pgn_process_raw</p>
+</dd></dl>
+
+</section>
+<section id="module-torch_pgn">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-torch_pgn" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, keiserlab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
